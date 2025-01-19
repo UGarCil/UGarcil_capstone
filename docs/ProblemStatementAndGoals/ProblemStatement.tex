@@ -3,11 +3,11 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 
-\title{Problem Statement and Goals\\\progname}
+\title{Problem Statement and Goals\\Multiple sequence alignment}
 
-\author{\authname}
+\author{\\Uriel Garcilazo Cruz}
 
-\date{}
+\date{January 18th, 2025}
 
 \input{../Comments}
 \input{../Common}
@@ -22,72 +22,65 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+18 January & Uriel Garcilazo Cruz & Document's first release\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \section{Problem Statement}
 
-\wss{You should check your problem statement with the
-\href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/ProbState-Checklist.pdf}
-{problem statement checklist}.} 
-
-\wss{You can change the section headings, as long as you include the required
-information.}
+Substitution matrices make one of the axioms on which to elaborate hypotheses in comparative biology.
+There are many substitution matrices used in the literature, 
+and their effects in different types of sequences is not always easy to evaluate through benchmarking.
 
 \subsection{Problem}
 
+Aligning DNA strands from two individuals or species helps revealing past evolutionary events between them.
+However, finding empirical values for the rate at which one nucleotide or aminoacid changes into another is difficult,
+because any evidence of substitutions that may have occurred as intermediate stages gets erased by new mutations.
+A square matrix that encodes the substitution rates among nucleotides or aminoacids is called a substitution matrix.
+Although multiple substitution matrices have been proposed, and subsequently adopted as a standard for alignment \cite{Altschul1991,Mount2008},
+it is of the utmost importance to determine how a given substitution matrix may impact the quality of an alignment.
+For this it is useful to use methods of pairwise alignment \cite{NEEDLEMAN1970443} that ensure the best global score between two sequences.
+This program enables the benchmarking of substitution matrices to determine their effects in a pairwise alignment.
+
+
 \subsection{Inputs and Outputs}
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+Given two sequences of DNA, determine the effects that commonly used substitution matrices have in the quality of their alignment.
 
 \subsection{Stakeholders}
 
+Evolutionary Biologists and researchers with genomic or protein data,
+interested in the effects of hyperparameters in the quality of their research.
 \subsection{Environment}
 
-\wss{Hardware and software environment}
+Linux terminal recommended\\
+Windows 10 or higher is recommended.\\
+MacOS Sierra or later is recommended
 
 \section{Goals}
 
+\begin{itemize}
+    \item Gives a way to measure the effects that a substitution matrix has over the quality of an alignment.
+    \item Yields a comparative tool to evaluate the effects of diverse substitution matrices.
+    \item Provides a benchmarking tool to evaluate the utility of matrices found in the literature.
+\end{itemize}
+
 \section{Stretch Goals}
 
-\section{Challenge Level and Extras}
+\begin{itemize}
+    \item By finding the best possible alignment, the data can be used to train machine learning algorithms.
+    \item framework could be extended to optimize substitution matrices for specific sequence types.
+    \item The analysis could help identify which matrix elements are most important for accurate alignment.
+\end{itemize}
 
-\wss{State your expected challenge level (advanced, general or basic).  The
-challenge can come through the required domain knowledge, the implementation or
-something else.  Usually the greater the novelty of a project the greater its
-challenge level.  You should include your rationale for the selected level.
-Approval of the level will be part of the discussion with the instructor for
-approving the project.  The challenge level, with the approval (or request) of
-the instructor, can be modified over the course of the term.}
+\newpage
 
-\wss{Teams may wish to include extras as either potential bonus grades, or to
-make up for a less advanced challenge level.  Potential extras include usability
-testing, code walkthroughs, user documentation, formal proof, GenderMag
-personas, Design Thinking, etc.  Normally the maximum number of extras will be
-two.  Approval of the extras will be part of the discussion with the instructor
-for approving the project.  The extras, with the approval (or request) of the
-instructor, can be modified over the course of the term.}
+\bibliographystyle {plain}
+\bibliography {srs}
 
-\newpage{}
-
-\section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741}
-
-\input{../Reflection.tex}
-
-\begin{enumerate}
-    \item What went well while writing this deliverable? 
-    \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-    \item How did you and your team adjust the scope of your goals to ensure
-    they are suitable for a Capstone project (not overly ambitious but also of
-    appropriate complexity for a senior design project)?
-\end{enumerate}  
+% A Python implementation of the core for this algorithm, called Needleman-Wunsch for pairwaise alignment can be found at:
+% https://urielgarcilazo.com/tutorials/1_DynamicProgramming.html 
 
 \end{document}
