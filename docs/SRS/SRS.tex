@@ -173,8 +173,10 @@ This section records information for easy reference.
 \subsection{Table of Units}
 
 Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is NOT employed
-as the unit system.  Instead of the basic units from SI, several units
-are described under the symbols section below.
+as the unit system.  Instead of the basic units from SI, the standard Human Genome
+ Variation Society (HGVS) nomenclature is employed as the unit system, unless 
+otherwise noted.
+
 
 ~\newline
 
@@ -182,12 +184,20 @@ are described under the symbols section below.
 \begin{center}
   \begin{tabular}{l l l} 
     \toprule		
-    \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
+    \textbf{symbol} & \textbf{unit} & \textbf{HGVS}\\
     \midrule 
-    
+    qa & alignment quality & fundamental unit of alignment quality 
+    (unit definition is unique to this document)
+    \\
+    bp & base pair & fundamental unit of genetic sequence length
+    \\
+    Kb & kilobase unit & one thousand base pairs
+    \\
     \bottomrule
   \end{tabular}
 \end{center}
+
+~\newline
 
   %	\caption{Provide a caption}
 %\end{table}
@@ -211,26 +221,6 @@ are described under the symbols section below.
 %   {NIST} web-page.}
 
 \subsection{Table of Symbols}
-
-Throughout this document the standard Human Genome Variation Society (HGVS) nomenclature is employed as the unit system.
-Additional units that are unique tu this document are prefixed with *.
-
-\begin{center}
-  \begin{tabular}{l l l} 
-    \toprule		
-    \textbf{symbol} & \textbf{unit} & \textbf{HGVS}\\
-    \midrule 
-    *qa & alignment quality & fundamental unit of alignment quality
-    \\
-    bp & base pair & fundamental unit of genetic sequence length
-    \\
-    Kb & kilobase unit & one thousand base pairs
-    \\
-    \bottomrule
-  \end{tabular}
-  \end{center}
-
-\vspace{1em}
 
 The table that follows summarizes the symbols used in this document along with
 their units.  The choice of symbols was made to be consistent with the bioinformatics
@@ -573,9 +563,8 @@ with the use of genetic sequences to make hypotheses of common ancestry.
 
 \subsection{System Constraints}
 
-An alphabet of 4 letters, standardized to the genetic DNA nomenclature, should be used 
-to represent the genetic sequences.
-
+No contraints were integrated in the program design that weren't at the scope of the 
+\progname{} software's operational implementation.
 % \plt{System constraints differ from other type of requirements because they
 %   limit the developers' options in the system design and they identify how the
 %   eventual system must fit into the world. This is the only place in the SRS
@@ -619,7 +608,7 @@ the rewards or penalties of moving from one base pair to another and
 expressed in units of alignment quality (qa)
 \item Pairwise alignment: A pairwise alignment is the process of aligning two genetic 
 sequences to identify regions of similarity 
-\item Genetic sequence: A genetic sequence is a string of characters that represent 
+\item Genetic sequence: A genetic sequence is a string of characters $\in \{N_A, N_C, N_G, N_T\}$ that represent 
 the nucleotides of a DNA molecule and expressed in units of base pairs (bp)
 \item Alignment quality: A measure of the quality of the alignment between two genetic 
 sequences and express in units of alignment quality (qa)
@@ -687,8 +676,8 @@ includes the following elements:
 \begin{itemize}
 
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{generate_alignment}:] Generate 
-scores ranking the quality of the alignment between two genetic sequences across
-multiple substitution matrices
+scores ranking the quality of the alignment between two genetic sequences given a 
+benchmarked set of substitution matrices
 % \item[GS\refstepcounter{goalnum}\thegoalnum \label{generate_rank}:] Rank  
 % multiple substitution matrices by the quality of the alignments they produce
 
@@ -782,9 +771,10 @@ change [LC], in which the respective assumption is used.
 \begin{itemize}
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{dna-sequences-only}:]
-DNA-sequences-only: The only type of genetic sequences that will be considered are DNA sequences
+DNA-sequences-only: An alphabet of 4 letters, standardized to the genetic DNA nomenclature is used 
+to represent the genetic sequences [DD\autoref{DD_substitution_matrices}]
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{two-sequences-only}:]
-Two-sequences-only: The only valid number of genetic sequences to be compared is two
+Two-sequences-only: The only valid number of genetic sequences to be compared is two [DD\autoref{DD_comparative_alginment_matrix}][GS\autoref{generate_alignment}][IM\autoref{IM_needleman_wunsch}].
   % \plt{Short description of each assumption.  Each assumption
   %   should have a meaningful label.  Use cross-references to identify the
   %   appropriate traceability to TM, GD, DD etc., using commands like dref, ddref
@@ -818,7 +808,7 @@ on.
 % #2 refname of theory
 {TM:DPO}
 % #3 label
-{Dynamic Programming Optimization}
+{Comparative alignment matrix}
 % #4 equation
 % {
 %   % $F_{ij} = \max(F_{i-1,j-1} + S(SEQ_{A_i}, SEQ_{B_j}), F_{i,j-1} + g, F_{i-1,j} + g)$
@@ -834,10 +824,17 @@ on.
   % where $F_{i,j}$ is the alignment score at position $i$ in genetic sequence $A$ and position $j$ in 
   % genetic sequence $B$, $d$ is the gap penalty associated with a deletion or insertion, and $S$ is the substitution matrix.
 
-  The above equation gives the optimal alignment score between two genetic sequences $SEQ_{A_i}$ and $SEQ_{B_j}$,
-  given in base pair (bp) units, where $F_{i,j}$ is the alignment score at position $i$ in genetic sequence $SEQ_A$ 
-  and position $j$ in genetic sequence $SEQ_B$ (in qa units), $g$ is the gap penalty associated with a deletion 
-  or insertion (given in qa units), and $S$ is the substitution matrix (given in qa units).
+  The above equation fills the values of the comparison matrix $F$ (a matrix of size $|SEQ_A| * |SEQ_B|$, with every $F_{i,j}$ in qa units)
+  , where $F_{i,j}$ is a cell at $SEQ_A$ position $i$ (rows) and position $j$ in $SEQ_B$ 
+   (columns); $g$ is the gap penalty associated with a deletion 
+  or insertion (given in qa units); $ S \text{()} $ is a function that uses a substitution matrix to evaluate the
+  nucleotide at position $SEQ_{A_i}$ and $SEQ_{B_j}$, returning a score given in qa units. The equation contains the 
+  following edge cases: $F_{0,0} = 0$, $F_{i,0} = F_{i-1,0} + g$, and $F_{0,j} = F_{0,j-1} + g$.
+
+  
+  % F_{0,0} = 0 \\
+  % F_{i,0} = F_{i-1,0} + g \\
+  % F_{0,j} = F_{0,j-1} + g
   % The above equation gives the conservation of energy for transient heat transfer in a material
   % of specific heat capacity $C$ (\si{\joule\per\kilogram\per\celsius}) and density $\rho$ 
   % (\si{\kilogram\per\cubic\metre}), where $\bf q$ is the thermal flux vector (\si{\watt\per\square\metre}),
@@ -961,36 +958,37 @@ models. The dimension of each quantity is also given.
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_comparative_alginment_matrix}\\
-\hline
-Label& \bf Comparative alignment matrix\\
-\hline
-Symbol &$F$\\
-\hline
-% Units& $Mt^{-3}$\\
+% \noindent
+% \begin{minipage}{\textwidth}
+% \renewcommand*{\arraystretch}{1.5}
+% \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
 % \hline
-  Units & qa \\
-  \hline
-  Equation&$F_{ij} = \max(F_{i-1,j-1} + S(SEQ_{A_i}, SEQ_{B_j}), F_{i,j-1} + g, F_{i-1,j} + g)$\\
-  \hline
-  Description & 
-                Comparative matrix of the alignment between two sequences, encoding the positional 
-                quality of each possible combination of the base pairs that conform such alignment.
-  \\
-  \hline
-  Sources& -- \\
-  \hline
-  Ref.\ By & \iref{IM_needleman_wunsch}\\
-  \hline
-\end{tabular}
-\end{minipage}\\
+% \rowcolor[gray]{0.9}
+% Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_comparative_alginment_matrix}\\
+% \hline
+% Label& \bf Comparative alignment matrix\\
+% \hline
+% Symbol &$F$\\
+% \hline
+% % Units& $Mt^{-3}$\\
+% % \hline
+%   Units & qa \\
+%   \hline
+%   Equation&$F_{ij} = \max(F_{i-1,j-1} + S(SEQ_{A_i}, SEQ_{B_j}), F_{i,j-1} + g, F_{i-1,j} + g)$\\
+%   \hline
+%   Description & 
+%                 Comparative matrix of the alignment between two sequences, encoding the positional 
+%                 quality of each possible combination of the base pairs that conform such alignment.
+%   \\
+%   \hline
+%   Sources& -- \\
+%   \hline
+%   Ref.\ By & \iref{IM_needleman_wunsch}\\
+%   \hline
+% \end{tabular}
+% \end{minipage}\\
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \noindent
 \begin{minipage}{\textwidth}
@@ -1013,6 +1011,8 @@ Symbol &$\mathbb{S}$\\
   Description & 
                 Set of substitution matrices that will be used
                 to calculate the alignment quality between two genetic sequences.
+                Each matrix $S_k$ is a square matrix of size 4x4, where each element
+                belongs to one of the four letters of the genetic DNA nomenclature.
   \\
   \hline
   Sources& -- \\
@@ -1022,8 +1022,70 @@ Symbol &$\mathbb{S}$\\
 \end{tabular}
 \end{minipage}\\
 
+% ##########################################################
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_optimal_alignment_score}\\
+\hline
+Label& \bf Optimal alignment score\\
+\hline
+Symbol &$\text{Score}$\\
+\hline
+Units & qa \\
+\hline
+Equation&$\text{Score}(F, S_k) = \sum_{(i,j) \in \text{Path}} F_{i,j}$\\
+\hline
+Description & 
+            The sum of alignment scores along the optimal path through
+            matrix $F$. The optimal path is determined by tracing backwards
+            from position $(m,n)$ to $(0,0)$, choosing at each step the
+            direction that contributed to the current cell's value.
+\\
+\hline
+Sources& -- \\
+\hline
+Ref.\ By & \iref{IM_needleman_wunsch}\\
+\hline
+\end{tabular}
+\end{minipage}\\
 
+% ##########################################################
 
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_functionS}\\
+\hline
+Label& \bf Substitution matrix mapper\\
+\hline
+Symbol &$S(SEQ_{A_i}, SEQ_{B_j})$\\
+\hline
+Units & qa \\
+\hline
+Equation&$\text{Score}(F, S_k) = \sum_{(i,j) \in \text{Path}} F_{i,j}$\\
+\hline
+Description & 
+            The sum of alignment scores along the optimal path through
+            matrix $F$. The optimal path is determined by tracing backwards
+            from position $(m,n)$ to $(0,0)$, choosing at each step the
+            direction that contributed to the current cell's value.
+\\
+\hline
+Sources& -- \\
+\hline
+Ref.\ By & \iref{IM_needleman_wunsch}\\
+\hline
+\end{tabular}
+\end{minipage}\\
+
+% ##########################################################
 
 % \subsubsection{Data Types}\label{sec_datatypes}
 
@@ -1102,13 +1164,21 @@ The goal \gsref{generate_alignment} is met by \iref{IM_needleman_wunsch}.
   \hline
   Input&$SEQ_A$,$SEQ_B$,$S_k$,$g$\\
   \hline
-  Output&$O_{AB}$\\
+  Output&$O_{SEQ_{AB}}$\\
   \hline
-  Description& $O_{AB} = \forall S_k \in \mathbb{S} : F_{i,j}^k = \max(F_{i-1,j-1}^k + S_k(SEQ_A, SEQ_B), F_{i,j-1}^k + g, F_{i-1,j}^k + g)$\\
-  &$SEQ_A$ and $SEQ_B$ are biological genetic sequences with bp units\\
-  &$S_k$ is a substitution matrix element of $\mathbb{S}$\\
-  &$g$ is the gap penalty given in qa units\\
-  &$F$ is comparison matrix between sequences, with each cell given in qa units\\
+  % Description& $O_{AB} = \forall S_k \in \mathbb{S} : F_{i,j}^k = \max(F_{i-1,j-1}^k + S_k(SEQ_A, SEQ_B), F_{i,j-1}^k + g, F_{i-1,j}^k + g)$\\
+  % Description& $O_{AB} = \{F_{m,n}^{k=1}, \ldots, F_{m,n}^{ k=|S|}\} \quad \text{where} \quad m = |SEQ_A|, n = |SEQ_B|$\\
+  Description & $O_{AB} = \{\text{Score}(F_{SEQ_A,SEQ_B}, S_k) \mid S_k \in \mathbb{S}\}$\\
+  &Where\\
+  & $SEQ_A$ and $SEQ_B$ are biological genetic sequences with bp units\\
+  & $S_k$ is a substitution matrix element of $\mathbb{S}$\\
+  & $g$ is the gap penalty given in qa units\\
+  & $F$ is comparison matrix between sequences, with each cell given in qa units\\
+  % &$\text{For each } S_k \in \mathbb{S}, \text{ matrix } F^k \text{ is computed as:}$\\
+  % &$SEQ_A$ and $SEQ_B$ are biological genetic sequences with bp units\\
+  % &$S_k$ is a substitution matrix element of $\mathbb{S}$\\
+  % &$g$ is the gap penalty given in qa units\\
+  % &$F$ is comparison matrix between sequences, with each cell given in qa units\\
   \hline
   Sources& -- \\
   \hline
@@ -1150,9 +1220,9 @@ uncertainty quantification exercise.
   \textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
                              \textbf{Typical Value} & \textbf{Uncertainty}\\
   \midrule 
-  $SEQ_A$ & $|{seq_B}| \geq 1$ & $|seq_A| \approx |seq_B|$ & 1 kb & 40\%
+  $SEQ_A$ & $|{seq_A}| \geq 1$ & $|seq_A| \approx |seq_B|$ & 1 kb & 40\%
   \\
-  $SEQ_B$ & $|{seq_A}| \geq 1$ & $|seq_B| \approx |seq_A|$ & 1 kb & 40\%
+  $SEQ_B$ & $|{seq_B}| \geq 1$ & $|seq_B| \approx |seq_A|$ & 1 kb & 40\%
   \\
   $S_k$ & $S \in \mathbb{R}^{n \times n}, n \geq 4$ & $S \in \mathbb{R}^{n \times n}, n \geq 0$ & $S \in \mathbb{R}^{4 \times 4}$& 0\%
   \\
@@ -1167,9 +1237,9 @@ uncertainty quantification exercise.
 \end{table}
 
 \noindent 
-\begin{description}
-\item[(*)] The vector $O_{AB}$ is presented as a named collection of scores
-\end{description}
+% \begin{description}
+% \item[(*)] The vector $O_{AB}$ is presented as a named collection of scores
+% \end{description}
 
 % \begin{table}[!h]
 % \caption{Specification Parameter Values} \label{TblSpecParams}
@@ -1239,7 +1309,7 @@ each substitution matrix $S_k$ in $\mathbb{S}$.
 %   good idea.}
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] Calculate optimal 
-alignment scores using dynamic programming recursion \iref{IM_needleman_wunsch}.
+alignment scores \iref{IM_needleman_wunsch}.
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] Verify that:
 \begin{itemize}
