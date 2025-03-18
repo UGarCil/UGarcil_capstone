@@ -53,18 +53,17 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+March 10, 2025 & 1.0 & Document's first version\\
+% Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
 
 ~\newpage
 
 \section{Symbols, Abbreviations and Acronyms}
+See SRS Documentation at \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/SRS/SRS.pdf}{SRS Documentation}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+% \wss{Also add any additional symbols, abbreviations or acronyms}
 
 \newpage
 
@@ -77,25 +76,35 @@ See SRS Documentation at \wss{give url}
 \section{Introduction}
 
 The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+the \progname software. The software is designed to evaluate the effect of 
+given substitution matrices in the quality of the alignment of a set of DNA sequences.
 
 Complementary documents include the System Requirement Specifications
 and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+found at \url{https://github.com/UGarCil/UGarcil_capstone}.
 
-\section{Notation}
+Many components from the present documentation follow the template
+ for a MIS for scientific computing software used in \cite{patel2023module}, 
+ \cite{bicket2017module}. These documentations were adapted from the \href{https://website-url.com/mis-template}{MIS template}.
 
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
+ \section{Notation}
 
+% \wss{You should describe your notation.  You can use what is below as
+%   a starting point.}
+
+
+This section is taken from the \href{https://website-url.com/mis-template}{MIS template}.
+
+\begin{quote}
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
 \cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
 \citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
 multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
+\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.\dots
+\end{quote}
 
-The following table summarizes the primitive data types used by \progname. 
+The following table summarizes the primitive data types used by the \progname software. 
 
 \begin{center}
 \renewcommand{\arraystretch}{1.2}
@@ -105,9 +114,8 @@ The following table summarizes the primitive data types used by \progname.
 \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
 \midrule
 character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
+integer & $\mathbb{R}$ & a real (i.e. non complex) number defined within (-$\infty$, $\infty$), which common values between -3.0 to 3.0 \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -134,18 +142,15 @@ The following table is taken directly from the Module Guide document for this pr
 {Hardware-Hiding} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Alignment (Needleman-Wunsch) Interface Module\\
+& Substitution Matrix Module\\
+& Result Concatenation Module\\
+& Data Output Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{3}{0.3\textwidth}{Software Decision} & Sequence Data Structure Module\\
+& F-Matrix Handler Module\\
+& Backtracking Algorithm Module\\
 \bottomrule
 
 \end{tabular}
@@ -154,34 +159,43 @@ The following table is taken directly from the Module Guide document for this pr
 \end{table}
 
 \newpage
+It is important to highlight the categorization for the Alignment Interface Module in the table above. 
+While the use of the Needleman-Wunsch algorithm sits at a high level behavior that defines 
+the main architecture of the software, it is also a Software Decision, as future releases of the 
+software may opt for other alignment algorithms. Its placement in the documentation as Behaviour-Hiding follows
+a functional justification by making the Needleman-Wunsch algorithm a high-behavior decision component.
 ~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+% #############################################
+\section{MIS of Alignment (Needleman-Wunsch) Module} \label{mNW}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+needleman\_wunsch
 
 \subsection{Uses}
 
-
+\begin{itemize}
+    \item \textbf{Sequence Data Structure Module}: For representing and manipulating sequences.
+    \item \textbf{Substitution Matrix Module}: For accessing substitution matrices and gap penalties.
+    \item \textbf{Backtracking Module}: For determining the optimal alignment score.
+    \item \textbf{F-Matrix Handler}: To traverse the scores calculated across the pairwise comparison between two sequences.
+  \end{itemize}
+  
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
+None
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+needleman\_wunsch & seq0:str, seq1:str, submat: dict & score:float & See Table 2 and 3 in~\href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV plan}\\
 \hline
 \end{tabular}
 \end{center}
@@ -190,81 +204,486 @@ The following table is taken directly from the Module Guide document for this pr
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+None
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+None
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+\begin{itemize}
+    \item The input sequences (seq0 and seq1) are valid strings containing only the characters A, T, G, C or \_.
+    \item The substitution matrix (submat) is a valid dictionary containing penalizing costs and a gap penalty.
+  \end{itemize}
+  
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{align\_sequences(seq0: str, seq1: str, submat: dict)}:
+\begin{itemize}
+    \item \textbf{Transition}: Computes the optimal global alignment between seq0 and seq1 using the Needleman-Wunsch algorithm.
+    \item \textbf{Output}: Returns a dictionary containing the alignment score and other relevant results.
+    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} (see Tables 2 and 3 of \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV plan}) if either sequence contains invalid characters or goes beyond the boundaries accepted by the program.
+  \end{itemize}
+  
+  \subsubsection{Local Functions}
+
+\begin{itemize}
+  \item \textbf{backtracking(matrix: List[List[float]], seq0: str, seq1: str) $\rightarrow$ float}:
+  \begin{itemize}
+      \item Backtracks through the alignment matrix to determine the optimal alignment path.
+      \item Returns the final alignment score.
+  \end{itemize}
+  \item \textbf{evaluateTransTransv(s1: str, s2: str, submat: List[List[float]]) $\rightarrow$ float}:
+  \begin{itemize}
+      \item Evaluates the cost of a transition or transversion between two nucleotides.
+  \end{itemize}
+  \item \textbf{evaluate(x: int, y: int, dir: str, submat: List[List[float]], matrix\_F: List[List[float]], seq0: str, seq1: str) $\rightarrow$ float}:
+  \begin{itemize}
+      \item Evaluates the cost of transitioning from one cell to another in the alignment matrix.
+  \end{itemize}
+\end{itemize}
+
+\newpage
+% #############################################
+
+% #############################################
+\section{MIS of Substitution Matrix Module} \label{mSM}
+
+\subsection{Module}
+
+substitution\_matrix
+
+\subsection{Uses}
+
+\begin{itemize}
+    \item \textbf{Sequence Data Structure Module}: For representing and manipulating sequences.
+    \item \textbf{Alignment (Needleman-Wunsch) Module}: For using substitution matrices in sequence alignment.
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+    \item \textbf{penalizingCostOf\_baseline}: A 4x4 matrix representing the baseline penalizing costs for nucleotide comparisons.
+    \item \textbf{penalizingCostOf\_JC}: A 4x4 matrix representing the Jukes-Cantor penalizing costs.
+    \item \textbf{penalizingCostOf\_K80}: A 4x4 matrix representing the Kimura 1980 penalizing costs.
+    \item \textbf{penalizingCostOf\_HKY85}: A 4x4 matrix representing the Hasegawa-Kishino-Yano 1985 penalizing costs.
+    \item \textbf{penalizingCostOf\_TN93}: A 4x4 matrix representing the Tamura-Nei 1993 penalizing costs.
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+get\_substitution\_matrix & name: str & submat: dict & see Table 4 in \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan} \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+    \item The substitution matrices are valid 4x4 matrices containing penalizing costs for nucleotide comparisons.
+    \item The gap penalty is a valid float value.
+\end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent \textbf{get\_substitution\_matrix(name: str) $\rightarrow$ dict}:
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+    \item \textbf{Transition}: Retrieves the substitution matrix and gap penalty associated with the given name.
+    \item \textbf{Output}: Returns a dictionary containing the substitution matrix and gap penalty.
+    \item \textbf{Exception}: Raises \texttt{InvalidMatrixError} (see Table 4 of \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan} for further details) if the matrix dimensions are invalid.
 \end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+None
 
 \newpage
+% #############################################
+
+% #############################################
+\section{MIS of Result Concatenation Module} \label{mRC}
+
+\subsection{Module}
+
+result\_concatenation
+
+\subsection{Uses}
+
+\begin{itemize}
+    \item \textbf{Alignment (Needleman-Wunsch) Module}: For performing sequence alignments and obtaining alignment scores.
+    \item \textbf{Substitution Matrix Module}: For accessing substitution matrices and gap penalties.
+    \item \textbf{Pandas Library}: For organizing and displaying results in a tabular format.
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+main & seq0: str, seq1: str & result: List[dict] &  \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+    \item As stated in Alignment (Needleman-Wunsch) and Substitution Matrix modules.
+    \item The Pandas library is available for data manipulation.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{main(seq0: str, seq1: str) $\rightarrow$ pandas.DataFrame}:
+\begin{itemize}
+    \item \textbf{Transition}: Computes the alignment scores for the given sequences using all available substitution matrices.
+    \item \textbf{Output}: Returns a list of dictionaries, where each dictionary contains the name of the substitution matrix and the corresponding alignment score.
+    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} if either sequence contains invalid characters.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+% #############################################
+
+% #############################################
+\section{MIS of Data Output Module} \label{mDO}
+
+\subsection{Module}
+
+data\_output
+
+\subsection{Uses}
+
+\begin{itemize}
+    \item \textbf{Result Concatenation Module}: For providing the alignment results to be displayed.
+    \item \textbf{Pandas Library}: For organizing and displaying results in a tabular format.
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+display\_results & result: List[dict] & None & InvalidResultError \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+    \item The input result is a valid list of dictionaries, where each dictionary contains the name of the substitution matrix and the corresponding alignment score.
+    \item The Pandas library is available for data manipulation and display.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{display\_results(result: List[dict]) $\rightarrow$ None}:
+\begin{itemize}
+    \item \textbf{Transition}: Converts the list of alignment results into a Pandas DataFrame and displays it in a tabular format.
+    \item \textbf{Output}: None (the results are displayed directly to the console or output medium).
+    \item \textbf{Exception}: Raises \texttt{InvalidResultError} if the input result is not a valid list of dictionaries.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+% #############################################
+% #############################################
+\section{MIS of Sequence Data Structure Module} \label{mSDS}
+
+\subsection{Module}
+
+sequence\_data\_structure
+
+\subsection{Uses}
+
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+validate\_sequence & seq: str & bool & InvalidSequenceError \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+    \item Sequences are represented as strings containing only the characters A, T, G, C, or \_.
+    \item Sequences are non-empty and valid for alignment purposes.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{validate\_sequence(seq: str) $\rightarrow$ bool}:
+\begin{itemize}
+    \item \textbf{Transition}: Validates the input sequence to ensure it contains only valid characters (A, T, G, C, or \_).
+    \item \textbf{Output}: Returns \texttt{True} if the sequence is valid, otherwise raises \texttt{InvalidSequenceError}.
+    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} (see Table 2 and 3 from \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV documentation}) if the sequence contains invalid characters.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+% #############################################
+% #############################################
+\section{MIS of F-Matrix Handler Module} \label{mFIM}
+
+\subsection{Module}
+
+matrix
+
+\subsection{Uses}
+
+\begin{itemize}
+    \item \textbf{Sequence Data Structure Module}: For accessing sequences to be aligned.
+    \item \textbf{Substitution Matrix Module}: For accessing substitution matrices and gap penalties.
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+initialize\_matrix & seq0: str, seq1: str & matrix: List[List[float]] & InvalidSequenceError \\
+fill\_matrix & seq0: str, seq1: str, submat: List[List[float]] & matrix: List[List[float]] & InvalidSequenceError \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+    \item The input sequences (seq0 and seq1) are valid strings containing only the characters A, T, G, C, or \_.
+    \item The substitution matrix (submat) is a valid 4x4 matrix of penalizing costs.
+    \item The gap penalty is a valid float value.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{initialize\_matrix(seq0: str, seq1: str) $\rightarrow$ List[List[float]]}:
+\begin{itemize}
+    \item \textbf{Transition}: Initializes the F-matrix with dimensions based on the lengths of seq0 and seq1.
+    \item \textbf{Output}: Returns a 2D list (matrix) initialized with zeros.
+    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} if either sequence contains invalid characters.
+\end{itemize}
+
+\noindent \textbf{fill\_matrix(seq0: str, seq1: str, submat: List[List[float]]) $\rightarrow$ List[List[float]]}:
+\begin{itemize}
+    \item \textbf{Transition}: Fills the F-matrix with alignment scores based on the sequences and substitution matrix.
+    \item \textbf{Output}: Returns the filled F-matrix.
+    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} if either sequence contains invalid characters.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+% #############################################
+% #############################################
+\section{MIS of Backtracking Algorithm Module} \label{mBA}
+
+\subsection{Module}
+
+backtracking
+
+\subsection{Uses}
+
+\begin{itemize}
+    \item \textbf{F-Matrix Initialization and Manipulation Module}: For accessing the filled F-matrix.
+    \item \textbf{Sequence Data Structure Module}: For accessing the sequences to be aligned.
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+backtracking & matrix: List[List[float]], seq0: str, seq1: str & float & InvalidMatrixError \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+    \item The input matrix is a valid 2D list (F-matrix) filled with alignment scores.
+    \item The input sequences (seq0 and seq1) are valid strings containing only the characters A, T, G, C, or \_.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{backtracking(matrix: List[List[float]], seq0: str, seq1: str) $\rightarrow$ float}:
+\begin{itemize}
+    \item \textbf{Transition}: Backtracks through the F-matrix to determine the optimal alignment path (i.e. the highest value out of the global alignment).
+    \item \textbf{Output}: Returns the final alignment score.
+    \item \textbf{Exception}: Raises \texttt{InvalidMatrixError} if the input matrix is not a valid 2D list or if the sequences are invalid.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+% #############################################
+
 
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
 
-\newpage
+% \newpage
 
-\section{Appendix} \label{Appendix}
+% \section{Appendix} \label{Appendix}
 
-\wss{Extra information if required}
+% \wss{Extra information if required}
 
-\newpage{}
+% \newpage{}
 
-\section*{Appendix --- Reflection}
+% \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741 projects}
+% \wss{Not required for CAS 741 projects}
 
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Problem Analysis and Design.
+% The information in this section will be used to evaluate the team members on the
+% graduate attribute of Problem Analysis and Design.
 
-\input{../../Reflection.tex}
+% \input{../../Reflection.tex}
 
-\begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item Which of your design decisions stemmed from speaking to your client(s)
-  or a proxy (e.g. your peers, stakeholders, potential users)? For those that
-  were not, why, and where did they come from?
-  \item While creating the design doc, what parts of your other documents (e.g.
-  requirements, hazard analysis, etc), it any, needed to be changed, and why?
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
-  \item Give a brief overview of other design solutions you considered.  What
-  are the benefits and tradeoffs of those other designs compared with the chosen
-  design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
-\end{enumerate}
+% \begin{enumerate}
+%   \item What went well while writing this deliverable? 
+%   \item What pain points did you experience during this deliverable, and how
+%     did you resolve them?
+%   \item Which of your design decisions stemmed from speaking to your client(s)
+%   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
+%   were not, why, and where did they come from?
+%   \item While creating the design doc, what parts of your other documents (e.g.
+%   requirements, hazard analysis, etc), it any, needed to be changed, and why?
+%   \item What are the limitations of your solution?  Put another way, given
+%   unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+%   \item Give a brief overview of other design solutions you considered.  What
+%   are the benefits and tradeoffs of those other designs compared with the chosen
+%   design?  From all the potential options, why did you select the documented design?
+%   (LO\_Explores)
+% \end{enumerate}
 
 
 \end{document}

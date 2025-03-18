@@ -157,16 +157,18 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+  \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific hardware on which the software is running.
+  \item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the initial input data (e.g., sequences, substitution matrices).
+  \item[\refstepcounter{acnum} \actheacnum \label{acAlgorithm}:] The alignment algorithm used (e.g., Needleman-Wunsch, Smith-Waterman).
+  \item[\refstepcounter{acnum} \actheacnum \label{acSubstitutionMatrices}:] The set of substitution matrices supported (e.g., DNA, protein matrices).
+  \item[\refstepcounter{acnum} \actheacnum \label{acOutput}:] The format of the output data (e.g., plain text, JSON, graphical visualization).
+  \item[\refstepcounter{acnum} \actheacnum \label{acGapPenalty}:] The method for calculating gap penalties that could go from fixed to variable, changing dynamically and requiring its own module.
+  \item[\refstepcounter{acnum} \actheacnum \label{acPerformance}:] The performance optimization strategy (parallel processing, GPU acceleration).
 \end{description}
 
-\wss{Anticipated changes relate to changes that would be made in requirements,
-design or implementation choices.  They are not related to changes that are made
-at run-time, like the values of parameters.}
+% \wss{Anticipated changes relate to changes that would be made in requirements,
+% design or implementation choices.  They are not related to changes that are made
+% at run-time, like the values of parameters.}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
@@ -178,9 +180,12 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucAlignmentType}:] The type of alignment problem (e.g., global alignment using Needleman-Wunsch).
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucSequenceType}:] The type of sequences handled (e.g., DNA sequences).
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucScoringSystem}:] The scoring system used for alignment (e.g., substitution matrices and gap penalties).
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucOutputFormat}:] The format of the output data (e.g., plain text for alignment results).
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucLanguage}:] The programming language used for implementation (e.g., Python).
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -191,39 +196,41 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+  \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mNW}:] Alignment (Needleman-Wunsch) Interface Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mSM}:] Substitution Matrix Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mRC}:] Result Concatenation Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mDO}:] Data Output Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mSDS}:] Sequence Data Structure Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mFIM}:] F-Matrix Handler Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mBA}:] Backtracking Algorithm Module
 \end{description}
 
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
-
-{Hardware-Hiding Module} & ~ \\
-\midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
-\bottomrule
-
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+  \toprule
+  \textbf{Level 1} & \textbf{Level 2}\\
+  \midrule
+  
+  {Hardware-Hiding Module} & ~ \\
+  \midrule
+  
+  \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & Alignment (Needleman-Wunsch) Interface Module (\mref{mNW}) \\
+  & Substitution Matrix Module (\mref{mSM}) \\
+  & Result Concatenation Module (\mref{mRC}) \\
+  & Data Output Module (\mref{mDO}) \\
+  \midrule
+  
+  \multirow{3}{0.3\textwidth}{Software Decision Module} & Sequence Data Structure Module (\mref{mSDS}) \\
+  & F-Matrix Handler Module (\mref{mFIM}) \\
+  & Backtracking Algorithm Module (\mref{mBA}) \\
+  \bottomrule
+  
+  \end{tabular}
+  \caption{Module Hierarchy}
+  \label{TblMH}
 \end{table}
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
@@ -232,12 +239,12 @@ The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
 
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
+% \wss{The intention of this section is to document decisions that are made
+%   ``between'' the requirements and the design.  To satisfy some requirements,
+%   design decisions need to be made.  Rather than make these decisions implicit,
+%   they are explicitly recorded here.  For instance, if a program has security
+%   requirements, a specific design decision may be made to satisfy those
+%   requirements with a password.}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -278,18 +285,46 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Alignment (Needleman-Wunsch) Interface Module (\mref{mNW})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:] The implementation of the Needleman-Wunsch algorithm for global sequence alignment.
+\item[Services:] Computes the optimal alignment score between two sequences.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Library
+\item[Uses:] \mref{mInput} (Input Format Module), \mref{mSM} (Substitution Matrix Module), \mref{mFIM} (F-Matrix Handler Module), \mref{mBA} (Backtracking Algorithm Module)
 \end{description}
 
-\subsubsection{Etc.}
+% ##########################################################
+\subsubsection{Substitution Matrix Module (\mref{mSM})}
+
+\begin{description}
+  \item[Secrets:] The structure and scoring rules for substitution matrices.
+  \item[Services:] Provides access to different substitution matrices (e.g., JC, K80, HKY85) and their penalizing costs.
+  \item[Implemented By:] \progname{}
+  \item[Type of Module:] Abstract 
+\end{description}
+
+
+% ##########################################################
+\subsubsection{Result Concatenation Module(\mref{mRC})}
+
+\begin{description}
+  \item[Secrets:] The logic for organizing and concatenating alignment results.
+  \item[Services:] Aggregates alignment scores from multiple substitution matrices into a single result.
+  \item[Implemented By:] pandas (Python library)
+  \item[Type of Module:] Service
+\end{description}
+
+% ##########################################################
+\subsubsection{Data Output Module(\mref{mDO})}
+
+\begin{description}
+  \item[Secrets:] The format and structure of the output data.
+  \item[Services:] Generates and formats the results of the sequence alignment for display.
+  \item[Implemented By:] \progname{}
+  \item[Type of Module:] Abstract Data Type
+\end{description}
 
 
 \subsection{Software Decision Module}
@@ -305,7 +340,35 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+% ##########################################################
+\subsubsection{Sequence Data Structure Module(\mref{mSDS})}
+\begin{description}
+  \item[Secrets:] The representation and validation of biological sequences.
+  \item[Services:] Provides functions to validate sequences and ensure they contain only valid characters (A, T, G, C, or \_).
+  \item[Implemented By:] \progname{}
+  \item[Type of Module:] Abstract Object
+\end{description}
+
+
+% ##########################################################
+\subsubsection{F-Matrix Handler Module(\mref{mFIM})}
+\begin{description}
+  \item[Secrets:] The initialization and manipulation of the F-matrix used in sequence alignment.
+  \item[Services:] Initializes the F-matrix and fills it with alignment scores based on the sequences and substitution matrix.
+  \item[Implemented By:] \progname{}
+  \item[Type of Module:] Library
+\end{description}
+
+
+% ##########################################################
+\subsubsection{Backtracking Algorithm Module(\mref{mBA})}
+\begin{description}
+  \item[Secrets:] The algorithm for backtracking through the F-matrix to determine the optimal alignment path.
+  \item[Services:] Computes the final alignment score by backtracking through the F-matrix.
+  \item[Implemented By:] \progname{}
+  \item[Type of Module:] Library
+\end{description}
+
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -316,21 +379,20 @@ requirements and between the modules and the anticipated changes.
 % like fref
 \begin{table}[H]
 \centering
-\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\begin{tabular}{p{0.5\textwidth} p{0.4\textwidth}}
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+FR1 (Input sequences and parameters) & \mref{mHH}, \mref{mSDS}, \mref{mSM} \\
+FR2 (Build comparative matrix) & \mref{mNW}, \mref{mFIM}, \mref{mSM} \\
+FR3 (optimal alignment scores) & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
+FR4 (Verify inputs) & \mref{mSDS}, \mref{mNW} \\
+FR5 (Output aligned sequences) & \mref{mDO}, \mref{mRC} \\
+NFR1 (Accuracy) & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
+NFR2 (Usability) & \mref{mDO}, \mref{mNW} \\
+NFR3 (Maintainability) & \mref{mSM}, \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
+NFR4 (Portability) & \mref{mHH}, \mref{mNW}, \mref{mDO} \\
+NFR5 (Performance) & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -343,18 +405,13 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acHardware} & \mref{mHH} \\
+\acref{acInput} & \mref{mSDS}, \mref{mSM} \\
+\acref{acAlgorithm} & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
+\acref{acSubstitutionMatrices} & \mref{mSM} \\
+\acref{acOutput} & \mref{mDO}, \mref{mRC} \\
+\acref{acGapPenalty} & \mref{mNW}, \mref{mFIM} \\
+\acref{acPerformance} & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -374,38 +431,38 @@ the modules. It can be seen that the graph is a directed acyclic graph
 system, and modules in the higher level of the hierarchy are essentially simpler
 because they use modules from the lower levels.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
+% \wss{The uses relation is not a data flow diagram.  In the code there will often
+% be an import statement in module A when it directly uses module B.  Module B
+% provides the services that module A needs.  The code for module A needs to be
+% able to see these services (hence the import statement).  Since the uses
+% relation is transitive, there is a use relation without an import, but the
+% arrows in the diagram typically correspond to the presence of import statement.}
 
-\wss{If module A uses module B, the arrow is directed from A to B.}
+% \wss{If module A uses module B, the arrow is directed from A to B.}
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.9\textwidth]{module_inter.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
 
 %\section*{References}
 
-\section{User Interfaces}
+% \section{User Interfaces}
 
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
+% \wss{Design of user interface for software and hardware.  Attach an appendix if
+% needed. Drawings, Sketches, Figma}
 
-\section{Design of Communication Protocols}
+% \section{Design of Communication Protocols}
 
-\wss{If appropriate}
+% \wss{If appropriate}
 
-\section{Timeline}
+% \section{Timeline}
 
-\wss{Schedule of tasks and who is responsible}
+% \wss{Schedule of tasks and who is responsible}
 
-\wss{You can point to GitHub if this information is included there}
+% \wss{You can point to GitHub if this information is included there}
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
