@@ -197,13 +197,15 @@ actually be implemented.
 
 \begin{description}
   \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mCM}:] Control Manager Module
   \item [\refstepcounter{mnum} \mthemnum \label{mNW}:] Alignment (Needleman-Wunsch) Interface Module
   \item [\refstepcounter{mnum} \mthemnum \label{mSM}:] Substitution Matrix Module
-  \item [\refstepcounter{mnum} \mthemnum \label{mRC}:] Result Concatenation Module
-  \item [\refstepcounter{mnum} \mthemnum \label{mDO}:] Data Output Module
+  \item [\refstepcounter{mnum} \mthemnum \label{mSFM}:] File Manager Module
+  % \item [\refstepcounter{mnum} \mthemnum \label{mRC}:] Result Concatenation Module
+  % \item [\refstepcounter{mnum} \mthemnum \label{mDO}:] Data Output Module
   \item [\refstepcounter{mnum} \mthemnum \label{mSDS}:] Sequence Data Structure Module
-  \item [\refstepcounter{mnum} \mthemnum \label{mFIM}:] F-Matrix Handler Module
-  \item [\refstepcounter{mnum} \mthemnum \label{mBA}:] Backtracking Algorithm Module
+  % \item [\refstepcounter{mnum} \mthemnum \label{mFIM}:] F-Matrix Handler Module
+  % \item [\refstepcounter{mnum} \mthemnum \label{mBA}:] Backtracking Algorithm Module
 \end{description}
 
 
@@ -214,18 +216,15 @@ actually be implemented.
   \textbf{Level 1} & \textbf{Level 2}\\
   \midrule
   
-  {Hardware-Hiding Module} & ~ \\
+  {Hardware-Hiding Module (\mref{mHH})} & ~ \\
   \midrule
   
-  \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & Alignment (Needleman-Wunsch) Interface Module (\mref{mNW}) \\
-  & Substitution Matrix Module (\mref{mSM}) \\
-  & Result Concatenation Module (\mref{mRC}) \\
-  & Data Output Module (\mref{mDO}) \\
+  \multirow{2}{0.3\textwidth}{Behaviour-Hiding Module} & Control Manager Module (\mref{mCM}) \\
+  & Alignment (Needleman-Wunsch) Interface Module (\mref{mNW}) \\
   \midrule
   
-  \multirow{3}{0.3\textwidth}{Software Decision Module} & Sequence Data Structure Module (\mref{mSDS}) \\
-  & F-Matrix Handler Module (\mref{mFIM}) \\
-  & Backtracking Algorithm Module (\mref{mBA}) \\
+  \multirow{2}{0.3\textwidth}{Software Decision Module} & Substitution Matrix Module (\mref{mSM}) \\
+  & File Manager Module (\mref{mSFM}) \\ & Sequence Data Structure Module (\mref{mSDS}) \\
   \bottomrule
   
   \end{tabular}
@@ -285,6 +284,18 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
+\subsubsection{Control Manager Module (\mref{mCM})}
+
+\begin{description}
+\item[Secrets:] Controls the flow of information in the program during the benchmarking process.
+\item[Services:] Computes the optimal alignment score between two sequences.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Library
+\item[Uses:] \mref{mSM} (Substitution Matrix Module), \mref{mSDS} (Sequence Data Structure Module), \mref{mNW} (Alignment Interface Module)
+\end{description}
+
+% ##########################################################
+
 \subsubsection{Alignment (Needleman-Wunsch) Interface Module (\mref{mNW})}
 
 \begin{description}
@@ -292,40 +303,10 @@ to be implemented.
 \item[Services:] Computes the optimal alignment score between two sequences.
 \item[Implemented By:] \progname{}
 \item[Type of Module:] Library
-\item[Uses:] \mref{mInput} (Input Format Module), \mref{mSM} (Substitution Matrix Module), \mref{mFIM} (F-Matrix Handler Module), \mref{mBA} (Backtracking Algorithm Module)
+\item[Uses:] \mref{mSM} (Substitution Matrix Module), \mref{mSDS} (Sequence Data Structure Module)
 \end{description}
 
 % ##########################################################
-\subsubsection{Substitution Matrix Module (\mref{mSM})}
-
-\begin{description}
-  \item[Secrets:] The structure and scoring rules for substitution matrices.
-  \item[Services:] Provides access to different substitution matrices (e.g., JC, K80, HKY85) and their penalizing costs.
-  \item[Implemented By:] \progname{}
-  \item[Type of Module:] Abstract 
-\end{description}
-
-
-% ##########################################################
-\subsubsection{Result Concatenation Module(\mref{mRC})}
-
-\begin{description}
-  \item[Secrets:] The logic for organizing and concatenating alignment results.
-  \item[Services:] Aggregates alignment scores from multiple substitution matrices into a single result.
-  \item[Implemented By:] pandas (Python library)
-  \item[Type of Module:] Service
-\end{description}
-
-% ##########################################################
-\subsubsection{Data Output Module(\mref{mDO})}
-
-\begin{description}
-  \item[Secrets:] The format and structure of the output data.
-  \item[Services:] Generates and formats the results of the sequence alignment for display.
-  \item[Implemented By:] \progname{}
-  \item[Type of Module:] Abstract Data Type
-\end{description}
-
 
 \subsection{Software Decision Module}
 
@@ -341,33 +322,37 @@ to be implemented.
 \end{description}
 
 % ##########################################################
+\subsubsection{Substitution Matrix Module (\mref{mSM})}
+
+\begin{description}
+  \item[Secrets:] The structure and scoring rules for substitution matrices.
+  \item[Services:] Provides access to different substitution matrices (e.g., JC, K80, HKY85) and their penalizing costs.
+  \item[Implemented By:] \progname{}
+  \item[Type of Module:] Abstract 
+  \item[Uses:] \mref{mSFM} (File Manager Module)
+\end{description}
+
+% ##########################################################
+\subsubsection{File Manager Module (\mref{mSFM})}
+
+\begin{description}
+  \item[Secrets:] The format and structure of input and output files, including FASTA sequence files, substitution matrix files, and benchmark results. Path management for accessing and storing data.
+  \item[Services:] Provides functions to read nucleotide sequences from FASTA files, load substitution matrices from text files, and export benchmark results to CSV format. Handles file validation and error reporting for invalid inputs.
+  \item[Implemented By:] \progname{}; pandas (Python library)
+  \item[Type of Module:] Abstract
+\end{description}
+
+% ##########################################################
 \subsubsection{Sequence Data Structure Module(\mref{mSDS})}
 \begin{description}
   \item[Secrets:] The representation and validation of biological sequences.
   \item[Services:] Provides functions to validate sequences and ensure they contain only valid characters (A, T, G, C, or \_).
   \item[Implemented By:] \progname{}
   \item[Type of Module:] Abstract Object
+  \item[Uses:] \mref{mSFM} (File Manager Module)
 \end{description}
-
 
 % ##########################################################
-\subsubsection{F-Matrix Handler Module(\mref{mFIM})}
-\begin{description}
-  \item[Secrets:] The initialization and manipulation of the F-matrix used in sequence alignment.
-  \item[Services:] Initializes the F-matrix and fills it with alignment scores based on the sequences and substitution matrix.
-  \item[Implemented By:] \progname{}
-  \item[Type of Module:] Library
-\end{description}
-
-
-% ##########################################################
-\subsubsection{Backtracking Algorithm Module(\mref{mBA})}
-\begin{description}
-  \item[Secrets:] The algorithm for backtracking through the F-matrix to determine the optimal alignment path.
-  \item[Services:] Computes the final alignment score by backtracking through the F-matrix.
-  \item[Implemented By:] \progname{}
-  \item[Type of Module:] Library
-\end{description}
 
 
 \section{Traceability Matrix} \label{SecTM}
@@ -378,49 +363,50 @@ requirements and between the modules and the anticipated changes.
 % the table should use mref, the requirements should be named, use something
 % like fref
 \begin{table}[H]
-\centering
-\begin{tabular}{p{0.5\textwidth} p{0.4\textwidth}}
-\toprule
-\textbf{Req.} & \textbf{Modules}\\
-\midrule
-FR1 (Input sequences and parameters) & \mref{mHH}, \mref{mSDS}, \mref{mSM} \\
-FR2 (Build comparative matrix) & \mref{mNW}, \mref{mFIM}, \mref{mSM} \\
-FR3 (optimal alignment scores) & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
-FR4 (Verify inputs) & \mref{mSDS}, \mref{mNW} \\
-FR5 (Output aligned sequences) & \mref{mDO}, \mref{mRC} \\
-NFR1 (Accuracy) & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
-NFR2 (Usability) & \mref{mDO}, \mref{mNW} \\
-NFR3 (Maintainability) & \mref{mSM}, \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
-NFR4 (Portability) & \mref{mHH}, \mref{mNW}, \mref{mDO} \\
-NFR5 (Performance) & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
-\bottomrule
-\end{tabular}
-\caption{Trace Between Requirements and Modules}
-\label{TblRT}
+  \centering
+  \begin{tabular}{p{0.5\textwidth} p{0.4\textwidth}}
+  \toprule
+  \textbf{Req.} & \textbf{Modules}\\
+  \midrule
+  FR1 (Input sequences and parameters) & \mref{mHH}, \mref{mSDS}, \mref{mSM}, \mref{mSFM} \\
+  FR2 (Build comparative matrix) & \mref{mNW}, \mref{mSM}, \mref{mCM} \\
+  FR3 (Calculate optimal alignment scores) & \mref{mNW}, \mref{mCM} \\
+  FR4 (Verify inputs) & \mref{mSDS}, \mref{mSFM} \\
+  FR5 (Output aligned sequences) & \mref{mNW}, \mref{mSFM} \\
+  NFR1 (Accuracy) & \mref{mNW}, \mref{mSM}, \mref{mCM} \\
+  NFR2 (Usability) & \mref{mHH}, \mref{mNW}, \mref{mCM} \\
+  NFR3 (Maintainability) & \mref{mSM}, \mref{mNW}, \mref{mSDS}, \mref{mSFM} \\
+  NFR4 (Portability) & \mref{mHH}, \mref{mNW} \\
+  NFR5 (Performance) & \mref{mNW}, \mref{mCM} \\
+  \bottomrule
+  \end{tabular}
+  \caption{Trace Between Requirements and Modules}
+  \label{TblRT}
 \end{table}
 
+
 \begin{table}[H]
-\centering
-\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{AC} & \textbf{Modules}\\
-\midrule
-\acref{acHardware} & \mref{mHH} \\
-\acref{acInput} & \mref{mSDS}, \mref{mSM} \\
-\acref{acAlgorithm} & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
-\acref{acSubstitutionMatrices} & \mref{mSM} \\
-\acref{acOutput} & \mref{mDO}, \mref{mRC} \\
-\acref{acGapPenalty} & \mref{mNW}, \mref{mFIM} \\
-\acref{acPerformance} & \mref{mNW}, \mref{mFIM}, \mref{mBA} \\
-\bottomrule
-\end{tabular}
-\caption{Trace Between Anticipated Changes and Modules}
-\label{TblACT}
+  \centering
+  \begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+  \toprule
+  \textbf{AC} & \textbf{Modules}\\
+  \midrule
+  \acref{acHardware} & \mref{mHH} \\
+  \acref{acInput} & \mref{mSDS}, \mref{mSM}, \mref{mSFM} \\
+  \acref{acAlgorithm} & \mref{mNW}, \mref{mCM} \\
+  \acref{acSubstitutionMatrices} & \mref{mSM} \\
+  \acref{acOutput} & \mref{mSFM} \\
+  \acref{acGapPenalty} & \mref{mNW}, \mref{mSM} \\
+  \acref{acPerformance} & \mref{mNW}, \mref{mCM} \\
+  \bottomrule
+  \end{tabular}
+  \caption{Trace Between Anticipated Changes and Modules}
+  \label{TblACT}
 \end{table}
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
-In this section, the uses hierarchy between modules is
+In this section, the hierarchy between modules is
 provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
 correct execution of B may be necessary for A to complete the task described in
 its specification. That is, A {\em uses} B if there exist situations in which
@@ -442,7 +428,7 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{module_inter.png}
+\includegraphics[width=0.9\textwidth]{module_inter_2.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
