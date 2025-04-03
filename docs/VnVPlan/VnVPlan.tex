@@ -67,58 +67,60 @@ Feb. 15th & 1.0 & First version\\
 
 \section{Symbols, Abbreviations, and Acronyms}
 
-The following tables are extracted from the program's SGS documentation (Garcilazo-Cruz, 2025).
-The tables are presented here for easy reference and cross-validation.
+Two tables from the SRS documentation \cite{SRS} are important for providing context to the terms  
+and abbreviations used in this document: Table of Symbols, and Abbreviations and Acronyms. Please refer to SRS for further 
+information.
 
 
-\renewcommand{\arraystretch}{1.2}
-\begin{center}
-  \begin{tabular}{l l l} 
-    \toprule		
-    \textbf{symbol} & \textbf{unit} & \textbf{HGVS}\\
-    \midrule 
-    *qa & alignment quality & fundamental unit of alignment quality
-    \\
-    bp & base pair & fundamental unit of genetic sequence length
-    \\
-    Kb & kilobase unit & one thousand base pairs
-    \\
-    \bottomrule
-  \end{tabular}
-\end{center}
 
-\noindent 
-\begin{longtable}{l l p{12cm}} \toprule
-  \textbf{symbol} & \textbf{unit} & \textbf{description}\\
-  \midrule 
-    F & -- & Comparative alignment between two sequences
-    \\
-    g & qa & penalty associated with a gap in the alignment of two sequences
-    \\
-    $N_A$ & bp & Adenine nitrogenous base, element of the purine family of nucleotides with an amine group in Carbon 6 of its pyrimidine ring
-    \\
-    $N_C$ & bp & Cytosine nitrogenous base, element of the pyrimidine family of nucleotides with a no methylated carbons making part of its pyrimidine ring
-    \\
-    $N_G$ & bp & Guanine nitrogenous base, element of the purine family of nucleotides with an amine group on Carbon 2 and a carbonyl group on Carbon 6 of its pyrimidine ring
-    \\
-    $N_T$ & bp & Tymine nitrogenous base, element of the pyrimidine family of nucleotides with a methyl group in Carbon 5 of its pyrimidine ring
-    \\
-    $Q_{AB}$ & qa & A collection of base pairs representing a genetic sequence to be compared with another sequence $SEQ_A$
-    \\
-    S & qa & Substitution matrix used to score the alignment of two sequences
-    \\
-    $SEQ_A$ & Kb & A collection of base pairs representing a genetic sequence to be compared with another sequence $SEQ_B$
-    \\
-    $SEQ_B$ & Kb & A collection of base pairs representing a genetic sequence to be compared with another sequence $SEQ_A$
-    \\
-    SNP & bp & single nucleotide polymorphism; variation in a single base pair in DNA sequence
-    \\
-    $T_I$ & qa & A transition occurrying between nucleotides of the same nitrogenous base families
-    \\
-    $T_V$ & qa & A transition occurrying between nucleotides of different nitrogenous base families
-    \\
-  \bottomrule
-\end{longtable}
+% \renewcommand{\arraystretch}{1.2}
+% \begin{center}
+%   \begin{tabular}{l l l} 
+%     \toprule		
+%     \textbf{symbol} & \textbf{unit} & \textbf{HGVS}\\
+%     \midrule 
+%     *qa & alignment quality & fundamental unit of alignment quality
+%     \\
+%     bp & base pair & fundamental unit of genetic sequence length
+%     \\
+%     Kb & kilobase unit & one thousand base pairs
+%     \\
+%     \bottomrule
+%   \end{tabular}
+% \end{center}
+
+% \noindent 
+% \begin{longtable}{l l p{12cm}} \toprule
+%   \textbf{symbol} & \textbf{unit} & \textbf{description}\\
+%   \midrule 
+%     F & -- & Comparative alignment between two sequences
+%     \\
+%     g & qa & penalty associated with a gap in the alignment of two sequences
+%     \\
+%     $N_A$ & bp & Adenine nitrogenous base, element of the purine family of nucleotides with an amine group in Carbon 6 of its pyrimidine ring
+%     \\
+%     $N_C$ & bp & Cytosine nitrogenous base, element of the pyrimidine family of nucleotides with a no methylated carbons making part of its pyrimidine ring
+%     \\
+%     $N_G$ & bp & Guanine nitrogenous base, element of the purine family of nucleotides with an amine group on Carbon 2 and a carbonyl group on Carbon 6 of its pyrimidine ring
+%     \\
+%     $N_T$ & bp & Tymine nitrogenous base, element of the pyrimidine family of nucleotides with a methyl group in Carbon 5 of its pyrimidine ring
+%     \\
+%     $Q_{AB}$ & qa & A collection of base pairs representing a genetic sequence to be compared with another sequence $SEQ_A$
+%     \\
+%     S & qa & Substitution matrix used to score the alignment of two sequences
+%     \\
+%     $SEQ_A$ & Kb & A collection of base pairs representing a genetic sequence to be compared with another sequence $SEQ_B$
+%     \\
+%     $SEQ_B$ & Kb & A collection of base pairs representing a genetic sequence to be compared with another sequence $SEQ_A$
+%     \\
+%     SNP & bp & single nucleotide polymorphism; variation in a single base pair in DNA sequence
+%     \\
+%     $T_I$ & qa & A transition occurrying between nucleotides of the same nitrogenous base families
+%     \\
+%     $T_V$ & qa & A transition occurrying between nucleotides of different nitrogenous base families
+%     \\
+%   \bottomrule
+% \end{longtable}
 
 % \begin{tabular}{l l} 
 %   \toprule		
@@ -133,7 +135,7 @@ The tables are presented here for easy reference and cross-validation.
 
 % \wss{Remove this section if it isn't needed}
 
-\newpage
+\bigskip
 
 \pagenumbering{arabic}
 This document serves as a systematic point of reference for the \progname{} software verification and validation process,
@@ -188,23 +190,23 @@ commonly found in molecular biology.
 % external library, you can explicitly state that you will assume that external library 
 % has already been verified by its implementation team.}
 
-\subsection{Challenge Level and Extras}
+% \subsection{Challenge Level and Extras}
 
-The scope of verification and validation for \progname{} is considered to be 
-basic, as the software is a scientific program that does not require a high level
-of complexity in its verification and validation process, and there's a clearly 
-defined set of validation tools that serve as a ground-truth to test the performance 
-and accuracy of the software.
+% The scope of verification and validation for \progname{} is considered to be 
+% basic, as the software is a scientific program that does not require a high level
+% of complexity in its verification and validation process, and there's a clearly 
+% defined set of validation tools that serve as a ground-truth to test the performance 
+% and accuracy of the software.
 
-Additional (extra) features tackled by the project include the implementation of 
-a verification software, which is assumed to mutate a sequence $SEQ_A$ from sequence
-$SEQ_B$ to generate the real alignment and score, which can then be compared with
-the alignment and score generated by the \progname{} software.
+% Additional (extra) features tackled by the project include the implementation of 
+% a verification software, which is assumed to mutate a sequence $SEQ_A$ from sequence
+% $SEQ_B$ to generate the real alignment and score, which can then be compared with
+% the alignment and score generated by the \progname{} software.
 
 \subsection{Relevant Documentation}
 
-The relevant documentation for \progname{} includes the Software Requirements Specification \citet{SRS},
-the Module Guide (MG) and the Problem Statement. These elements can be found in the \href{https://github.com/UGarCil/UGarcil_capstone}{GitHub}  
+The relevant documentation for \progname{} includes the Software Requirements Specification \citep{SRS},
+the Module Guide \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/Design/SoftArchitecture/MG.pdf}{(MG)}, Module Interface Specification (\href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}) and the Problem Statement. These elements can be found in the \href{https://github.com/UGarCil/UGarcil_capstone}{GitHub}  
 repository for the project, and are available for consultation at any time.
 
 The SRS document provides a detailed description of the software's requirements, including the
@@ -224,7 +226,7 @@ development.
 % \wss{Don't just list the other documents.  You should explain why they are relevant and 
 % how they relate to your VnV efforts.}
 
-\section{Plan}
+\section{Plan}\label{sec:plan}
 
 The verification and validation plan for \progname{} is divided into several sections. 
 First, there is a description of the verification and validation team, where the roles of
@@ -291,7 +293,9 @@ using the following recipe:
 The design verification plan for \progname{} will be reviewed by the team members, including the author,
 using a dynamic verification approach by the main author Uriel Garcilazo-Cruz, and assisted in the 
 verification and test accuracy by the domain expert Junwei Lin. The instructor Dr. Spencer Smith will 
-review the documentation to determine correctness and adherence to verification standards.
+review the documentation to determine correctness and adherence to verification standards. The verification will 
+be assisted by the use of a checklist, which will be used to ensure that all aspects of the design have been covered.
+The list can be found at \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/Checklists/VnV-Checklist.pdf}{Vnv implementation checklist}
 
 % \wss{Plans for design verification}
 
@@ -328,7 +332,8 @@ To verify \progname{}'s implementation, the team will follow the following steps
   \begin{itemize}
     \item Author (Uriel Garcilazo-Cruz) will validate and create the first version of the code.
     \item Using pylint to check for code quality and adherence to coding standards in the
-    programming language Python.
+    programming language Python, and following the PEP8 guidelines.
+    \item Using pytest to check for code unit testing and evaluate code standards.
   \end{itemize}
   
   \item Dynamic verification:
@@ -395,7 +400,7 @@ and the time available to complete the project's verification.
 
 % \wss{This section might reference back to the SRS verification section.}
 
-\section{System Tests}
+\section{System Tests}\label{sec:unit-test-description}
 
 % \wss{There should be text between all headings, even if it is just a roadmap of
 % the contents of the subsections.}
@@ -434,17 +439,17 @@ used in \citet{NEEDLEMAN1970443}.
 \begin{table}[h]
   \begin{tabular}{|c|c c|c c|}
   \hline 
-    & \multicolumn{2}{c|}{Input (bp)} & \multicolumn{2}{c|}{Output} \\
+    & \multicolumn{2}{c|}{Input (string)} & \multicolumn{2}{c|}{Output} \\
   \cline{2-5}
   ID & $SEQ_A$ & $SEQ_B$ & valid? & Error Message \\
   \hline
   TC-SubLiMat-1-1 & ATCG & ATCG & Y & NONE \\
   \hline
-  TC-SubLiMat-1-2 & " " & ATCG & N & Sequence length bigger than zero \\
+  TC-SubLiMat-1-2 & `` '' & ATCG & N & Sequence length bigger than zero \\
   \hline
-  TC-SubLiMat-1-3 & ATCG & " " & N & Sequence length bigger than zero \\
+  TC-SubLiMat-1-3 & ATCG & `` '' & N & Sequence length bigger than zero \\
   \hline
-  TC-SubLiMat-1-4 & " " & " " & N & Sequence length bigger than zero \\
+  TC-SubLiMat-1-4 & `` '' & `` '' & N & Sequence length bigger than zero \\
   \hline
   TC-SubLiMat-1-5 & ATCG & A\_CG & Y & NONE \\
   \hline
@@ -465,7 +470,7 @@ Control: Automatic
 					
 Initial State: Hyperparameter defined during runtime
 					
-Input: Inputs from Table~\ref{tab:test-case-1}
+Input: Sequence A, and sequence B from a row in Table~\ref{tab:test-case-1}
 					
 Output: Return an error message with a detailed description of the sequence(s)
 creating the issue, or a list of numbers representing the alignment score(s) for the
@@ -479,7 +484,9 @@ Test Case Derivation: Evaluates the software's ability to handle different types
 that represent genetic sequences, including valid and invalid sequences, and sequences with 
 different lengths. The system returns error messages when the physical constrains of the data are 
 violated, in cases where the lenght of the sequence is zero, or when the sequence contains non-DNA
-symbols.
+symbols. For valid sequences, the system returns a list of numbers representing the alignment score(s). The 
+list is summarized in a .csv format produced by the pandas library. The execution of such sequences is 
+considered successful if a .csv file is produced.
 
 % \wss{Justify the expected value given in the Output field}
 
@@ -516,12 +523,12 @@ Control: Automatic
 					
 Initial State: Parameter defined during runtime
 					
-Input: Valid inputs from Table~\ref{tab:test-case-1} with cases taken from elements from 
+Input: Sequence A, and sequence B from a row in Table~\ref{tab:test-case-1} with cases taken from elements from 
 Table~\ref{tab:test-case-2}
 
 					
 Output: Return a matrix with the alignment scores for the pairwise sequence alignment of the input sequences
- $SEQ_A$ and $SEQ_B$. 
+ $SEQ_A$ and $SEQ_B$. Correctness will be determined by the size of the matrix, which should be $n \times m$.
 % \wss{The expected result for the given inputs}
 
 Test Case Derivation: Evaluates the software's ability to construct a comparison matrix for the alignment of 
@@ -536,27 +543,58 @@ How test will be performed: Automatically using the pytest framework.
 \item{Functional Input Tests - Functional Input Tests - Input Tests: Valid matrices of S (R3)\\\\}
 
 \begin{table}[h]
+  \centering
   \begin{tabular}{|c|c|c c|}
   \hline 
-    & Input Matrix & \multicolumn{2}{c|}{Expected Output} \\
+    & Input Matrix & Valid? & Error Message \\
   \cline{2-4}
   ID & Dimensions \& Content & Valid? & Error Message \\
   \hline
-  TC-SubMat-3-1 & $n \times n, n=4$ & Y & NONE \\
+  TC-SubMat-3-1 & 
+  $\begin{bmatrix} 
+      2 & -1 & -1 & -1 \\ 
+     -1 &  2 & -1 & -1 \\ 
+     -1 & -1 &  2 & -1 \\ 
+     -1 & -1 & -1 &  2 
+  \end{bmatrix}$ & Y & NONE \\
   \hline
-  TC-SubMat-3-2 & $n \times m, n=4, m=5$ & N & Matrix must be square \\
+  TC-SubMat-3-2 & 
+  $\begin{bmatrix} 
+      2 & -1 & -1 & -1 & 0 \\ 
+     -1 &  2 & -1 & -1 & 0 \\ 
+     -1 & -1 &  2 & -1 & 0 \\ 
+     -1 & -1 & -1 &  2 & 0 
+  \end{bmatrix}$ & N & Matrix must be 4x4 for nucleotides \\
   \hline
-  TC-SubMat-3-3 & $n \times n, n=4$ , non-numeric & N & Matrix entries must be numeric \\
+  TC-SubMat-3-3 & 
+  $\begin{bmatrix} 
+      2 & -1 & ``x" & -1 \\ 
+     -1 &  2 & -1 & -1 \\ 
+     -1 & -1 &  2 & -1 \\ 
+     -1 & -1 & -1 &  2 
+  \end{bmatrix}$ & N & Matrix entries must be numeric \\
   \hline
-  TC-SubMat-3-4 & $n \times n, n=3$ & N & Matrix must be 4x4 for nucleotides \\
+  TC-SubMat-3-4 & 
+  $\begin{bmatrix} 
+      2 & -1 & -1 \\ 
+     -1 &  2 & -1 \\ 
+     -1 & -1 &  2  
+  \end{bmatrix}$ & N & Matrix must be 4x4 for nucleotides \\
   \hline
-  TC-SubMat-3-5 & $n \times n, n=4$ asymmetric & N & Matrix must be symmetric \\
+  TC-SubMat-3-5 & 
+  $\begin{bmatrix} 
+      2 & -1 & -1 & -1 \\ 
+     -2 &  2 & -1 & -1 \\ 
+     -1 & -1 &  2 & -1 \\ 
+     -1 & -1 & -1 &  2 
+  \end{bmatrix}$ & N & Matrix must be symmetric \\
   \hline
   \end{tabular}
-  \caption{Test cases for substitution matrix validation. A valid substitution matrix must be square with dimensions 4x4 for nucleotides,
-  contain only numeric values, and be symmetric for reciprocal comparisons between elements.}
+  \caption{Test cases for substitution matrix validation. A valid substitution matrix must be 4x4 for nucleotide comparisons, 
+  contain only numeric values, and be symmetric.}
   \label{tab:test-case-3}
 \end{table}
+
 
 Control: Automatic
 					
@@ -586,14 +624,14 @@ Control: Automatic
 					
 Initial State: Pending output conditional to valid inputs
 					
-Input: Set of calculated alignment scores given a matrix F
+Input: A .csv file with the alignment scores for the input sequences $SEQ_A$ and $SEQ_B$, where 
+every row represents the scores obtained given a specific substitution matrix $S$.
 					
-Output: An error message that appears when the maximum length of a sequence as input is reached, and nothing otherwise.
- $SEQ_A$ and $SEQ_B$.
+Output: An Assertion error "File corrupted" when the .csv file is not readable via python and pandas. A 
+valid input returns None.
 % \wss{The expected result for the given inputs}
 
-Test Case Derivation: Evaluates the software's ability to process alignment scores, and build a comparison matrix F in 
-a reasonable amount of time.
+Test Case Derivation: Evaluates the software's ability to process alignment scores, and build a comparison matrix.
 
 % \wss{Justify the expected value given in the Output field}
 
@@ -640,37 +678,42 @@ appropriate functional tests from above.
 \item{Nonfunctional Tests: Performance}
 
 
-\begin{table}[h]
-  \begin{tabular}{|c|c c|c c|}
-  \hline 
-    & \multicolumn{2}{c|}{Input (bp)} & \multicolumn{2}{c|}{Expected Performance} \\
-  \cline{2-5}
-  ID & $SEQ_{A_k=1}^n$ & $SEQ_{B_k=1}^m$ & Matrix Size & Est. Time (s) \\
-  \hline
-  TC-SubLiMat-4-1 & $n=10$ & $m=10$ & $100$ & $< 0.1$ \\
-  \hline
-  TC-SubLiMat-4-2 & $n=100$ & $m=10$ & $1,000$ & $< 1.0$ \\
-  \hline
-  TC-SubLiMat-4-3 & $n=10$ & $m=100$ & $1,000$ & $< 1.0$ \\
-  \hline
-  TC-SubLiMat-4-4 & $n=500$ & $m=500$ & $250,000$ & $\sim 25$ \\
-  \hline
-  TC-SubLiMat-4-5 & $n=5,000$ & $m=5,000$ & $25,000,000$ & $> 300$ \\
-  \hline
-  TC-SubLiMat-4-3 & $n \geq 5,001$ & $m \geq 5,001$ & N/A & $< 0.1$ \\
-  \hline
-  \end{tabular}
-  \caption{Test cases for estimated time of completion given the size of the comparison matrix}
-  \label{tab:test-case-2}
-\end{table}
+% \begin{table}[h]
+%   \begin{tabular}{|c|c c|c c|}
+%   \hline 
+%     & \multicolumn{2}{c|}{Input (bp)} & \multicolumn{2}{c|}{Expected Performance} \\
+%   \cline{2-5}
+%   ID & $SEQ_{A_k=1}^n$ & $SEQ_{B_k=1}^m$ & Matrix Size & Est. Time (s) \\
+%   \hline
+%   TC-SubLiMat-4-1 & $n=10$ & $m=10$ & $100$ & $< 0.1$ \\
+%   \hline
+%   TC-SubLiMat-4-2 & $n=100$ & $m=10$ & $1,000$ & $< 1.0$ \\
+%   \hline
+%   TC-SubLiMat-4-3 & $n=10$ & $m=100$ & $1,000$ & $< 1.0$ \\
+%   \hline
+%   TC-SubLiMat-4-4 & $n=500$ & $m=500$ & $250,000$ & $\sim 25$ \\
+%   \hline
+%   TC-SubLiMat-4-5 & $n=5,000$ & $m=5,000$ & $25,000,000$ & $> 300$ \\
+%   \hline
+%   TC-SubLiMat-4-3 & $n \geq 5,001$ & $m \geq 5,001$ & N/A & $< 0.1$ \\
+%   \hline
+%   \end{tabular}
+%   \caption{Test cases for estimated time of completion given the size of the comparison matrix}
+%   \label{tab:test-case-2}
+% \end{table}
 
+Performance will be evaluated qualitatively by running the software on a Mac OS system, a raspberry pi 4 model B (Linux Bookworm OS), and 
+windows 10 system. Such evaluation will determine if the program is able to run on these operative systems using python 3.10 or above. If the system 
+is able to exectute the code, a script will evaluate how long it took to run on a set of 10, 100, and 5000 sequences.
 
-Initial State: Pending output conditional to valid inputs
+This information will be summarized in a table.
+
+% Initial State: Pending output conditional to valid inputs
 					
-Input: Set of calculated alignment scores given a matrix F
+% Input: Set of calculated alignment scores given a matrix F
 					
-Output: A float value representing the amount of time taken to calculate the alignment scores for the input sequences
- $SEQ_A$ and $SEQ_B$.
+% Output: A float value representing the amount of time taken to calculate the alignment scores for the input sequences
+%  $SEQ_A$ and $SEQ_B$.
 % \wss{The expected result for the given inputs}
 
 Test Case Derivation: Evaluates the software's ability to execute, in a commercial computer, the alignment of two genetic sequences
@@ -678,7 +721,7 @@ Test Case Derivation: Evaluates the software's ability to execute, in a commerci
 
 % \wss{Justify the expected value given in the Output field}
 
-How test will be performed: Automatically using the pytest framework.
+How test will be performed: manually implementing the installation process.
 
 \end{enumerate}
 
@@ -693,11 +736,11 @@ How test will be performed: Automatically using the pytest framework.
       \hline
       ID & Operating System & Expected Result \\
       \hline
-      TC-SCEC-5-1 & Windows & Pass \\
+      TC-SCEC-5-1 & Windows & ``sublimat loaded on Windows'' \\
       \hline
-      TC-SCEC-5-2 & Linux & Pass \\
+      TC-SCEC-5-2 & Linux & ``sublimat loaded on Linux'' \\
       \hline
-      TC-SCEC-5-3 & macOS & Pass \\
+      TC-SCEC-5-3 & macOS & ``sublimat loaded on MacOS'' \\
       \hline
     \end{tabular}
     \caption{Test cases for system compatibility across different platforms}
@@ -708,8 +751,8 @@ Initial State: Fresh system installation with no prior software components
 
 Input: Software installation package
 
-Output: Successful running system over all platforms to verify portability of the software, and 
-summarized in a table.
+Output: Successful running system over all platforms to verify portability of the software by implementing pytest 
+scripts, same as previously defined.
 
 Test Case Derivation: Evaluates the software's ability to install and run consistently across different operating systems while maintaining functionality and user experience.
 
@@ -730,7 +773,7 @@ How test will be performed: Code developer (Uriel Garcilazo Cruz) will try to in
       \hline
       No. & Question & Answer \\
       \hline
-      1. & How many cores does your computer have? & \\
+      1. & Do you have any previous experience with Python? & \\
       \hline
       2. & Are you familiar with the use of Python? & \\
       \hline
@@ -761,8 +804,8 @@ Output: Survey with user responses
 
 Test Case Derivation: Evaluates how easy it is for the user to interact with the software, and how intuitive the software is to use.
 
-How test will be performed: An online survey will be created and shared with potential users of the software, 
-including domain experts and, if possible, students in the field of molecular biology or collaborators that meet the 
+How test will be performed: An online survey will be created and shared with Junwei Lin (expert domain) of the software, 
+and students in the field of chemistry, or collaborators that meet the 
 user specifications found in the SRS document \citet{SRS}.
 \end{enumerate}
   
