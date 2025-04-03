@@ -286,7 +286,8 @@ to be implemented.
 \end{description}
 
 \subsubsection{Control Manager Module (\mref{mCM})}
-
+This module is responsible for managing the overall control flow of the
+program, including the initialization of the program, reading input files, and invoking the necessary modules for sequence alignment. It serves as the main entry point for the program and coordinates the interaction between different components.
 \begin{description}
 \item[Secrets:] Controls the flow of information in the program during the benchmarking process.
 \item[Services:] Computes the optimal alignment score between two sequences.
@@ -299,6 +300,7 @@ to be implemented.
 
 \subsubsection{Alignment (Needleman-Wunsch) Interface Module (\mref{mNW})}
 
+This module implements the Needleman-Wunsch algorithm for global pairwise sequence alignment, generating a comparative matrix F from the input sequences, and given a substitution matrix.
 \begin{description}
 \item[Secrets:] The implementation of the Needleman-Wunsch algorithm for global sequence alignment.
 \item[Services:] Computes the optimal alignment score between two sequences.
@@ -324,7 +326,10 @@ to be implemented.
 
 % ##########################################################
 \subsubsection{Substitution Matrix Module (\mref{mSM})}
-
+This module is responsible for managing the substitution matrices used in the alignment
+process. It provides functions to load, validate, and access different substitution
+matrices, as well as their associated scoring rules. The module also handles the 
+gap penalties and other parameters related to the scoring system.
 \begin{description}
   \item[Secrets:] The structure and scoring rules for substitution matrices.
   \item[Services:] Provides access to different substitution matrices (e.g., JC, K80, HKY85) and their penalizing costs.
@@ -335,7 +340,9 @@ to be implemented.
 
 % ##########################################################
 \subsubsection{File Manager Module (\mref{mSFM})}
-
+This module is responsible for managing the input and output
+files used in the program. It handles file reading, writing, and validation, ensuring that the data is correctly formatted and accessible. 
+The module also provides functions for exporting benchmark results to CSV format.
 \begin{description}
   \item[Secrets:] The format and structure of input and output files, including FASTA sequence files, substitution matrix files, and benchmark results. Path management for accessing and storing data.
   \item[Services:] Provides functions to read nucleotide sequences from FASTA files, load substitution matrices from text files, and export benchmark results to CSV format. Handles file validation and error reporting for invalid inputs.
@@ -345,6 +352,10 @@ to be implemented.
 
 % ##########################################################
 \subsubsection{Sequence Data Structure Module(\mref{mSDS})}
+This module is responsible for managing the representation and validation of 
+biological sequences. It provides functions to validate sequences and ensure 
+they contain only valid characters (A, T, G, C, or \_). The module also handles 
+the storage and manipulation of sequences during the alignment process.
 \begin{description}
   \item[Secrets:] The representation and validation of biological sequences.
   \item[Services:] Provides functions to validate sequences and ensure they contain only valid characters (A, T, G, C, or \_).
