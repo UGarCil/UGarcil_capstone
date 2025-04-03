@@ -54,6 +54,7 @@ urlcolor=cyan          % color of external links
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 March 10, 2025 & 1.0 & Document's first version\\
+April 4th, 2025 & 1.1 & Document's updates after changes on modular design\\
 % Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -133,30 +134,29 @@ described by giving their type signature followed by their specification.
 The following table is taken directly from the Module Guide document for this project.
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
-
-{Hardware-Hiding} & ~ \\
-\midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Alignment (Needleman-Wunsch) Interface Module\\
-& Substitution Matrix Module\\
-& Result Concatenation Module\\
-& Data Output Module\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision} & Sequence Data Structure Module\\
-& F-Matrix Handler Module\\
-& Backtracking Algorithm Module\\
-\bottomrule
-
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
+    \centering
+    \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+    \toprule
+    \textbf{Level 1} & \textbf{Level 2}\\
+    \midrule
+    
+    Hardware-Hiding & ~ \\
+    \midrule
+    
+    Behaviour-Hiding & Alignment (Needleman-Wunsch) Interface Module\\
+    & Control Manager Module\\
+    \midrule
+    
+    Software Decision & Substitution Matrix Module\\
+    & File Manager Module\\
+    & Sequence Data Structure Module\\
+    \bottomrule
+    
+    \end{tabular}
+    \caption{Module Hierarchy}
+    \label{TblMH}
 \end{table}
+
 
 \newpage
 It is important to highlight the categorization for the Alignment Interface Module in the table above. 
@@ -171,17 +171,15 @@ a functional justification by making the Needleman-Wunsch algorithm a high-behav
 
 \subsection{Module}
 
-needleman\_wunsch
+NeedlemanWunsch
 
 \subsection{Uses}
 
 \begin{itemize}
-    \item \textbf{Sequence Data Structure Module}: For representing and manipulating sequences.
-    \item \textbf{Substitution Matrix Module}: For accessing substitution matrices and gap penalties.
-    \item \textbf{Backtracking Module}: For determining the optimal alignment score.
-    \item \textbf{F-Matrix Handler}: To traverse the scores calculated across the pairwise comparison between two sequences.
-  \end{itemize}
-  
+    \item \textbf{Sequence Data Structure Module (mSDS)}: For validated biological sequence input
+    \item \textbf{Substitution Matrix Module (mSM)}: For accessing substitution matrices and gap penalties
+\end{itemize}
+
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -195,7 +193,149 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-needleman\_wunsch & seq0:str, seq1:str, submat: dict & score:float & See Table 2 and 3 in~\href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV plan}\\
+\texttt{\_\_init\_\_} & seq\_a: str, seq\_b: str, gap\_penalty: float = -2 & NeedlemanWunsch instance & - \\
+\hline
+\texttt{\_\_call\_\_} & submat: dict & float (alignment score) & AlignmentError \\
+\hline
+\texttt{align} & submat: dict & float (alignment score) & AlignmentError \\
+\hline
+\texttt{get\_aligned\_sequences} & - & tuple (str, str) & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+    \item \texttt{seq\_a}: First input sequence
+    \item \texttt{seq\_b}: Second input sequence
+    \item \texttt{gap\_penalty}: Gap insertion penalty score
+    \item \texttt{submat}: Active substitution matrix
+    \item \texttt{seq\_a\_aligned}: Aligned version of seq\_a
+    \item \texttt{seq\_b\_aligned}: Aligned version of seq\_b
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+    \item Input sequences contain only characters \{A, T, G, C, \_\}
+    \item Sequences have been pre-validated by SequenceData module
+    \item Substitution matrix is a valid 4x4 matrix for nucleotides
+    \item Gap penalty is a negative float value
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{NeedlemanWunsch.\_\_init\_\_(seq\_a, seq\_b, gap\_penalty=-2)}:
+\begin{itemize}
+    \item Initializes alignment processor with sequences and gap penalty
+    \item Transition: Sets instance variables
+\end{itemize}
+
+\noindent \textbf{NeedlemanWunsch.\_\_call\_\_(submat)}:
+\begin{itemize}
+    \item Output: Alignment score (float)
+    \item Exception: AlignmentError if sequences cannot be aligned
+    \item Delegates to align() method
+\end{itemize}
+
+\noindent \textbf{NeedlemanWunsch.align(submat)}:
+\begin{itemize}
+    \item Transition: 
+    \begin{enumerate}
+        \item Sets active substitution matrix
+        \item Initializes dynamic programming matrix
+        \item Computes alignment scores
+        \item Performs traceback to determine optimal alignment
+    \end{enumerate}
+    \item Output: Final alignment score (float)
+    \item Exception: AlignmentError if alignment fails
+\end{itemize}
+
+\noindent \textbf{NeedlemanWunsch.get\_aligned\_sequences()}:
+\begin{itemize}
+    \item Output: Tuple of aligned sequences (str, str)
+    \item Requires: align() must have been called first
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+    \item \textbf{evaluate\_substitution(s1: str, s2: str) $\rightarrow$ float}:
+    \begin{itemize}
+        \item Looks up substitution score in matrix
+        \item Handles both matrix formats (direct 4x4 or parameterized)
+        \item Returns score for nucleotide pair
+    \end{itemize}
+    
+    \item \textbf{compute\_alignment\_matrix(matrix) $\rightarrow$ List[List[float]]}:
+    \begin{itemize}
+        \item Fills dynamic programming matrix
+        \item Applies recurrence relation:
+        \begin{equation}
+            F(i,j) = \max\begin{cases}
+                F(i-1,j-1) + s(x_i,y_j) \\
+                F(i-1,j) + d \\
+                F(i,j-1) + d
+            \end{cases}
+        \end{equation}
+    \end{itemize}
+    
+    \item \textbf{backtrack(matrix) $\rightarrow$ float}:
+    \begin{itemize}
+        \item Traces optimal path through DP matrix
+        \item Sets seq\_a\_aligned and seq\_b\_aligned
+        \item Returns final alignment score
+    \end{itemize}
+\end{itemize}
+
+\subsection{Considerations}
+
+\begin{itemize}
+    \item Time Complexity: O(mn) for sequences of length m and n
+    \item Space Complexity: O(mn) for full matrix storage
+    \item Handles both traditional and parameterized substitution matrices
+    \item Inserts gap penalties through constant gap penalty
+\end{itemize}
+
+\newpage
+% #############################################
+
+\section{MIS of Control Manager Module} \label{mCM}
+
+\subsection{Module}
+
+main
+
+\subsection{Uses}
+
+\begin{itemize}
+    \item \textbf{File Manager Module}: For file I/O operations
+    \item \textbf{Alignment Module}: For sequence alignment
+    \item \textbf{Sequence Data Structure Module}: For sequence handling
+    \item \textbf{Substitution Matrix Module}: For matrix operations
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+main & seq\_data: SequenceData, matrix\_bench: SubMat & list[dict] & AlignmentError \\
 \hline
 \end{tabular}
 \end{center}
@@ -213,39 +353,54 @@ None
 \subsubsection{Assumptions}
 
 \begin{itemize}
-    \item The input sequences (seq0 and seq1) are valid strings containing only the characters A, T, G, C or \_.
-    \item The substitution matrix (submat) is a valid dictionary containing penalizing costs and a gap penalty.
-  \end{itemize}
-  
-\subsubsection{Access Routine Semantics}
-
-\noindent \textbf{align\_sequences(seq0: str, seq1: str, submat: dict)}:
-\begin{itemize}
-    \item \textbf{Transition}: Computes the optimal global alignment between seq0 and seq1 using the Needleman-Wunsch algorithm.
-    \item \textbf{Output}: Returns a dictionary containing the alignment score and other relevant results.
-    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} (see Tables 2 and 3 of \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV plan}) if either sequence contains invalid characters or goes beyond the boundaries accepted by the program.
-  \end{itemize}
-  
-  \subsubsection{Local Functions}
-
-\begin{itemize}
-  \item \textbf{backtracking(matrix: List[List[float]], seq0: str, seq1: str) $\rightarrow$ float}:
-  \begin{itemize}
-      \item Backtracks through the alignment matrix to determine the optimal alignment path.
-      \item Returns the final alignment score.
-  \end{itemize}
-  \item \textbf{evaluateTransTransv(s1: str, s2: str, submat: List[List[float]]) $\rightarrow$ float}:
-  \begin{itemize}
-      \item Evaluates the cost of a transition or transversion between two nucleotides.
-  \end{itemize}
-  \item \textbf{evaluate(x: int, y: int, dir: str, submat: List[List[float]], matrix\_F: List[List[float]], seq0: str, seq1: str) $\rightarrow$ float}:
-  \begin{itemize}
-      \item Evaluates the cost of transitioning from one cell to another in the alignment matrix.
-  \end{itemize}
+    \item Input files exist and are properly formatted
+    \item Required modules are properly initialized
+    \item Output directory is writable
 \end{itemize}
 
-\newpage
-% #############################################
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{main(seq\_data, matrix\_bench)}:
+\begin{itemize}
+    \item Transition:
+    \begin{enumerate}
+        \item Initializes NeedlemanWunsch alignment manager
+        \item Iterates through each substitution matrix
+        \item Computes alignment score for each matrix
+        \item Collects results
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Workflow}
+
+The control flow follows this sequence:
+
+\begin{enumerate}
+    \item Sequence data is loaded via SequenceData module
+    \item Substitution matrices are loaded via SubMat module
+    \item For each substitution matrix:
+    \begin{enumerate}
+        \item Alignment is performed via NeedlemanWunsch
+        \item Results are collected
+    \end{enumerate}
+    \item Results are exported via FileManager
+\end{enumerate}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.8\textwidth]{workflow.png}
+% \caption{Control flow diagram}
+% \label{fig:workflow}
+% \end{figure}
+
+\subsection{Considerations}
+
+\begin{itemize}
+    \item Acts as the system's main coordinator
+    \item Stateless - maintains no internal state between runs
+    \item Delegates all specialized operations to other modules
+    \item Handles the sequencing of operations but not their implementation
+\end{itemize}
 
 % #############################################
 \section{MIS of Substitution Matrix Module} \label{mSM}
@@ -257,8 +412,7 @@ substitution\_matrix
 \subsection{Uses}
 
 \begin{itemize}
-    \item \textbf{Sequence Data Structure Module}: For representing and manipulating sequences.
-    \item \textbf{Alignment (Needleman-Wunsch) Module}: For using substitution matrices in sequence alignment.
+    \item \textbf{File Manager Module}: For loading matrix data from files
 \end{itemize}
 
 \subsection{Syntax}
@@ -266,11 +420,7 @@ substitution\_matrix
 \subsubsection{Exported Constants}
 
 \begin{itemize}
-    \item \textbf{penalizingCostOf\_baseline}: A 4x4 matrix representing the baseline penalizing costs for nucleotide comparisons.
-    \item \textbf{penalizingCostOf\_JC}: A 4x4 matrix representing the Jukes-Cantor penalizing costs.
-    \item \textbf{penalizingCostOf\_K80}: A 4x4 matrix representing the Kimura 1980 penalizing costs.
-    \item \textbf{penalizingCostOf\_HKY85}: A 4x4 matrix representing the Hasegawa-Kishino-Yano 1985 penalizing costs.
-    \item \textbf{penalizingCostOf\_TN93}: A 4x4 matrix representing the Tamura-Nei 1993 penalizing costs.
+    \item \textbf{penalizingCostOf\_}: A 4x4 matrix representing the baseline penalizing costs for nucleotide comparisons.
 \end{itemize}
 
 \subsubsection{Exported Access Programs}
@@ -280,7 +430,9 @@ substitution\_matrix
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-get\_substitution\_matrix & name: str & submat: dict & see Table 4 in \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan} \\
+get\_substitution\_matrix & name: str & submat: dict & InvalidMatrixError \\
+validate\_benchmark & benchmark: list[dict] & - & InvalidMatrixError \\
+get\_matrix\_names & - & list[str] & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -289,7 +441,13 @@ get\_substitution\_matrix & name: str & submat: dict & see Table 4 in \href{http
 
 \subsubsection{State Variables}
 
-None
+\begin{itemize}
+    \item \texttt{data}: List of matrix dictionaries containing:
+    \begin{itemize}
+        \item \texttt{NAME}: String identifier
+        \item \texttt{PENALIZING\_COSTS}: 4x4 numerical matrix
+    \end{itemize}
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
@@ -298,17 +456,43 @@ None
 \subsubsection{Assumptions}
 
 \begin{itemize}
-    \item The substitution matrices are valid 4x4 matrices containing penalizing costs for nucleotide comparisons.
-    \item The gap penalty is a valid float value.
+    \item Input files follow the format:
+    \begin{verbatim}
+    >MatrixName
+    A,T,G,C
+    T,A,G,C
+    G,T,A,C
+    C,G,T,A
+    \end{verbatim}
+    \item All matrices are 4x4 and square
+    \item Nucleotide order is fixed as [A, T, G, C] for index mapping
 \end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
 \noindent \textbf{get\_substitution\_matrix(name: str) $\rightarrow$ dict}:
 \begin{itemize}
-    \item \textbf{Transition}: Retrieves the substitution matrix and gap penalty associated with the given name.
-    \item \textbf{Output}: Returns a dictionary containing the substitution matrix and gap penalty.
-    \item \textbf{Exception}: Raises \texttt{InvalidMatrixError} (see Table 4 of \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan} for further details) if the matrix dimensions are invalid.
+    \item Retrieves matrix dictionary by name from \texttt{data}
+    \item \textbf{Output}: Dictionary with keys:
+    \begin{itemize}
+        \item \texttt{NAME}: Matrix identifier
+        \item \texttt{PENALIZING\_COSTS}: 4x4 scoring matrix
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{validate\_benchmark(benchmark: list[dict])}:
+\begin{itemize}
+    \item \textbf{Exception}: Raises \texttt{InvalidMatrixError} if:
+    \begin{itemize}
+        \item Any matrix is not 4x4
+        \item Contains non-numeric values
+    \end{itemize}
+    Returns boolean indicating validity
+\end{itemize}
+
+\noindent \textbf{get\_matrix\_names() $\rightarrow$ list[str]}:
+\begin{itemize}
+    \item \textbf{Output}: List of all loaded matrix names
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -319,25 +503,26 @@ None
 % #############################################
 
 % #############################################
-\section{MIS of Result Concatenation Module} \label{mRC}
+\section{MIS of File Manager Module} \label{mSFM}
 
 \subsection{Module}
 
-result\_concatenation
+file\_manager
 
 \subsection{Uses}
 
 \begin{itemize}
-    \item \textbf{Alignment (Needleman-Wunsch) Module}: For performing sequence alignments and obtaining alignment scores.
-    \item \textbf{Substitution Matrix Module}: For accessing substitution matrices and gap penalties.
-    \item \textbf{Pandas Library}: For organizing and displaying results in a tabular format.
+    \item \textbf{Software Hardware Module}: For interaction with I/O services
+    \item \textbf{Control Manager Module}: For file management operations and file path information
 \end{itemize}
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
-None
+\begin{itemize}
+    \item None
+\end{itemize}
 
 \subsubsection{Exported Access Programs}
 
@@ -346,7 +531,9 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-main & seq0: str, seq1: str & result: List[dict] &  \\
+read\_sequence\_file & file\_path: str & tuple (str, str) & ValueError \\
+read\_submat\_file & file\_path: str & list[dict] & ValueError \\
+export & data: list[dict], file\_path: str & - & IOError \\
 \hline
 \end{tabular}
 \end{center}
@@ -364,90 +551,77 @@ None
 \subsubsection{Assumptions}
 
 \begin{itemize}
-    \item As stated in Alignment (Needleman-Wunsch) and Substitution Matrix modules.
-    \item The Pandas library is available for data manipulation.
+    \item Input FASTA files follow format:
+    \begin{verbatim}
+    >Sequence1
+    ATGC
+    >Sequence2
+    TGCA
+    \end{verbatim}
+    \item Substitution matrix files follow format:
+    \begin{verbatim}
+    >MatrixName
+    1.0,-0.33,-0.33,-0.33
+    -0.33,1.0,-0.33,-0.33
+    -0.33,-0.33,1.0,-0.33
+    -0.33,-0.33,-0.33,1.0
+    \end{verbatim}
+    \item Output directories are writable
 \end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \textbf{main(seq0: str, seq1: str) $\rightarrow$ pandas.DataFrame}:
+\noindent \textbf{read\_sequence\_file(file\_path: str) $\rightarrow$ tuple}:
 \begin{itemize}
-    \item \textbf{Transition}: Computes the alignment scores for the given sequences using all available substitution matrices.
-    \item \textbf{Output}: Returns a list of dictionaries, where each dictionary contains the name of the substitution matrix and the corresponding alignment score.
-    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} if either sequence contains invalid characters.
+    \item Reads and validates FASTA file
+    \item \textbf{Output}: Tuple of two nucleotide sequences (str, str)
+    \item \textbf{Exception}: Raises \texttt{ValueError} if:
+    \begin{itemize}
+        \item Missing sequence headers
+        \item Invalid number of sequences
+        \item Zero-length sequences
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{read\_submat\_file(file\_path: str) $\rightarrow$ list[dict]}:
+\begin{itemize}
+    \item Loads and validates substitution matrices
+    \item \textbf{Output}: List of matrix dictionaries with:
+    \begin{itemize}
+        \item \texttt{NAME}: String identifier
+        \item \texttt{PENALIZING\_COSTS}: 4x4 numerical matrix
+    \end{itemize}
+    \item \textbf{Exception}: Raises \texttt{ValueError} if:
+    \begin{itemize}
+        \item Non-square matrices
+        \item Non-numeric values
+        \item Incomplete matrix data
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{export(data: list[dict], file\_path: str)}:
+\begin{itemize}
+    \item Writes benchmark results to CSV
+    \item \textbf{Output}: None (creates file at specified path)
+    \item \textbf{Exception}: Raises \texttt{IOError} if file cannot be written
 \end{itemize}
 
 \subsubsection{Local Functions}
 
 None
 
-\newpage
-% #############################################
-
-% #############################################
-\section{MIS of Data Output Module} \label{mDO}
-
-\subsection{Module}
-
-data\_output
-
-\subsection{Uses}
+\subsection{Considerations}
 
 \begin{itemize}
-    \item \textbf{Result Concatenation Module}: For providing the alignment results to be displayed.
-    \item \textbf{Pandas Library}: For organizing and displaying results in a tabular format.
+    \item UTF-8 encoding enforced for all text files
+    \item CSV output includes headers: "matrix" and "score"
+    \item Paths are resolved relative to user's designated directory
 \end{itemize}
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-None
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-display\_results & result: List[dict] & None & InvalidResultError \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-None
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-\begin{itemize}
-    \item The input result is a valid list of dictionaries, where each dictionary contains the name of the substitution matrix and the corresponding alignment score.
-    \item The Pandas library is available for data manipulation and display.
-\end{itemize}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent \textbf{display\_results(result: List[dict]) $\rightarrow$ None}:
-\begin{itemize}
-    \item \textbf{Transition}: Converts the list of alignment results into a Pandas DataFrame and displays it in a tabular format.
-    \item \textbf{Output}: None (the results are displayed directly to the console or output medium).
-    \item \textbf{Exception}: Raises \texttt{InvalidResultError} if the input result is not a valid list of dictionaries.
-\end{itemize}
-
-\subsubsection{Local Functions}
-
-None
 
 \newpage
+
 % #############################################
+
 % #############################################
 \section{MIS of Sequence Data Structure Module} \label{mSDS}
 
@@ -457,70 +631,8 @@ sequence\_data\_structure
 
 \subsection{Uses}
 
-None
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-None
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-validate\_sequence & seq: str & bool & InvalidSequenceError \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-None
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
 \begin{itemize}
-    \item Sequences are represented as strings containing only the characters A, T, G, C, or \_.
-    \item Sequences are non-empty and valid for alignment purposes.
-\end{itemize}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent \textbf{validate\_sequence(seq: str) $\rightarrow$ bool}:
-\begin{itemize}
-    \item \textbf{Transition}: Validates the input sequence to ensure it contains only valid characters (A, T, G, C, or \_).
-    \item \textbf{Output}: Returns \texttt{True} if the sequence is valid, otherwise raises \texttt{InvalidSequenceError}.
-    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} (see Table 2 and 3 from \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV documentation}) if the sequence contains invalid characters.
-\end{itemize}
-
-\subsubsection{Local Functions}
-
-None
-
-\newpage
-% #############################################
-% #############################################
-\section{MIS of F-Matrix Handler Module} \label{mFIM}
-
-\subsection{Module}
-
-matrix
-
-\subsection{Uses}
-
-\begin{itemize}
-    \item \textbf{Sequence Data Structure Module}: For accessing sequences to be aligned.
-    \item \textbf{Substitution Matrix Module}: For accessing substitution matrices and gap penalties.
+    \item \textbf{File Manager Module}: For loading sequence data from files
 \end{itemize}
 
 \subsection{Syntax}
@@ -536,8 +648,9 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-initialize\_matrix & seq0: str, seq1: str & matrix: List[List[float]] & InvalidSequenceError \\
-fill\_matrix & seq0: str, seq1: str, submat: List[List[float]] & matrix: List[List[float]] & InvalidSequenceError \\
+\texttt{\_\_init\_\_} & read\_file\_path: str & SequenceData instance & ValueError \\
+\texttt{validate\_sequence} & seq: str & - & ValueError \\
+\texttt{get\_sequences} & - & tuple (str, str) & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -546,7 +659,10 @@ fill\_matrix & seq0: str, seq1: str, submat: List[List[float]] & matrix: List[Li
 
 \subsubsection{State Variables}
 
-None
+\begin{itemize}
+    \item \texttt{seq\_a}: First nucleotide sequence (5' to 3')
+    \item \texttt{seq\_b}: Second nucleotide sequence (5' to 3')
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
@@ -555,94 +671,54 @@ None
 \subsubsection{Assumptions}
 
 \begin{itemize}
-    \item The input sequences (seq0 and seq1) are valid strings containing only the characters A, T, G, C, or \_.
-    \item The substitution matrix (submat) is a valid 4x4 matrix of penalizing costs.
-    \item The gap penalty is a valid float value.
+    \item Sequences contain only characters \{A, T, G, C, \_\}
+    \item Sequences are non-empty (length $\geq$ 1)
+    \item Input files contain exactly two sequences
+    \item Underscore (\_) represents gap characters
 \end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \textbf{initialize\_matrix(seq0: str, seq1: str) $\rightarrow$ List[List[float]]}:
+\noindent \textbf{SequenceData.\_\_init\_\_(read\_file\_path: str)}:
 \begin{itemize}
-    \item \textbf{Transition}: Initializes the F-matrix with dimensions based on the lengths of seq0 and seq1.
-    \item \textbf{Output}: Returns a 2D list (matrix) initialized with zeros.
-    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} if either sequence contains invalid characters.
+    \item Loads sequences via \texttt{read\_sequence\_file()}
+    \item Validates sequences using \texttt{validate\_sequence()}
+    \item Initializes \texttt{seq\_a} and \texttt{seq\_b}
+    \item \textbf{Exception}: Raises \texttt{ValueError} for:
+    \begin{itemize}
+        \item Invalid FASTA format
+        \item Invalid nucleotide characters
+        \item Unequal sequence counts
+    \end{itemize}
 \end{itemize}
 
-\noindent \textbf{fill\_matrix(seq0: str, seq1: str, submat: List[List[float]]) $\rightarrow$ List[List[float]]}:
+\noindent \textbf{validate\_sequence(seq: str)}:
 \begin{itemize}
-    \item \textbf{Transition}: Fills the F-matrix with alignment scores based on the sequences and substitution matrix.
-    \item \textbf{Output}: Returns the filled F-matrix.
-    \item \textbf{Exception}: Raises \texttt{InvalidSequenceError} if either sequence contains invalid characters.
+    \item Checks sequence validity
+    \item \textbf{Exception}: Raises \texttt{ValueError} if:
+    \begin{itemize}
+        \item Contains non-\{A,T,G,C,\_\} characters
+        \item Zero-length sequence
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{get\_sequences() $\rightarrow$ tuple}:
+\begin{itemize}
+    \item \textbf{Output}: Returns (\texttt{seq\_a}, \texttt{seq\_b}) pair
 \end{itemize}
 
 \subsubsection{Local Functions}
 
 None
 
-\newpage
-% #############################################
-% #############################################
-\section{MIS of Backtracking Algorithm Module} \label{mBA}
-
-\subsection{Module}
-
-backtracking
-
-\subsection{Uses}
+\subsection{Considerations}
 
 \begin{itemize}
-    \item \textbf{F-Matrix Initialization and Manipulation Module}: For accessing the filled F-matrix.
-    \item \textbf{Sequence Data Structure Module}: For accessing the sequences to be aligned.
+    \item Case-sensitive for nucleotide characters
+    \item No support for ambiguous bases (N, R, Y, etc.)
+    \item Gap character (\_) must be explicitly included
+    \item Validation occurs during initialization
 \end{itemize}
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-None
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-backtracking & matrix: List[List[float]], seq0: str, seq1: str & float & InvalidMatrixError \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-None
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-\begin{itemize}
-    \item The input matrix is a valid 2D list (F-matrix) filled with alignment scores.
-    \item The input sequences (seq0 and seq1) are valid strings containing only the characters A, T, G, C, or \_.
-\end{itemize}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent \textbf{backtracking(matrix: List[List[float]], seq0: str, seq1: str) $\rightarrow$ float}:
-\begin{itemize}
-    \item \textbf{Transition}: Backtracks through the F-matrix to determine the optimal alignment path (i.e. the highest value out of the global alignment).
-    \item \textbf{Output}: Returns the final alignment score.
-    \item \textbf{Exception}: Raises \texttt{InvalidMatrixError} if the input matrix is not a valid 2D list or if the sequences are invalid.
-\end{itemize}
-
-\subsubsection{Local Functions}
-
-None
 
 \newpage
 % #############################################
