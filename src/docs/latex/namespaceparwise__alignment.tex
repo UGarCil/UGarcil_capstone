@@ -1,0 +1,163 @@
+\doxysection{parwise\+\_\+alignment Namespace Reference}
+\hypertarget{namespaceparwise__alignment}{}\label{namespaceparwise__alignment}\index{parwise\_alignment@{parwise\_alignment}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{namespaceparwise__alignment_a3031d0b267dbd186e3706feaabbc7d0f}{evaluate\+Trans\+Transv}} (str s1, str s2, List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]} submat)
+\begin{DoxyCompactList}\small\item\em Calculate substitution score between two nucleotides. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceparwise__alignment_a4425ee379da734a407cdbd3a22ddecc0}{evaluate}} (int x, int y, str dir, List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]} submat, List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]} matrix\+\_\+F, str \mbox{\hyperlink{namespaceparwise__alignment_a677b34d5237f1f27d00f067f6ec97b9e}{seq0}}, str \mbox{\hyperlink{namespaceparwise__alignment_aba1a87efe8ee120bc98b05512653f2ab}{seq1}})
+\begin{DoxyCompactList}\small\item\em Calculate cell score for dynamic programming matrix. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{namespaceparwise__alignment_a0504e4e58ef98212076c4a6a1ea585d2}{backtracking}} (List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]} matrix, str \mbox{\hyperlink{namespaceparwise__alignment_a677b34d5237f1f27d00f067f6ec97b9e}{seq0}}, str \mbox{\hyperlink{namespaceparwise__alignment_aba1a87efe8ee120bc98b05512653f2ab}{seq1}})
+\begin{DoxyCompactList}\small\item\em Trace back through matrix to find optimal alignment. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{namespaceparwise__alignment_a2ce293d056a5d9f2fd950ce379a3e724}{needleman\+\_\+wunsch}} (str \mbox{\hyperlink{namespaceparwise__alignment_a677b34d5237f1f27d00f067f6ec97b9e}{seq0}}, str \mbox{\hyperlink{namespaceparwise__alignment_aba1a87efe8ee120bc98b05512653f2ab}{seq1}}, List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]} submat)
+\begin{DoxyCompactList}\small\item\em Perform Needleman-\/\+Wunsch global sequence alignment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespaceparwise__alignment_a677b34d5237f1f27d00f067f6ec97b9e}{seq0}} = "{}TGGAT"{}
+\item 
+str \mbox{\hyperlink{namespaceparwise__alignment_aba1a87efe8ee120bc98b05512653f2ab}{seq1}} = "{}ATGGA"{}
+\item 
+list \mbox{\hyperlink{namespaceparwise__alignment_ab239be82e9c71b85277cdd60252ee5de}{penalizing\+Cost\+Of\+\_\+baseline}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceparwise__alignment_a0504e4e58ef98212076c4a6a1ea585d2}\label{namespaceparwise__alignment_a0504e4e58ef98212076c4a6a1ea585d2} 
+\index{parwise\_alignment@{parwise\_alignment}!backtracking@{backtracking}}
+\index{backtracking@{backtracking}!parwise\_alignment@{parwise\_alignment}}
+\doxysubsubsection{\texorpdfstring{backtracking()}{backtracking()}}
+{\footnotesize\ttfamily parwise\+\_\+alignment.\+backtracking (\begin{DoxyParamCaption}\item[{List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]}}]{matrix,  }\item[{str}]{seq0,  }\item[{str}]{seq1 }\end{DoxyParamCaption})}
+
+
+
+Trace back through matrix to find optimal alignment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em matrix} & Filled dynamic programming matrix \\
+\hline
+{\em seq0} & First sequence \\
+\hline
+{\em seq1} & Second sequence \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Final alignment score
+\end{DoxyReturn}
+Works with reversed matrix and sequences for easier traversal Here is the caller graph for this function\+:
+% FIG 0
+\Hypertarget{namespaceparwise__alignment_a4425ee379da734a407cdbd3a22ddecc0}\label{namespaceparwise__alignment_a4425ee379da734a407cdbd3a22ddecc0} 
+\index{parwise\_alignment@{parwise\_alignment}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!parwise\_alignment@{parwise\_alignment}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily parwise\+\_\+alignment.\+evaluate (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{str}]{dir,  }\item[{List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]}}]{submat,  }\item[{List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]}}]{matrix\+\_\+F,  }\item[{str}]{seq0,  }\item[{str}]{seq1 }\end{DoxyParamCaption})}
+
+
+
+Calculate cell score for dynamic programming matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Column index in matrix \\
+\hline
+{\em y} & Row index in matrix \\
+\hline
+{\em dir} & Movement direction\+: "{}l"{} (left), "{}t"{} (top), "{}d"{} (diagonal) \\
+\hline
+{\em submat} & Substitution matrix \\
+\hline
+{\em matrix\+\_\+F} & Dynamic programming matrix \\
+\hline
+{\em seq0} & First input sequence \\
+\hline
+{\em seq1} & Second input sequence \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Calculated score for current cell
+\end{DoxyReturn}
+Implements gap penalty (-\/2) and substitution scoring Here is the call graph for this function\+:
+% FIG 1
+Here is the caller graph for this function\+:
+% FIG 2
+\Hypertarget{namespaceparwise__alignment_a3031d0b267dbd186e3706feaabbc7d0f}\label{namespaceparwise__alignment_a3031d0b267dbd186e3706feaabbc7d0f} 
+\index{parwise\_alignment@{parwise\_alignment}!evaluateTransTransv@{evaluateTransTransv}}
+\index{evaluateTransTransv@{evaluateTransTransv}!parwise\_alignment@{parwise\_alignment}}
+\doxysubsubsection{\texorpdfstring{evaluateTransTransv()}{evaluateTransTransv()}}
+{\footnotesize\ttfamily parwise\+\_\+alignment.\+evaluate\+Trans\+Transv (\begin{DoxyParamCaption}\item[{str}]{s1,  }\item[{str}]{s2,  }\item[{List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]}}]{submat }\end{DoxyParamCaption})}
+
+
+
+Calculate substitution score between two nucleotides. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s1} & First nucleotide character (A/\+T/\+G/C) \\
+\hline
+{\em s2} & Second nucleotide character (A/\+T/\+G/C) \\
+\hline
+{\em submat} & Substitution matrix (4x4 list) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Score from substitution matrix
+\end{DoxyReturn}
+Uses nucleotide order\+: \mbox{[}"{}\+A"{},"{}\+T"{},"{}\+G"{},"{}\+C"{}\mbox{]} for matrix indexing Here is the caller graph for this function\+:
+% FIG 3
+\Hypertarget{namespaceparwise__alignment_a2ce293d056a5d9f2fd950ce379a3e724}\label{namespaceparwise__alignment_a2ce293d056a5d9f2fd950ce379a3e724} 
+\index{parwise\_alignment@{parwise\_alignment}!needleman\_wunsch@{needleman\_wunsch}}
+\index{needleman\_wunsch@{needleman\_wunsch}!parwise\_alignment@{parwise\_alignment}}
+\doxysubsubsection{\texorpdfstring{needleman\_wunsch()}{needleman\_wunsch()}}
+{\footnotesize\ttfamily parwise\+\_\+alignment.\+needleman\+\_\+wunsch (\begin{DoxyParamCaption}\item[{str}]{seq0,  }\item[{str}]{seq1,  }\item[{List\mbox{[}List\mbox{[}float\mbox{]}\mbox{]}}]{submat }\end{DoxyParamCaption})}
+
+
+
+Perform Needleman-\/\+Wunsch global sequence alignment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em seq0} & First sequence to align \\
+\hline
+{\em seq1} & Second sequence to align \\
+\hline
+{\em submat} & Substitution matrix (4x4 list) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Optimal alignment score
+\end{DoxyReturn}
+Creates and fills dynamic programming matrix, then backtracks Here is the call graph for this function\+:
+% FIG 4
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceparwise__alignment_ab239be82e9c71b85277cdd60252ee5de}\label{namespaceparwise__alignment_ab239be82e9c71b85277cdd60252ee5de} 
+\index{parwise\_alignment@{parwise\_alignment}!penalizingCostOf\_baseline@{penalizingCostOf\_baseline}}
+\index{penalizingCostOf\_baseline@{penalizingCostOf\_baseline}!parwise\_alignment@{parwise\_alignment}}
+\doxysubsubsection{\texorpdfstring{penalizingCostOf\_baseline}{penalizingCostOf\_baseline}}
+{\footnotesize\ttfamily list parwise\+\_\+alignment.\+penalizing\+Cost\+Of\+\_\+baseline}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ =\ \ [}
+\DoxyCodeLine{00002\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ \ A\ \ T\ \ G\ \ C}}
+\DoxyCodeLine{00003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0,-\/3,-\/1,-\/3],\ \textcolor{comment}{\#\ A\ \#baseline}}
+\DoxyCodeLine{00004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/3,0,-\/3,-\/1],\ \textcolor{comment}{\#\ T}}
+\DoxyCodeLine{00005\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/1,-\/3,0,-\/3],\ \textcolor{comment}{\#\ G}}
+\DoxyCodeLine{00006\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-\/3,-\/1,-\/3,0]\ \ \textcolor{comment}{\#\ C}}
+\DoxyCodeLine{00007\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ]}
+
+\end{DoxyCode}
+\Hypertarget{namespaceparwise__alignment_a677b34d5237f1f27d00f067f6ec97b9e}\label{namespaceparwise__alignment_a677b34d5237f1f27d00f067f6ec97b9e} 
+\index{parwise\_alignment@{parwise\_alignment}!seq0@{seq0}}
+\index{seq0@{seq0}!parwise\_alignment@{parwise\_alignment}}
+\doxysubsubsection{\texorpdfstring{seq0}{seq0}}
+{\footnotesize\ttfamily str parwise\+\_\+alignment.\+seq0 = "{}TGGAT"{}}
+
+\Hypertarget{namespaceparwise__alignment_aba1a87efe8ee120bc98b05512653f2ab}\label{namespaceparwise__alignment_aba1a87efe8ee120bc98b05512653f2ab} 
+\index{parwise\_alignment@{parwise\_alignment}!seq1@{seq1}}
+\index{seq1@{seq1}!parwise\_alignment@{parwise\_alignment}}
+\doxysubsubsection{\texorpdfstring{seq1}{seq1}}
+{\footnotesize\ttfamily str parwise\+\_\+alignment.\+seq1 = "{}ATGGA"{}}
+

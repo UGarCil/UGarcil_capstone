@@ -1,0 +1,26 @@
+The following naming conventions, taken from PEP-8, are used:
++-------------------------------+---------------------------+----------------------+
+| Case                          | Type                      | Example              |
++-------------------------------+---------------------------+----------------------+
+| ALL_CAPS                      | CONSTANT                  | MAX_SPEED           |
+| CamelCase                     | Class                     | GameEngine          |
+| snake_case                    | Variable                  | player_score        |
+|                               | Function                  | calculate_area      |
+|                               | Method (Class Function)   | get_data            |
+|                               | Module                    | data_loader.py      |
+|                               | Package                   | utils               |
+| _single_leading_underscore    | Private Variable          | _cache              |
+|                               | Private Method            | _reset_values       |
+|                               | Protected Variable/Method | _update_state       |
+|                               | Non-Public Class Variable | _internal_data      |
+| __double_leading_underscores__| Dunder (Special) Method   | __init__, __str__   |
++-------------------------------+---------------------------+----------------------+
+
+- DD. for Data Definitions
+- DE. for Domain Examples
+- FD. for Function Definitions
+- FE. for Function Examples
+- RD. for Requirements Definitions
+- RE. for Requirements Examples
+- CD. for Class Definitions
+- CE. for Class Examples

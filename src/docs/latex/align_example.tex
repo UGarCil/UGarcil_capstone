@@ -1,0 +1,16 @@
+\chapter{Example Usage}
+\hypertarget{align_example}{}\label{align_example}\index{Example Usage@{Example Usage}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{seq0\ =\ \textcolor{stringliteral}{"{}TGGAT"{}}}
+\DoxyCodeLine{seq1\ =\ \textcolor{stringliteral}{"{}ATGGA"{}}}
+\DoxyCodeLine{baseline\_matrix\ =\ [}
+\DoxyCodeLine{\ \ \ \ [0,-\/3,-\/1,-\/3],}
+\DoxyCodeLine{\ \ \ \ [-\/3,0,-\/3,-\/1],}
+\DoxyCodeLine{\ \ \ \ [-\/1,-\/3,0,-\/3],}
+\DoxyCodeLine{\ \ \ \ [-\/3,-\/1,-\/3,0]}
+\DoxyCodeLine{]}
+\DoxyCodeLine{print(needleman\_wunsch(seq0,\ seq1,\ baseline\_matrix))\ \ \textcolor{comment}{\#\ Output:\ -\/12.0}}
+
+\end{DoxyCode}
+ 

@@ -1,0 +1,4 @@
+>test_1
+AA
+>test_1
+AA

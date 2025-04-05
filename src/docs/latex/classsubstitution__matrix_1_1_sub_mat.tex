@@ -1,0 +1,88 @@
+\doxysection{substitution\+\_\+matrix.\+Sub\+Mat Class Reference}
+\hypertarget{classsubstitution__matrix_1_1_sub_mat}{}\label{classsubstitution__matrix_1_1_sub_mat}\index{substitution\_matrix.SubMat@{substitution\_matrix.SubMat}}
+
+
+Data structure representing a substitution matrix.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsubstitution__matrix_1_1_sub_mat_a4e001fb621ff2c26504e37d16e17dabe}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, str \mbox{\hyperlink{classsubstitution__matrix_1_1_sub_mat_aa87276ba606affc73151d871f2201584}{file\+\_\+path}})
+\item 
+\mbox{\hyperlink{classsubstitution__matrix_1_1_sub_mat_a5e1508ffcc0a41bb8dcce74903f04242}{read\+\_\+submat\+\_\+file}} (self, str \mbox{\hyperlink{classsubstitution__matrix_1_1_sub_mat_aa87276ba606affc73151d871f2201584}{file\+\_\+path}})
+\item 
+\mbox{\hyperlink{classsubstitution__matrix_1_1_sub_mat_ad7a61fe187efacd7aab16c5359860d95}{validate\+\_\+benchmark}} (self, \mbox{\hyperlink{classsubstitution__matrix_1_1_sub_mat_afbf2a85f04b4a590632130460d86caba}{benchmark}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsubstitution__matrix_1_1_sub_mat_aa87276ba606affc73151d871f2201584}{file\+\_\+path}}
+\item 
+\mbox{\hyperlink{classsubstitution__matrix_1_1_sub_mat_afbf2a85f04b4a590632130460d86caba}{benchmark}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Data structure representing a substitution matrix. 
+
+\begin{DoxyVerb}@brief Represents a collection of substitution matrices\end{DoxyVerb}
+
+
+\begin{DoxyParagraph}{MG Reference\+: MG-\/\+ALIGNMENT-\/2.1.3}
+
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{SRS Requirement\+: SRS-\/\+DATA-\/\+STRUCT-\/020}
+
+\end{DoxyParagraph}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classsubstitution__matrix_1_1_sub_mat_a4e001fb621ff2c26504e37d16e17dabe}\label{classsubstitution__matrix_1_1_sub_mat_a4e001fb621ff2c26504e37d16e17dabe} 
+\index{substitution\_matrix.SubMat@{substitution\_matrix.SubMat}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!substitution\_matrix.SubMat@{substitution\_matrix.SubMat}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily substitution\+\_\+matrix.\+Sub\+Mat.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{str}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classsubstitution__matrix_1_1_sub_mat_a5e1508ffcc0a41bb8dcce74903f04242}\label{classsubstitution__matrix_1_1_sub_mat_a5e1508ffcc0a41bb8dcce74903f04242} 
+\index{substitution\_matrix.SubMat@{substitution\_matrix.SubMat}!read\_submat\_file@{read\_submat\_file}}
+\index{read\_submat\_file@{read\_submat\_file}!substitution\_matrix.SubMat@{substitution\_matrix.SubMat}}
+\doxysubsubsection{\texorpdfstring{read\_submat\_file()}{read\_submat\_file()}}
+{\footnotesize\ttfamily substitution\+\_\+matrix.\+Sub\+Mat.\+read\+\_\+submat\+\_\+file (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{str}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Gets the sequence data from the file path\end{DoxyVerb}
+ \Hypertarget{classsubstitution__matrix_1_1_sub_mat_ad7a61fe187efacd7aab16c5359860d95}\label{classsubstitution__matrix_1_1_sub_mat_ad7a61fe187efacd7aab16c5359860d95} 
+\index{substitution\_matrix.SubMat@{substitution\_matrix.SubMat}!validate\_benchmark@{validate\_benchmark}}
+\index{validate\_benchmark@{validate\_benchmark}!substitution\_matrix.SubMat@{substitution\_matrix.SubMat}}
+\doxysubsubsection{\texorpdfstring{validate\_benchmark()}{validate\_benchmark()}}
+{\footnotesize\ttfamily substitution\+\_\+matrix.\+Sub\+Mat.\+validate\+\_\+benchmark (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{benchmark }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Validates the substitution matrices
+For each matrix of costs:
+- Matrix is square
+- Matrix is 4x4
+- Matrix contains only numerical values
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classsubstitution__matrix_1_1_sub_mat_afbf2a85f04b4a590632130460d86caba}\label{classsubstitution__matrix_1_1_sub_mat_afbf2a85f04b4a590632130460d86caba} 
+\index{substitution\_matrix.SubMat@{substitution\_matrix.SubMat}!benchmark@{benchmark}}
+\index{benchmark@{benchmark}!substitution\_matrix.SubMat@{substitution\_matrix.SubMat}}
+\doxysubsubsection{\texorpdfstring{benchmark}{benchmark}}
+{\footnotesize\ttfamily substitution\+\_\+matrix.\+Sub\+Mat.\+benchmark}
+
+\Hypertarget{classsubstitution__matrix_1_1_sub_mat_aa87276ba606affc73151d871f2201584}\label{classsubstitution__matrix_1_1_sub_mat_aa87276ba606affc73151d871f2201584} 
+\index{substitution\_matrix.SubMat@{substitution\_matrix.SubMat}!file\_path@{file\_path}}
+\index{file\_path@{file\_path}!substitution\_matrix.SubMat@{substitution\_matrix.SubMat}}
+\doxysubsubsection{\texorpdfstring{file\_path}{file\_path}}
+{\footnotesize\ttfamily substitution\+\_\+matrix.\+Sub\+Mat.\+file\+\_\+path}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{substitution__matrix_8py}{substitution\+\_\+matrix.\+py}}\end{DoxyCompactItemize}
