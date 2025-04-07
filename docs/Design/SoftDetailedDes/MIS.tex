@@ -55,6 +55,7 @@ urlcolor=cyan          % color of external links
 \midrule
 March 10, 2025 & 1.0 & Document's first version\\
 April 4th, 2025 & 1.1 & Document's updates after changes on modular design\\
+April 7th, 2025 & 1.2 & Updated version after comments on modular design\\
 % Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -115,8 +116,10 @@ The following table summarizes the primitive data types used by the \progname so
 \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
 \midrule
 character & char & a single symbol or digit\\
-integer & $\mathbb{R}$ & a real (i.e. non complex) number defined within (-$\infty$, $\infty$), which common values between -3.0 to 3.0 \\
+float & $\mathbb{R}$ & a real (i.e. non complex) number defined within (-$\infty$, $\infty$), which common values between -3.0 to 3.0 \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
+str & char & string, represented as a chain of characters from the ASCII \\
+dict & python dictionary & a data structure that stores only state variables \\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -145,11 +148,11 @@ The following table is taken directly from the Module Guide document for this pr
     
     Behaviour-Hiding & Alignment (Needleman-Wunsch) Interface Module\\
     & Control Manager Module\\
+    & Sequence Data Structure Module\\
     \midrule
     
     Software Decision & Substitution Matrix Module\\
     & File Manager Module\\
-    & Sequence Data Structure Module\\
     \bottomrule
     
     \end{tabular}
@@ -170,14 +173,20 @@ a functional justification by making the Needleman-Wunsch algorithm a high-behav
 \section{MIS of Alignment (Needleman-Wunsch) Module} \label{mNW}
 
 \subsection{Module}
+alignment
 
-NeedlemanWunsch
+\begin{verbatim}
+    ADT NeedlemanWunsch:
+        - constructor (seq_a, seq_b, gap) → None
+        - align(submat) → float       # Returns alignment score
+        - get_aligned() → (str, str)  # Returns (aligned_a, aligned_b)
+\end{verbatim}
 
 \subsection{Uses}
 
 \begin{itemize}
-    \item \textbf{Sequence Data Structure Module (mSDS)}: For validated biological sequence input
-    \item \textbf{Substitution Matrix Module (mSM)}: For accessing substitution matrices and gap penalties
+    \item \textbf{Sequence Data Structure Module}: For validated biological sequence input
+    \item \textbf{Substitution Matrix Module}: For accessing substitution matrices and gap penalties
 \end{itemize}
 
 \subsection{Syntax}
@@ -193,9 +202,9 @@ None
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\texttt{\_\_init\_\_} & seq\_a: str, seq\_b: str, gap\_penalty: float = -2 & NeedlemanWunsch instance & - \\
+\texttt{NeedlemanWunsch} & seq\_a: str, seq\_b: str, gap\_penalty: float = -2 & NeedlemanWunsch instance & - \\
 \hline
-\texttt{\_\_call\_\_} & submat: dict & float (alignment score) & AlignmentError \\
+\texttt{NeedlemanWunsch()} & submat: dict & float (alignment score) & AlignmentError \\
 \hline
 \texttt{align} & submat: dict & float (alignment score) & AlignmentError \\
 \hline
@@ -209,26 +218,18 @@ None
 \subsubsection{State Variables}
 
 \begin{itemize}
-    \item \texttt{seq\_a}: First input sequence
-    \item \texttt{seq\_b}: Second input sequence
-    \item \texttt{gap\_penalty}: Gap insertion penalty score
-    \item \texttt{submat}: Active substitution matrix
-    \item \texttt{seq\_a\_aligned}: Aligned version of seq\_a
-    \item \texttt{seq\_b\_aligned}: Aligned version of seq\_b
+    \item \texttt{seq\_a}: str (First input sequence)
+    \item \texttt{seq\_b}: str (Second input sequence)
+    \item \texttt{gap\_penalty}: float (Gap insertion penalty score)
+    \item \texttt{submat}: dict (Active substitution matrix)
+    \item \texttt{seq\_a\_aligned}: str (Aligned version of seq\_a)
+    \item \texttt{seq\_b\_aligned}: str (Aligned version of seq\_b)
 \end{itemize}
 
 \subsubsection{Environment Variables}
 
 None
 
-\subsubsection{Assumptions}
-
-\begin{itemize}
-    \item Input sequences contain only characters \{A, T, G, C, \_\}
-    \item Sequences have been pre-validated by SequenceData module
-    \item Substitution matrix is a valid 4x4 matrix for nucleotides
-    \item Gap penalty is a negative float value
-\end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
@@ -240,20 +241,13 @@ None
 
 \noindent \textbf{NeedlemanWunsch.\_\_call\_\_(submat)}:
 \begin{itemize}
-    \item Output: Alignment score (float)
+    \item Output: Alignment score $NeedlemanWunsch.align \rightarrow float$ is \\
+    calculated by generating sequence pairwise comparison matrix F and traversing using the algorithm.
     \item Exception: AlignmentError if sequences cannot be aligned
-    \item Delegates to align() method
 \end{itemize}
 
 \noindent \textbf{NeedlemanWunsch.align(submat)}:
 \begin{itemize}
-    \item Transition: 
-    \begin{enumerate}
-        \item Sets active substitution matrix
-        \item Initializes dynamic programming matrix
-        \item Computes alignment scores
-        \item Performs traceback to determine optimal alignment
-    \end{enumerate}
     \item Output: Final alignment score (float)
     \item Exception: AlignmentError if alignment fails
 \end{itemize}
@@ -266,34 +260,35 @@ None
 
 \subsubsection{Local Functions}
 
-\begin{itemize}
-    \item \textbf{evaluate\_substitution(s1: str, s2: str) $\rightarrow$ float}:
-    \begin{itemize}
-        \item Looks up substitution score in matrix
-        \item Handles both matrix formats (direct 4x4 or parameterized)
-        \item Returns score for nucleotide pair
-    \end{itemize}
+% \begin{itemize}
+%     \item \textbf{evaluate\_substitution(s1: str, s2: str) $\rightarrow$ float}:
+%     \begin{itemize}
+%         \item Looks up substitution score in matrix
+%         \item Handles both matrix formats (direct 4x4 or parameterized)
+%         \item Returns score for nucleotide pair
+%     \end{itemize}
     
-    \item \textbf{compute\_alignment\_matrix(matrix) $\rightarrow$ List[List[float]]}:
-    \begin{itemize}
-        \item Fills dynamic programming matrix
-        \item Applies recurrence relation:
-        \begin{equation}
-            F(i,j) = \max\begin{cases}
-                F(i-1,j-1) + s(x_i,y_j) \\
-                F(i-1,j) + d \\
-                F(i,j-1) + d
-            \end{cases}
-        \end{equation}
-    \end{itemize}
+%     \item \textbf{compute\_alignment\_matrix(matrix) $\rightarrow$ List[List[float]]}:
+%     \begin{itemize}
+%         \item Fills dynamic programming matrix
+%         \item Applies recurrence relation:
+%         \begin{equation}
+%             F(i,j) = \max\begin{cases}
+%                 F(i-1,j-1) + s(x_i,y_j) \\
+%                 F(i-1,j) + d \\
+%                 F(i,j-1) + d
+%             \end{cases}
+%         \end{equation}
+%     \end{itemize}
     
-    \item \textbf{backtrack(matrix) $\rightarrow$ float}:
-    \begin{itemize}
-        \item Traces optimal path through DP matrix
-        \item Sets seq\_a\_aligned and seq\_b\_aligned
-        \item Returns final alignment score
-    \end{itemize}
-\end{itemize}
+%     \item \textbf{backtrack(matrix) $\rightarrow$ float}:
+%     \begin{itemize}
+%         \item Traces optimal path through DP matrix
+%         \item Sets seq\_a\_aligned and seq\_b\_aligned
+%         \item Returns final alignment score
+%     \end{itemize}
+% \end{itemize}
+None
 
 \subsection{Considerations}
 
@@ -350,27 +345,15 @@ None
 
 None
 
-\subsubsection{Assumptions}
-
-\begin{itemize}
-    \item Input files exist and are properly formatted
-    \item Required modules are properly initialized
-    \item Output directory is writable
-\end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
 \noindent \textbf{main(seq\_data, matrix\_bench)}:
 \begin{itemize}
-    \item Transition:
-    \begin{enumerate}
-        \item Initializes NeedlemanWunsch alignment manager
-        \item Iterates through each substitution matrix
-        \item Computes alignment score for each matrix
-        \item Collects results
-    \end{enumerate}
+    \item \textbf{Input}: SequenceData instance and SubMat instance
+    \item \textbf{Output}: List of dictionaries containing alignment results
+    \item \textbf{Exception}: Raises AlignmentError if alignment fails
 \end{itemize}
-
 \subsection{Workflow}
 
 The control flow follows this sequence:
@@ -403,11 +386,128 @@ The control flow follows this sequence:
 \end{itemize}
 
 % #############################################
+
+\newpage
+
+% #############################################
+\section{MIS of Sequence Data Structure Module} \label{mSDS}
+
+\subsection{Module}
+
+sequence\_data\_structure
+
+\begin{verbatim}
+ADT SequenceData:
+    constructor(file_path: str) → None
+    validate_sequence(seq: str) → None
+    get_sequences() → tuple[str, str]
+\end{verbatim}
+
+
+\subsection{Uses}
+
+\begin{itemize}
+    \item \textbf{File Manager Module}: For loading sequence data from files
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+\texttt{SequenceData} & read\_file\_path: str & SequenceData instance & ValueError \\
+\texttt{validate\_sequence} & seq: str & - & ValueError \\
+\texttt{get\_sequences} & - & tuple (str, str) & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+    \item \texttt{seq\_a}: str (First nucleotide sequence: 5' to 3')
+    \item \texttt{seq\_b}: str (Second nucleotide sequence: 5' to 3')
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+    % \item Sequences contain only characters \{A, T, G, C, \_\}
+    % \item Sequences are non-empty (length $\geq$ 1)
+    % \item Input files contain exactly two sequences
+    \item Underscore (\_) represents gap characters
+    \item sequence files are provided in fasta format
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent \textbf{SequenceData.\_\_init\_\_(read\_file\_path: str)}:
+\begin{itemize}
+    \item Loads sequences via \texttt{read\_sequence\_file()}
+    \item Validates sequences using \texttt{validate\_sequence()}
+    \item Stores \texttt{seq\_a} and \texttt{seq\_b}
+    \item \textbf{Exception}: Raises \texttt{ValueError} for:
+    \begin{itemize}
+        \item Invalid FASTA format
+        \item Unequal sequence counts
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{validate\_sequence(seq: str)}:
+\begin{itemize}
+    \item Checks sequence validity
+    \item \textbf{Exception}: Raises \texttt{ValueError} if:
+    \begin{itemize}
+        \item Contains non-\{A,T,G,C,\_\} characters
+        \item Zero-length sequence
+    \end{itemize}
+\end{itemize}
+
+\noindent \textbf{get\_sequences() $\rightarrow$ (str,str)}:
+\begin{itemize}
+    \item \textbf{Output}: Returns (\texttt{seq\_a}:str, \texttt{seq\_b}:str)
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\subsection{Considerations}
+
+\begin{itemize}
+    \item Case-sensitive for nucleotide characters
+    \item No support for ambiguous bases (N, R, Y, etc.)
+    \item Gap character (\_) must be explicitly included
+    \item Validation occurs during initialization
+\end{itemize}
+
+% ##############################################
+\newpage 
 \section{MIS of Substitution Matrix Module} \label{mSM}
 
 \subsection{Module}
 
 substitution\_matrix
+\begin{verbatim}
+    ADT SubMat:
+        constructor(filepath) → None       # Loads/validates matrices
+        validate_benchmark(matrices) → None
+        get_matrix_names() → list[str]  # Returns matrix IDs
+\end{verbatim}
 
 \subsection{Uses}
 
@@ -444,8 +544,8 @@ get\_matrix\_names & - & list[str] & - \\
 \begin{itemize}
     \item \texttt{data}: List of matrix dictionaries containing:
     \begin{itemize}
-        \item \texttt{NAME}: String identifier
-        \item \texttt{PENALIZING\_COSTS}: 4x4 numerical matrix
+        \item \texttt{NAME}: str (String identifier)
+        \item \texttt{PENALIZING\_COSTS}: 4x4 float matrix
     \end{itemize}
 \end{itemize}
 
@@ -453,20 +553,20 @@ get\_matrix\_names & - & list[str] & - \\
 
 None
 
-\subsubsection{Assumptions}
+% \subsubsection{Assumptions}
 
-\begin{itemize}
-    \item Input files follow the format:
-    \begin{verbatim}
-    >MatrixName
-    A,T,G,C
-    T,A,G,C
-    G,T,A,C
-    C,G,T,A
-    \end{verbatim}
-    \item All matrices are 4x4 and square
-    \item Nucleotide order is fixed as [A, T, G, C] for index mapping
-\end{itemize}
+% \begin{itemize}
+%     \item Input files follow the format:
+%     \begin{verbatim}
+%     >MatrixName
+%     A,T,G,C
+%     T,A,G,C
+%     G,T,A,C
+%     C,G,T,A
+%     \end{verbatim}
+%     \item All matrices are 4x4 and square
+%     \item Nucleotide order is fixed as [A, T, G, C] for index mapping
+% \end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
@@ -507,7 +607,9 @@ None
 
 \subsection{Module}
 
+
 file\_manager
+
 
 \subsection{Uses}
 
@@ -548,26 +650,26 @@ None
 
 None
 
-\subsubsection{Assumptions}
+% \subsubsection{Assumptions}
 
-\begin{itemize}
-    \item Input FASTA files follow format:
-    \begin{verbatim}
-    >Sequence1
-    ATGC
-    >Sequence2
-    TGCA
-    \end{verbatim}
-    \item Substitution matrix files follow format:
-    \begin{verbatim}
-    >MatrixName
-    1.0,-0.33,-0.33,-0.33
-    -0.33,1.0,-0.33,-0.33
-    -0.33,-0.33,1.0,-0.33
-    -0.33,-0.33,-0.33,1.0
-    \end{verbatim}
-    \item Output directories are writable
-\end{itemize}
+% \begin{itemize}
+%     \item Input FASTA files follow format:
+%     \begin{verbatim}
+%     >Sequence1
+%     ATGC
+%     >Sequence2
+%     TGCA
+%     \end{verbatim}
+%     \item Substitution matrix files follow format:
+%     \begin{verbatim}
+%     >MatrixName
+%     1.0,-0.33,-0.33,-0.33
+%     -0.33,1.0,-0.33,-0.33
+%     -0.33,-0.33,1.0,-0.33
+%     -0.33,-0.33,-0.33,1.0
+%     \end{verbatim}
+%     \item Output directories are writable
+% \end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
@@ -616,108 +718,6 @@ None
     \item UTF-8 encoding enforced for all text files
     \item CSV output includes headers: "matrix" and "score"
     \item Paths are resolved relative to user's designated directory
-\end{itemize}
-
-\newpage
-
-% #############################################
-
-% #############################################
-\section{MIS of Sequence Data Structure Module} \label{mSDS}
-
-\subsection{Module}
-
-sequence\_data\_structure
-
-\subsection{Uses}
-
-\begin{itemize}
-    \item \textbf{File Manager Module}: For loading sequence data from files
-\end{itemize}
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-None
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{3cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-\texttt{\_\_init\_\_} & read\_file\_path: str & SequenceData instance & ValueError \\
-\texttt{validate\_sequence} & seq: str & - & ValueError \\
-\texttt{get\_sequences} & - & tuple (str, str) & - \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-    \item \texttt{seq\_a}: First nucleotide sequence (5' to 3')
-    \item \texttt{seq\_b}: Second nucleotide sequence (5' to 3')
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-\begin{itemize}
-    \item Sequences contain only characters \{A, T, G, C, \_\}
-    \item Sequences are non-empty (length $\geq$ 1)
-    \item Input files contain exactly two sequences
-    \item Underscore (\_) represents gap characters
-\end{itemize}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent \textbf{SequenceData.\_\_init\_\_(read\_file\_path: str)}:
-\begin{itemize}
-    \item Loads sequences via \texttt{read\_sequence\_file()}
-    \item Validates sequences using \texttt{validate\_sequence()}
-    \item Initializes \texttt{seq\_a} and \texttt{seq\_b}
-    \item \textbf{Exception}: Raises \texttt{ValueError} for:
-    \begin{itemize}
-        \item Invalid FASTA format
-        \item Invalid nucleotide characters
-        \item Unequal sequence counts
-    \end{itemize}
-\end{itemize}
-
-\noindent \textbf{validate\_sequence(seq: str)}:
-\begin{itemize}
-    \item Checks sequence validity
-    \item \textbf{Exception}: Raises \texttt{ValueError} if:
-    \begin{itemize}
-        \item Contains non-\{A,T,G,C,\_\} characters
-        \item Zero-length sequence
-    \end{itemize}
-\end{itemize}
-
-\noindent \textbf{get\_sequences() $\rightarrow$ tuple}:
-\begin{itemize}
-    \item \textbf{Output}: Returns (\texttt{seq\_a}, \texttt{seq\_b}) pair
-\end{itemize}
-
-\subsubsection{Local Functions}
-
-None
-
-\subsection{Considerations}
-
-\begin{itemize}
-    \item Case-sensitive for nucleotide characters
-    \item No support for ambiguous bases (N, R, Y, etc.)
-    \item Gap character (\_) must be explicitly included
-    \item Validation occurs during initialization
 \end{itemize}
 
 \newpage
