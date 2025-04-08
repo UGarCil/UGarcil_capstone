@@ -285,89 +285,7 @@ literature and with the existing internationally recognized standard for the des
   \bottomrule
 \end{tabular}\\
 
-% \plt{Add any other abbreviations or acronyms that you add}
 
-% \subsection{Mathematical Notation}
-
-% \plt{This section is optional, but should be included for projects that make use
-%   of notation to convey mathematical information.  For instance, if typographic
-%   conventions (like bold face font) are used to distinguish matrices, this
-%   should be stated here.  If symbols are used to show mathematical operations,
-%   these should be summarized here.  In some cases the easiest way to summarize
-%   the notation is to point to a text or other source that explains the
-%   notation.}
-
-% \plt{This section was added to the template because some students use very
-%   domain specific notation.  This notation will not be readily understandable to
-%   people outside of your domain.  It should be explained.}
-
-% \newpage
-
-% \pagenumbering{arabic}
-
-% \plt{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007,
-%   SmithAndKoothoor2016}.  It will get you started.  You should not modify the
-%   section headings, without first discussing the change with the course
-%   instructor.  Modification means you are not following the template, which
-%   loses some of the advantage of a template, especially standardization.
-%   Although the bits shown below do not include type information, you may need to
-%   add this information for your problem.  If you are unsure, please can ask the
-%   instructor.}
-
-% \plt{Feel free to change the appearance of the report by modifying the LaTeX
-%   commands.}
-
-% \plt{This template document assumes that a single program is being documented.
-%   If you are documenting a family of models, you should start with a commonality
-%   analysis.  A separate template is provided for this.  For program
-%   families you should look at \cite{Smith2006, SmithMcCutchanAndCarette2017}.
-%   Single family member programs are often programs based on a single physical
-%   model.  General purpose tools are usually documented as a family.  Families of
-%   physical models also come up.}
-
-% \plt{The SRS is not generally written, or read, sequentially.  The SRS is a
-%   reference document.  It is generally read in an ad hoc order, as the need
-%   arises.  For writing an SRS, and for reading one for the first time, the
-%   suggested order of sections is:
-% \begin{itemize}
-% \item Goal Statement
-% \item Instance Models
-% \item Requirements
-% \item Introduction
-% \item Specific System Description
-% \end{itemize}
-% }
-
-% \plt{Guiding principles for the SRS document:
-% \begin{itemize}
-% \item Do not repeat the same information at the same abstraction level.  If
-%   information is repeated, the repetition should be at a different abstraction
-%   level.  For instance, there will be overlap between the scope section and the
-%   assumptions, but the scope section will not go into as much detail as the
-%   assumptions section.
-% \end{itemize}
-% }
-
-% \plt{The template description comments should be disabled before submitting this
-%   document for grading.}
-
-% \plt{You can borrow any wording from the text given in the template.  It is part
-%   of the template, and not considered an instance of academic integrity.  Of
-%   course, you need to cite the source of the template.}
-
-% \plt{When the documentation is done, it should be possible to trace back to the
-%   source of every piece of information.  Some information will come from
-%   external sources, like terminology.  Other information will be derived, like
-%   General Definitions.}
-
-% \plt{An SRS document should have the following qualities: unambiguous,
-%   consistent, complete, validatable, abstract and traceable.}
-
-% \plt{The overall goal of the SRS is that someone that meets the Characteristics
-%   of the Intended Reader (Section~\ref{sec_IntendedReader}) can learn,
-%   understand and verify the captured domain knowledge.  They should not have to
-%   trust the authors of the SRS on any statements.  They should be able to
-%   independently verify/derive every statement made.}
 
 \section{Introduction}
 
@@ -394,35 +312,13 @@ elements include goals, assumptions, and theoretical and instanced models that d
 the scientific basis of the software. Moreover, the document is intended to be used as a guide to detail 
 the unique characteristics of the software to improve on its verifiability and correctness. 
 
-% \plt{This section summarizes the purpose of the SRS document.  It does not focus
-%   on the problem itself.  The problem is described in the ``Problem
-%   Description'' section (Section~\ref{Sec_pd}).  The purpose is for the document
-%   in the context of the project itself, not in the context of this course.
-%   Although the ``purpose'' of the document is to get a grade, you should not
-%   mention this.  Instead, ``fake it'' as if this is a real project.  The purpose
-%   section will be similar between projects.  The purpose of the document is the
-%   purpose of the SRS, including communication, planning for the design stage,
-%   etc.}
 
 \subsection{Scope of Requirements} 
 
 The scope of the requirements for the SubLiMat software includes the evaluation of 
 moderate-sized genetic sequences with similar dimensions. 
 
-% \plt{Modelling the real world requires simplification.  The full complexity of
-%   the actual physics, chemistry, biology is too much for existing models, and
-%   for existing computational solution techniques.  Rather than say what is in
-%   the scope, it is usually easier to say what is not.  You can think of it as
-%   the scope is initially everything, and then it is constrained to create the
-%   actual scope.  For instance, the problem can be restricted to 2 dimensions, or
-%   it can ignore the effect of temperature (or pressure) on the material
-%   properties, etc.}  
 
-% \plt{The scope section is related to the assumptions section
-%   (Section~\ref{sec_assumpt}).  However, the scope and the assumptions are not
-%   at the same level of abstraction.  The scope is at a high level.  The focus is
-%   on the ``big picture'' assumptions.  The assumptions section lists, and
-%   describes, all of the assumptions.}
 
 % \plt{The scope section is relevant for later determining typical values of inputs. The scope should make it clear what inputs are reasonable to expect. This is a distinction between scope and context (context is a later section).  Scope affects the inputs while context affects how the software will be used.}
 
@@ -433,20 +329,7 @@ equivalent or higher to a highschool level. Although not necessary, the document
 from a reader who possesses a basic understanding of comparative biology equivalent to first 
 year university level or higher.  
 
-% \plt{This section summarizes the skills and knowledge of the readers of the
-%   SRS.  It does NOT have the same purpose as the ``User Characteristics''
-%   section (Section~\ref{SecUserCharacteristics}).  The intended readers are the
-%   people that will read, review and maintain the SRS.  They are the people that
-%   will conceivably design the software that is intended to meet the
-%   requirements.  The user, on the other hand, is the person that uses the
-%   software that is built.  They may never read this SRS document.  Of course,
-%   the same person could be a ``user'' and an ``intended reader.''}
 
-% \plt{The intended reader characteristics should be written as unambiguously and
-%   as specifically as possible.  Rather than say, the user should have an
-%   understanding of physics, say what kind of physics and at what level.  For
-%   instance, is high school physics adequate, or should the reader have had a
-%   graduate course on advanced quantum mechanics?}
 
 \subsection{Organization of Document}
 
@@ -475,34 +358,9 @@ models to the instance models.
 This section provides general information about the system.  It identifies the
 interfaces between the system and its environment, describes the user
 characteristics and lists the system constraints.
-% \plt{This text can likely be
-%   borrowed verbatim.}
-
-% \plt{The purpose of this section is to provide general information about the
-%   system so the specific requirements in the next section will be easier to
-%   understand. The general system description section is designed to be
-%   changeable independent of changes to the functional requirements documented in
-%   the specific system description. The general system description provides a
-%   context for a family of related models.  The general description can stay the
-%   same, while specific details are changed between family members.}
 
 \subsection{System Context}
 
-% \plt{Your system context will include a figure that shows the abstract view of
-%   the software.  Often in a scientific context, the program can be viewed
-%   abstractly following the design pattern of Inputs $\rightarrow$ Calculations
-%   $\rightarrow$ Outputs.  The system context will therefore often follow this
-%   pattern.  The user provides inputs, the system does the calculations, and then
-%   provides the outputs to the user.  The figure should not show all of the
-%   inputs, just an abstract view of the main categories of inputs (like material
-%   properties, geometry, etc.).  Likewise, the outputs should be presented from
-%   an abstract point of view.  In some cases the diagram will show other external
-%   entities, besides the user.  For instance, when the software product is a
-%   library, the user will be another software program, not an actual end user.
-%   If there are system constraints that the software must work with external
-%   libraries, these libraries can also be shown on the System Context diagram.
-%   They should only be named with a specific library name if this is required by
-%   the system constraint.}
 
 \begin{figure}[h!]
 \begin{center}
@@ -512,15 +370,6 @@ characteristics and lists the system constraints.
 \end{center}
 \end{figure}
 
-% \plt{For each of the entities in the system context diagram its responsibilities
-%   should be listed.  Whenever possible the system should check for data quality,
-%   but for some cases the user will need to assume that responsibility.  The list
-%   of responsibilities should be about the inputs and outputs only, and they
-%   should be abstract.  Details should not be presented here.  However, the
-%   information should not be so abstract as to just say ``inputs'' and
-%   ``outputs''.  A summarizing phrase can be used to characterize the inputs.
-%   For instance, saying ``material properties'' provides some information, but it
-%   stays away from the detail of listing every required properties.}
 
 \begin{itemize}
 \item User Responsibilities:
@@ -539,47 +388,24 @@ characteristics and lists the system constraints.
 \end{itemize}
 \end{itemize}
 
-% \plt{Identify in what context the software will typically be used.  Is it for
-% exploration? education? engineering work? scientific work?. Identify whether it
-% will be used for mission-critical or safety-critical applications.} \plt{This
-% additional context information is needed to determine how much effort should be
-% devoted to the rationale section.  If the application is safety-critical, the
-% bar is higher.  This is currently less structured, but analogous to, the idea to
-% the Automotive Safety Integrity Levels (ASILs) that McSCert uses in their
-% automotive hazard analyses.}
+
 
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
 The end user of SubLiMat should have a general understanding of genetics and be familiar 
 with the use of genetic sequences to make hypotheses of common ancestry.
-% \plt{This section summarizes the knowledge/skills expected of the user.
-%   Measuring usability, which is often a required non-function requirement,
-%   requires knowledge of a typical user.  As mentioned above, the user is a
-%   different role from the ``intended reader,'' as given in
-%   Section~\ref{sec_IntendedReader}.  As in Section~\ref{sec_IntendedReader}, the
-%   user characteristics should be specific an unambiguous.  For instance, ``The
-%   end user of \progname{} should have an understanding of undergraduate Level 1
-%   Calculus and Physics.''}
+
 
 \subsection{System Constraints}
 
 No contraints were integrated in the program design that weren't at the scope of the 
 \progname{} software's operational implementation.
-% \plt{System constraints differ from other type of requirements because they
-%   limit the developers' options in the system design and they identify how the
-%   eventual system must fit into the world. This is the only place in the SRS
-%   where design decisions can be specified.  That is, the quality requirement for
-%   abstraction is relaxed here.  However, system constraints should only be
-%   included if they are truly required.}
+
 
 \section{Specific System Description}
 
 
-% This section first presents the problem description, which gives a high-level
-% view of the problem to be solved.  This is followed by the solution characteristics
-% specification, which presents the assumptions, theories, definitions and finally
-% the instance models.  \plt{Add any project specific details that are relevant
-%   for the section overview.}
+
 
 \subsection{Problem Description} \label{Sec_pd}
 
@@ -591,11 +417,6 @@ substitution matrices on the alignment quality of genetic sequences.
 \subsubsection{Terminology and  Definitions}
 
 
-% \plt{This section is expressed in words, not with equations.  It provide the
-%   meaning of the different words and phrases used in the domain of the problem.
-% The terminology is used to introduce concepts from the world outside of the
-% mathematical model  The terminology provides a real world connection to give the
-% mathematical model meaning.}
 
 This subsection provides a list of terms that are used in the subsequent
 sections and their meaning, with the purpose of reducing ambiguity and making it
@@ -619,22 +440,6 @@ a deletion or insertion of a base pair, and penalized with units of alignment qu
 
 \subsubsection{Physical System Description} \label{sec_phySystDescrip}
 
-% \plt{The purpose of this section is to clearly and unambiguously state the
-%   physical system that is to be modelled. Effective problem solving requires a
-%   logical and organized approach. The statements on the physical system to be
-%   studied should cover enough information to solve the problem. The physical
-%   description involves element identification, where elements are defined as
-%   independent and separable items of the physical system. Some example elements
-%   include acceleration due to gravity, the mass of an object, and the size and
-%   shape of an object. Each element should be identified and labelled, with their
-%   interesting properties specified clearly. The physical description can also
-%   include interactions of the elements, such as the following: i) the
-%   interactions between the elements and their physical environment; ii) the
-%   interactions between elements; and, iii) the initial or boundary conditions.}
-
-% \plt{The elements of the physical system do not have to correspond to an actual
-% physical entity.  They can be conceptual.  This is particularly important when
-% the documentation is for a numerical method. }
 
 The physical system of \progname{}, as shown in Figure~\ref{fig:sequence_alignment},
 includes the following elements:
@@ -661,15 +466,6 @@ includes the following elements:
 
 \subsubsection{Goal Statements}
 
-% \plt{The goal statements refine the ``Problem Description''
-%   (Section~\ref{Sec_pd}).  A goal is a functional objective the system under
-%   consideration should achieve. Goals provide criteria for sufficient
-%   completeness of a requirements specification and for requirements
-%   pertinence. Goals will be refined in Section “Instanced Models”
-%   (Section~\ref{sec_instance}). Large and complex goals should be decomposed
-%   into smaller sub-goals.  The goals are written abstractly, with a minimal
-%   amount of technical language.  They should be understandable by non-domain
-%   experts.}
 
 \noindent Given two genetic sequences of size n, the goal statements are:
 
@@ -685,48 +481,6 @@ benchmarked set of substitution matrices
 
 \subsection{Solution Characteristics Specification}
 
-% \plt{This section specifies the information in the solution domain of the system
-%   to be developed. This section is intended to express what is required in
-%   such a way that analysts and stakeholders get a clear picture, and the
-%   latter will accept it. The purpose of this section is to reduce the problem
-%   into one expressed in mathematical terms. Mathematical expertise is used to
-%   extract the essentials from the underlying physical description of the
-%   problem, and to collect and substantiate all physical data pertinent to the
-%   problem.}
-
-% \plt{This section presents the solution characteristics by successively refining
-%   models.  It starts with the abstract/general Theoretical Models (TMs) and
-%   refines them to the concrete/specific Instance Models (IMs).  If necessary
-%   there are intermediate refinements to General Definitions (GDs).  All of these
-%   refinements can potentially use Assumptions (A) and Data Definitions (DD).
-%   TMs are refined to create new models, that are called GMs or IMs. DDs are not
-%   refined; they are just used. GDs and IMs are derived, or refined, from other
-%   models. DDs are not derived; they are just given. TMs are also just given, but
-%   they are refined, not used.  If a potential DD includes a derivation, then
-%   that means it is refining other models, which would make it a GD or an IM.}
-
-% \plt{The above makes a distinction between ``refined'' and ``used.'' A model is
-%   refined to another model if it is changed by the refinement. When we change a
-%   general 3D equation to a 2D equation, we are making a refinement, by applying
-%   the assumption that the third dimension does not matter. If we use a
-%   definition, like the definition of density, we aren't refining, or changing
-%   that definition, we are just using it.}
-
-% \plt{The same information can be a TM in one problem and a DD in another.  It is
-%   about how the information is used.  In one problem the definition of
-%   acceleration can be a TM, in another it would be a DD.}
-
-% \plt{There is repetition between the information given in the different chunks
-%   (TM, GDs etc) with other information in the document.  For instance, the
-%   meaning of the symbols, the units etc are repeated.  This is so that the
-%   chunks can stand on their own when being read by a reviewer/user.  It also
-%   facilitates reuse of the models in a different context.}
-
-% \noindent \plt{The relationships between the parts of the document are show in
-%   the following figure.  In this diagram ``may ref'' has the same role as
-%   ``uses'' above.  The figure adds ``Likely Changes,'' which are able to
-%   reference (use) Assumptions.}
-
 \begin{figure}[H]
   \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
 \end{figure}
@@ -736,31 +490,9 @@ Subsection~\ref{sec_instance}.  The information to understand the meaning of the
 instance models and their derivation is also presented, so that the instance
 models can be verified.
 
-% \subsubsection{Types}
-
-% \plt{This section is optional. Defining types can make the document easier to
-% understand.}
-
-% \subsubsection{Scope Decisions}
-
-% \plt{This section is optional.}
-% \subsubsection{Modelling Decisions}
-
-% \plt{This section is optional.}
 
 \subsubsection{Assumptions} \label{sec_assumpt}
 
-% \plt{The assumptions are a refinement of the scope.  The scope is general, where
-%   the assumptions are specific.  All assumptions should be listed, even those
-%   that domain experts know so well that they are rarely (if ever) written down.}
-% \plt{The document should not take for granted that the reader knows which
-%   assumptions have been made. In the case of unusual assumptions, it is
-%   recommended that the documentation either include, or point to, an explanation
-%   and justification for the assumption.} 
-% \plt{If it helps with the organization and understandability, the assumptions
-% can be presented as sub sections.  The following sub-sections are options:
-% background theory assumptions, helper theory assumptions, generic theory
-% assumptions, problem specific assumptions, and rationale assumptions}
 
 This section simplifies the original problem and helps in developing the
 theoretical model by filling in the missing information for the physical system.
@@ -775,26 +507,12 @@ DNA-sequences-only: An alphabet of 4 letters, standardized to the genetic DNA no
 to represent the genetic sequences [DD\autoref{DD_substitution_matrices}]
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{two-sequences-only}:]
 Two-sequences-only: The only valid number of genetic sequences to be compared is two [DD\autoref{DD_comparative_alginment_matrix}][GS\autoref{generate_alignment}][IM\autoref{IM_needleman_wunsch}].
-  % \plt{Short description of each assumption.  Each assumption
-  %   should have a meaningful label.  Use cross-references to identify the
-  %   appropriate traceability to TM, GD, DD etc., using commands like dref, ddref
-  %   etc.  Each assumption should be atomic - that is, there should not be an
-  %   explicit (or implicit) ``and'' in the text of an assumption.}
 
 \end{itemize}
 
 \subsubsection{Theoretical Models}\label{sec_theoretical}
 
-% \plt{Theoretical models are sets of abstract mathematical equations or axioms
-%   for solving the problem described in Section ``Physical System Description''
-%   (Section~\ref{sec_phySystDescrip}). Examples of theoretical models are
-%   physical laws, constitutive equations, relevant conversion factors, etc.}
 
-% \plt{Optionally the theory section could be divided into subsections to provide
-% more structure and improve understandability and reusability.  Potential
-% subsections include the following: Context theories, background theories, helper
-% theories, generic theories, problem specific theories, final theories and
-% rationale theories.}
 
 This section focuses on the general equations and laws that \progname{} is based
 on.  
@@ -866,88 +584,20 @@ None
 % #1 derivation - not applicable by default
 {}
 
-% \plt{``Ref.\ By'' is used repeatedly with the different types of information.
-%   This stands for Referenced By.  It means that the models, definitions and
-%   assumptions listed reference the current model, definition or assumption.
-%   This information is given for traceability.  Ref. By provides a pointer in the
-%   opposite direction to what we commonly do.  You still need to have a reference
-%   in the other direction pointing to the current model, definition or
-%   assumption.  As an example, if TM1 is referenced by GD2, that means that GD2 will
-%   explicitly include a reference to TM1.}
-
 ~\newline
 
 \subsubsection{General Definitions}\label{sec_gendef}
 
-% \plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
-%   other GDs.  The GDs are less abstract than the TMs.  Generally the reduction
-%   in abstraction is possible through invoking (using/referencing) Assumptions.
-%   For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
-%   GD could take the general law and apply it to get a 1D equation.}
 
 This section collects the laws and equations that will be used in building the
 instance models.
 
-% \plt{Some projects may not have any content for this section, but the section
-%   heading should be kept.}  \plt{Modify the examples below for your problem, and
-%   add additional definitions as appropriate.}
 
-% ~\newline
 
-% \noindent
-% \begin{minipage}{\textwidth}
-% \renewcommand*{\arraystretch}{1.5}
-% \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-% \hline
-% \rowcolor[gray]{0.9}
-% Number& GD\refstepcounter{defnum}\thedefnum \label{NL}\\
-% \hline
-% Label &\bf Needleman-Wunsch algorithm \\
-% \hline
-% % Units&$MLt^{-3}T^0$\\
-% % \hline
-% SI Units& {} \\
-% \hline
-% Equation&$F_{ij} = \max(F_{i-1,j-1} + S(SEQ_{A_i}, SEQ_{B_j}), F_{i,j-1} + g, F_{i-1,j} + g)$  \\
-% \hline
-% Description & 
-% The above equation gives the optimal alignment score between two genetic sequences $SEQ_{A,i}$ and $SEQ_{B,j}$
-% given in base pair (bp) units, where $F_{i,j}$ is the alignment score at position $i$ in genetic sequence $SEQ_A$ 
-% and position $j$ in genetic sequence $SEQ_B$ (in qa units), $g$ is the gap penalty associated with a deletion 
-% or insertion (given in qa units), and $S$ is the substitution matrix (given in qa units).
-% \\
-% & $q(t)$ is the thermal flux (\si{\watt\per\square\metre}).\\
-% & $h$ is the heat transfer coefficient, assumed independent of $T$ (\aref{A_hcoeff})
-% 	(\si{\watt\per\square\metre\per\celsius}).\\
-% &$\Delta T(t)$= $T(t) - T_{\text{env}}(t)$ is the time-dependent thermal gradient
-% between the environment and the object (\si{\celsius}).
-% \\
-% \hline
-%   Source & Citation here \\
-%   \hline
-%   Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
-%   \hline
-% \end{tabular}
-% \end{minipage}\\
-
-% \subsubsection*{Detailed derivation of simplified rate of change of temperature}
-
-% No detailed derivation necessary to describe the recursive nature of the algorithm
-% \plt{This may be necessary when the necessary information does not fit in the
-%   description field.}
-% \plt{Derivations are important for justifying a given GD.  You want it to be
-%   clear where the equation came from.}
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
-% \plt{The Data Definitions are definitions of symbols and equations that are
-%   given for the problem.  They are not derived; they are simply used by other
-%   models.  For instance, if a problem depends on density, there may be a data
-%   definition for the equation defining density.  The DDs are given information
-%   that you can use in your other modules.}
 
-% \plt{All Data Definitions should be used (referenced) by at least one other
-%   model.}
 
 This section collects and defines all the data needed to build the instance
 models. The dimension of each quantity is also given.  
@@ -958,35 +608,6 @@ models. The dimension of each quantity is also given.
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \noindent
-% \begin{minipage}{\textwidth}
-% \renewcommand*{\arraystretch}{1.5}
-% \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-% \hline
-% \rowcolor[gray]{0.9}
-% Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_comparative_alginment_matrix}\\
-% \hline
-% Label& \bf Comparative alignment matrix\\
-% \hline
-% Symbol &$F$\\
-% \hline
-% % Units& $Mt^{-3}$\\
-% % \hline
-%   Units & qa \\
-%   \hline
-%   Equation&$F_{ij} = \max(F_{i-1,j-1} + S(SEQ_{A_i}, SEQ_{B_j}), F_{i,j-1} + g, F_{i-1,j} + g)$\\
-%   \hline
-%   Description & 
-%                 Comparative matrix of the alignment between two sequences, encoding the positional 
-%                 quality of each possible combination of the base pairs that conform such alignment.
-%   \\
-%   \hline
-%   Sources& -- \\
-%   \hline
-%   Ref.\ By & \iref{IM_needleman_wunsch}\\
-%   \hline
-% \end{tabular}
-% \end{minipage}\\
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1085,46 +706,8 @@ Ref.\ By & \iref{IM_needleman_wunsch}\\
 \end{tabular}
 \end{minipage}\\
 
-% ##########################################################
 
-% \subsubsection{Data Types}\label{sec_datatypes}
 
-% \plt{This section is optional.  In many scientific computing programs it isn't
-%   necessary, since the inputs and outpus are straightforward types, like reals,
-%   integers, and sequences of reals and integers.  However, for some problems it
-%   is very helpful to capture the type information.}
-
-% \plt{The data types are not derived; they are simply stated and used by other
-%   models.}
-
-% \plt{All data types must be used by at least one of the models.}
-
-% \plt{For the mathematical notation for expressing types, the recommendation is
-%   to use the notation of~\citet{HoffmanAndStrooper1995}.}
-
-% This section collects and defines all the data types needed to document the
-% models. \plt{Modify the examples below for your problem, and add additional
-%   definitions as appropriate.}
-
-% ~\newline
-
-% \noindent
-% \begin{minipage}{\textwidth}
-% \renewcommand*{\arraystretch}{1.5}
-% \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-%   \hline
-%   \rowcolor[gray]{0.9}
-%   Type Name & Name for Type\\
-%   \hline
-%   Type Def & mathematical definition of the type\\
-%   \hline
-%   Description & description here
-%   \\
-%   \hline
-%   Sources & Citation here, if the type is borrowed from another source\\
-%   \hline
-% \end{tabular}
-% \end{minipage}\\
 
 \subsubsection{Instance Models} \label{sec_instance}    
 
@@ -1237,48 +820,8 @@ uncertainty quantification exercise.
 \end{table}
 
 \noindent 
-% \begin{description}
-% \item[(*)] The vector $O_{AB}$ is presented as a named collection of scores
-% \end{description}
 
-% \begin{table}[!h]
-% \caption{Specification Parameter Values} \label{TblSpecParams}
-% \renewcommand{\arraystretch}{1.2}
-% \noindent \begin{longtable*}{l l} 
-%   \toprule
-%   \textbf{Var} & \textbf{Value} \\
-%   \midrule 
-%   $L_\text{min}$ & 0.1 \si{\metre}\\
-%   \bottomrule
-% \end{longtable*}
-% \end{table}
 
-% \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
-
-% \noindent
-% A correct solution must exhibit \plt{fill in the details}.  \plt{These
-%   properties are in addition to the stated requirements.  There is no need to
-%   repeat the requirements here.  These additional properties may not exist for
-%   every problem.  Examples include conservation laws (like conservation of
-%   energy or mass) and known constraints on outputs, which are usually summarized
-%   in tabular form.  A sample table is shown in Table~\ref{TblOutputVar}}
-
-% \begin{table}[!h]
-% \caption{Output Variables} \label{TblOutputVar}
-% \renewcommand{\arraystretch}{1.2}
-% \noindent \begin{longtable*}{l l} 
-%   \toprule
-%   \textbf{Var} & \textbf{Physical Constraints} \\
-%   \midrule 
-%   $T_W$ & $T_\text{init} \leq T_W \leq T_C$ (by~\aref{A_charge})
-%   \\
-%   \bottomrule
-% \end{longtable*}
-% \end{table}
-
-% \plt{This section is not for test cases or techniques for verification and
-%   validation.  Those topics will be addressed in the Verification and Validation
-%   plan.}
 
 \section{Requirements}
 
@@ -1333,22 +876,6 @@ alignment scores \iref{IM_needleman_wunsch}.
 
 \subsection{Nonfunctional Requirements}
 
-% \plt{List your nonfunctional requirements.  You may consider using a fit
-%   criterion to make them verifiable.}
-% \plt{The goal is for the nonfunctional requirements to be unambiguous, abstract
-%   and verifiable.  This isn't easy to show succinctly, so a good strategy may be
-% to give a ``high level'' view of the requirement, but allow for the details to
-% be covered in the Verification and Validation document.}
-% \plt{An absolute requirement on a quality of the system is rarely needed.  For
-%   instance, an accuracy of 0.0101 \% is likely fine, even if the requirement is
-%   for 0.01 \% accuracy.  Therefore, the emphasis will often be more on
-%   describing now well the quality is achieved, through experimentation, and
-%   possibly theory, rather than meeting some bar that was defined a priori.}
-% \plt{You do not need an entry for correctness in your NFRs.  The purpose of the
-%   SRS is to record the requirements that need to be satisfied for correctness.
-%   Any statement of correctness would just be redundant. Rather than discuss
-%   correctness, you can characterize how far away from the correct (true)
-%   solution you are allowed to be.  This is discussed under accuracy.}
 
 \noindent \begin{itemize}
 
@@ -1384,9 +911,6 @@ maintainability and portability, which are key nonfunctional requirements.
 
 The second rationale that justifies assumption \aref{two-sequences-only} is the
 nature of the Needleman-Wunsch algorithm, which guarantees optimal alignment in 2D matrices.
-% \plt{Provide a rationale for the decisions made in the documentation.  Rationale
-% should be provided for scope decisions, modelling decisions, assumptions and
-% typical values.}
 
 \section{Likely Changes}    
 
@@ -1421,44 +945,10 @@ other. Table~\ref{Table:A_trace} shows the dependencies of theoretical models,
 general definitions, data definitions, instance models, and likely changes on
 the assumptions.
 
-% \plt{You will have to modify these tables for your problem.}
 
-% \plt{The traceability matrix is not generally symmetric.  If GD1 uses A1, that
-%   means that GD1's derivation or presentation requires invocation of A1.  A1
-%   does not use GD1.  A1 is ``used by'' GD1.}
-
-% \plt{The traceability matrix is challenging to maintain manually.  Please do
-%   your best.  In the future tools (like Drasil) will make this much easier.}
-
-% \afterpage{
-% \begin{landscape}
 \begin{table}[h!]
 \centering
-% \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-% \hline
-% 	& \aref{A_OnlyThermalEnergy}& \aref{A_hcoeff}& \aref{A_mixed}& \aref{A_tpcm}& \aref{A_const_density}& \aref{A_const_C}& \aref{A_Newt_coil}& \aref{A_tcoil}& \aref{A_tlcoil}& \aref{A_Newt_pcm}& \aref{A_charge}& \aref{A_InitTemp}& \aref{A_OpRangePCM}& \aref{A_OpRange}& \aref{A_htank}& \aref{A_int_heat}& \aref{A_vpcm}& \aref{A_PCM_state}& \aref{A_Pressure} \\
-% \hline
-% \tref{T_COE}        & X& & & & & & & & & & & & & & & & & & \\ \hline
-% \tref{T_SHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-% \tref{T_LHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-% \dref{NL}           & & X& & & & & & & & & & & & & & & & & \\ \hline
-% \dref{ROCT}         & & & X& X& X& X& & & & & & & & & & & & & \\ \hline
-% \ddref{FluxCoil}    & & & & & & & X& X& X& & & & & & & & & & \\ \hline
-% \ddref{FluxPCM}     & & & X& X& & & & & & X& & & & & & & & & \\ \hline
-% \ddref{D_HOF}       & & & & & & & & & & & & & & & & & & & \\ \hline
-% \ddref{D_MF}        & & & & & & & & & & & & & & & & & & & \\ \hline
-% \iref{ewat}         & & & & & & & & & & & X& X& & X& X& X& & & X \\ \hline
-% \iref{epcm}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
-% \iref{I_HWAT}       & & & & & & & & & & & & & & X& & & & & X \\ \hline
-% \iref{I_HPCM}       & & & & & & & & & & & & & X& & & & & X & \\ \hline
-% \lcref{LC_tpcm}     & & & & X& & & & & & & & & & & & & & & \\ \hline
-% \lcref{LC_tcoil}    & & & & & & & & X& & & & & & & & & & & \\ \hline
-% \lcref{LC_tlcoil}   & & & & & & & & & X& & & & & & & & & & \\ \hline
-% \lcref{LC_charge}   & & & & & & & & & & & X& & & & & & & & \\ \hline
-% \lcref{LC_InitTemp} & & & & & & & & & & & & X& & & & & & & \\ \hline
-% \lcref{LC_htank}    & & & & & & & & & & & & & & & X& & & & \\
-% \hline
-% \end{tabular}
+
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
   & \aref{dna-sequences-only}& \aref{two-sequences-only}& \tref{TM:DPO}& \ddref{DD_comparative_alginment_matrix}& \iref{IM_needleman_wunsch}\\
@@ -1493,19 +983,6 @@ the assumptions.
 \caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
 \label{Table:trace}
 \end{table}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \begin{tabular}{|c|c|c|c|c|}
-% \hline
-%   & \iref{IM_needleman_wunsch} & \ref{sec_DataConstraints} & \rref{R_Inputs} & \rref{R_Calculate} \\ \hline
-% \iref{IM_needleman_wunsch} & -- & X & X & X \\  \hline
-% \rref{R_Inputs} & X & X & -- & X \\  \hline
-% \rref{R_OutputInputs} & X & X & X & X \\  \hline
-% \rref{R_Calculate} & X & X & X & -- \\  \hline
-% \rref{R_VerifyOutput} & X & X & X & X \\  \hline
-% \rref{R_Output} & X & X & X & X \\ \hline
-% \end{tabular}
 
 
 \begin{table}[h!]
@@ -1555,127 +1032,12 @@ instance models, requirements, and data constraints on each other.
 	\end{center}
 \end{figure}
 
-% \section{Development Plan}
-
-% \plt{This section is optional.  It is used to explain the plan for developing
-%   the software.  In particular, this section gives a list of the order in which
-%   the requirements will be implemented.  In the context of a course  this is
-%   where you can indicate which requirements will be implemented as part of the
-%   course, and which will be ``faked'' as future work.  This section can be
-%   organized as a prioritized list of requirements, or it could should the
-%   requirements that will be implemented for ``phase 1'', ``phase 2'', etc.}
 
 \section{Values of Auxiliary Constants}
-
-% \plt{Show the values of the symbolic parameters introduced in the report.}
-
-% \plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-% Their values are defined in this section for easy maintenance.}
-
-% \plt{The value of FRACTION, for the Maintainability NFR would be given here.}
-% \begin{table}[h!]
-% \centering
-% \begin{tabular}{|l|l|c|c|}
-% \hline
-% \textbf{Symbol} & \textbf{Description} & \textbf{Value} & \textbf{Unit} \\
-% \hline
-% $BS$ & Baseline substitution matrix $s \in \mathbb{S}$ & $\begin{bmatrix}
-% 0 & -3 & -1 & -3 \\
-% -3 & 0 & -3 & -1 \\
-% -1 & -3 & 0 & -3 \\
-% -3 & -1 & -3 & 0
-% \end{bmatrix}$ & qa \\
-% \hline
-% $JC$ & Jukes Cantor substitution matrix $s \in \mathbb{S}$ & $\begin{bmatrix}
-% 1.0 & -\frac{1}{3} & -\frac{1}{3} & -\frac{1}{3} \\
-% -\frac{1}{3} & 1.0 & -\frac{1}{3} & -\frac{1}{3} \\
-% -\frac{1}{3} & -\frac{1}{3} & 1.0 & -\frac{1}{3} \\
-% -\frac{1}{3} & -\frac{1}{3} & -\frac{1}{3} & 1.0
-% \end{bmatrix}$ & qa \\
-% \hline
-% $K80$ & Kimura 1980 substitution matrix $s \in \mathbb{S}$ & $\begin{bmatrix}
-% 1.0 & -2.0 & -1.0 & -2.0 \\
-% -2.0 & 1.0 & -2.0 & -1.0 \\
-% -1.0 & -2.0 & 1.0 & -2.0 \\
-% -2.0 & -1.0 & -2.0 & 1.0
-% \end{bmatrix}$ & qa \\
-% \hline
-% $HKY85$ & Hasegawa-Kishino-Yano 1985 matrix $s \in \mathbb{S}$ & $\begin{bmatrix}
-% 1.0 & -2.5 & -1.0 & -2.5 \\
-% -2.5 & 1.0 & -2.5 & -1.0 \\
-% -1.0 & -2.5 & 1.0 & -2.5 \\
-% -2.5 & -1.0 & -2.5 & 1.0
-% \end{bmatrix}$ & qa \\
-% \hline
-% $TN93$ & Tamura-Nei 1993 substitution matrix $s \in \mathbb{S}$ & $\begin{bmatrix}
-% 1.0 & -2.5 & -1.0 & -2.5 \\
-% -2.5 & 1.0 & -2.5 & -1.5 \\
-% -1.0 & -2.5 & 1.0 & -2.5 \\
-% -2.5 & -1.5 & -2.5 & 1.0
-% \end{bmatrix}$ & qa \\
-% \hline
-% \end{tabular}
-% \caption{Values of Auxiliary Constants}
-% \label{table:aux_constants}
-% \end{table}
 
 \newpage
 
 \bibliographystyle {plainnat}
 \bibliography {../../refs/References}
-
-% \newpage
-
-% \noindent \plt{The following is not part of the template, just some things to consider
-%   when filing in the template.}
-
-% \noindent \plt{Grammar, flow and \LaTeX advice:
-% \begin{itemize}
-% \item For Mac users \texttt{*.DS\_Store} should be in \texttt{.gitignore}
-% \item \LaTeX{} and formatting rules
-% \begin{itemize}
-% \item Variables are italic, everything else not, includes subscripts (link to
-%   document)
-% \begin{itemize}
-% \item \href{https://physics.nist.gov/cuu/pdf/typefaces.pdf}{Conventions}
-% \item Watch out for implied multiplication
-% \end{itemize}
-% \item Use BibTeX
-% \item Use cross-referencing
-% \end{itemize}
-% \item Grammar and writing rules
-% \begin{itemize}
-% \item Acronyms expanded on first usage (not just in table of acronyms)
-% \item ``In order to'' should be ``to''
-% \end{itemize}
-% \end{itemize}}
-
-% \noindent \plt{Advice on using the template:
-% \begin{itemize}
-% \item Difference between physical and software constraints
-% \item Properties of a correct solution means \emph{additional} properties, not
-%   a restating of the requirements (may be ``not applicable'' for your problem).
-%   If you have a table of output constraints, then these are properties of a
-%   correct solution.
-% \item Assumptions have to be invoked somewhere
-% \item ``Referenced by'' implies that there is an explicit reference
-% \item Think of traceability matrix, list of assumption invocations and list of
-%   reference by fields as automatically generatable
-% \item If you say the format of the output (plot, table etc), then your
-%   requirement could be more abstract
-% \end{itemize}
-% }
-
-% \newpage{}
-% \section*{Appendix --- Reflection}
-
-% \wss{Not required for CAS 741}
-
-% The information in this section will be used to evaluate the team members on the
-% graduate attribute of Lifelong Learning.  
-
-% \input{../Reflection.tex}
-
-% \input{../SRS_Reflection.tex}
 
 \end{document}
