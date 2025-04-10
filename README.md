@@ -1,6 +1,9 @@
 # Substitution-Matrix benchmarking with pairwise sequence alignment
 
-Developer Names: Uriel Garcilazo Cruz
+![Alt text](./icons/logo.png "Sublimat logo")
+
+
+Developer: Uriel Garcilazo Cruz
 
 Date of project start: January 18th, 2025
 
