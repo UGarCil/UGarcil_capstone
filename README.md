@@ -1,8 +1,8 @@
 # Substitution-Matrix benchmarking with pairwise sequence alignment
 
-![Alt text](./icons/logo.png "Sublimat logo")
-
-
+<p align="center">
+  <img src="./icons/logo.png" alt="Substitution Matrix Visualization">
+</p>
 Developer: Uriel Garcilazo Cruz
 
 Date of project start: January 18th, 2025
