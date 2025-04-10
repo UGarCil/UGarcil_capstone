@@ -64,7 +64,7 @@ def export(data, file_path):
 # >Sequence2
 # ATGGA
 # @endcode
-def read_sequence_file(file_path):
+def read_sequence_file(file_path, max_length=5000):
     """@brief Gets the sequence data from the file path"""
     with open(file_path, encoding="utf-8") as file:
         data = file.readlines()
@@ -82,6 +82,12 @@ def read_sequence_file(file_path):
     seq2 = data[3].strip()
     if len(seq1) < 1 or len(seq2) < 1:
         raise ValueError("Zero-length sequences Error")
+    
+    # Validate sequence length
+    if len(seq1) > max_length or len(seq2) > max_length:
+        raise ValueError(f"Sequence length exceeds maximum allowed size ({max_length}bp)")
+    
+    
     return (seq1, seq2)
 
 

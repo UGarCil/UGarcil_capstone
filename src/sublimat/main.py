@@ -41,7 +41,7 @@ from sublimat.sequence_data_structure import SequenceData
 from sublimat.substitution_matrix import SubMat
 
 
-## @fn main(seq_data: SequenceData, matrix_bench: SubMat) -> list
+## @fn main(seq_data: set, matrix_bench: str) -> list
 # @brief Execute full matrix_bench pipeline
 # @ingroup core_module
 # @param seq_data Validated sequence pair (from @ref seq_data_module)

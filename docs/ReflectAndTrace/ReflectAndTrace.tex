@@ -1,7 +1,23 @@
 \documentclass{article}
-
+\usepackage{natbib} 
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{array}
+
+\definecolor{linkcolor}{rgb}{0,0.2,0.6}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=linkcolor,
+    urlcolor=linkcolor,
+}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}2cm}
+\newcolumntype{C}{>{\centering\arraybackslash}p{2cm}}
+
+\usepackage[table]{xcolor}
 
 \title{Reflection and Traceability Report on \progname}
 
@@ -16,129 +32,346 @@
 
 \maketitle
 
-\plt{Reflection is an important component of getting the full benefits from a
-learning experience.  Besides the intrinsic benefits of reflection, this
-document will be used to help the TAs grade how well your team responded to
-feedback.  Therefore, traceability between Revision 0 and Revision 1 is and
-important part of the reflection exercise.  In addition, several CEAB (Canadian
-Engineering Accreditation Board) Learning Outcomes (LOs) will be assessed based
-on your reflections.}
-
 \section{Changes in Response to Feedback}
-
-\plt{Summarize the changes made over the course of the project in response to
-feedback from TAs, the instructor, teammates, other teams, the project
-supervisor (if present), and from user testers.}
-
-\plt{For those teams with an external supervisor, please highlight how the feedback 
-from the supervisor shaped your project.  In particular, you should highlight the 
-supervisor's response to your Rev 0 demonstration to them.}
-
-\plt{Version control can make the summary relatively easy, if you used issues
-and meaningful commits.  If you feedback is in an issue, and you responded in
-the issue tracker, you can point to the issue as part of explaining your
-changes.  If addressing the issue required changes to code or documentation, you
-can point to the specific commit that made the changes.  Although the links are
-helpful for the details, you should include a label for each item of feedback so
-that the reader has an idea of what each item is about without the need to click
-on everything to find out.}
-
-\plt{If you were not organized with your commits, traceability between feedback
-and commits will not be feasible to capture after the fact.  You will instead
-need to spend time writing down a summary of the changes made in response to
-each item of feedback.}
-
-\plt{You should address EVERY item of feedback.  A table or itemized list is
-recommended.  You should record every item of feedback, along with the source of
-that feedback and the change you made in response to that feedback.  The
-response can be a change to your documentation, code, or development process.
-The response can also be the reason why no changes were made in response to the
-feedback.  To make this information manageable, you will record the feedback and
-response separately for each deliverable in the sections that follow.}
-
-\plt{If the feedback is general or incomplete, the TA (or instructor) will not
-be able to grade your response to feedback.  In that case your grade on this
-document, and likely the Revision 1 versions of the other documents will be
-low.} 
-
+% #############################################################
 \subsection{SRS and Hazard Analysis}
 
+The SRS documentation was the first document of its type I ever made for any 
+of my programs. The interpretation of the requirements was a bit difficult at first, 
+especially for the lack of specific details in the problem statement, attempting to maintain 
+a balance between being too specific and too vague. The theoretical models that served as 
+foundation to later documents were also one of the most difficult parts to write. 
+The feedback received from my peers and instructor pointed at clear semantic issues 
+between functional vs. non-functional requirements. To this end, the detailing of specific 
+condition boundaries for my theoretical model (i.e. edge cases) and its refactoring
+into the return of a function with mathematical notation was feedback that arose later in 
+class.
+
+
+\begin{table}[h]
+    \centering
+    \caption{Feedback Response Tracking - SRS}
+    \label{tab:feedbackSRS}
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{0.22\textwidth}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{0.18\textwidth}|}
+        \hline
+        \textbf{Label} & \textbf{Changes/Issue} & \textbf{Commit} \\
+        \hline\hline
+        SRS and PoC & Initial submission for SRS and PoC shared with peer reviewers and instructor & \href{https://github.com/UGarCil/UGarcil_capstone/tree/aecf366c770d223f83eb9bfa6c4c393a2deb07d8}{aecf366} \\
+        \hline
+        SRS - Instructor feedback & Changes in the definition of theoretical models, and non-functional requirements & \href{https://github.com/UGarCil/UGarcil_capstone/commit/ab39de66f9337a4d7b16575f4caf76358bb562ad}{ab39de} \\
+        \hline
+        SRS - Issue: Please declare edge cases & Added handling and documentation for edge cases as per peer domain expert's suggestion & \href{https://github.com/UGarCil/UGarcil_capstone/commit/ab39de66f9337a4d7b16575f4caf76358bb562ad}{ab39de} \\
+        \hline
+        SRS - Unclear IM1 Definition & Instance model updated, adding clarity and refactoring th. model as function & \href{https://github.com/UGarCil/UGarcil_capstone/commit/ab39de66f9337a4d7b16575f4caf76358bb562ad}{ab39de} \\
+        \hline
+    \end{tabularx}
+\end{table}
+% ###################################################################### 
+\newpage
+
 \subsection{Design and Design Documentation}
+The module interface specification and the module guide for \progname{}  started with a 
+complex design with 9 modules, from which only 5 were implemented at the end. 
+My understanding of such documentation was limited (still is due to the extensive nature of the
+topic). Especially confusing at the beginning were the multiple definitions of modules, whose categorizations 
+seemed at times arbitrary or justifiable only from a functional perspective. The slides from the course helped, 
+as I was able to focus this categorization in libraries, control, abstract, abstract data types and 
+record. From an operational point of view, and as a coder, having a better understanding on how abstraction 
+in modular design differs from the definitions of modules given by the programming languages themselves gave me a missing 
+piece in the capacity to scale and expand my projects. I began the files with a clear notion of 
+functionality, services and secrets. The effects in the quality of my code became obvious during testing, where 
+this modularity allowed me to evlauate the code efficiently.
+My understanding in modularity was further reinforced by the instructor's feedback, whose comments were primarily oriented towards the type of 
+information that should be included given a specific module type.
 
+\begin{table}[h]
+    \centering
+    \caption{Feedback Response Tracking}
+    \label{tab:feedbackMGMIS}
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{0.22\textwidth}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{0.18\textwidth}|}
+        \hline
+        \textbf{Label} & \textbf{Changes/Issue} & \textbf{Commit} \\
+        \hline\hline
+        MIS/MG Submission & Initial submission for MIS/MG & \href{https://github.com/UGarCil/UGarcil_capstone/commit/f35477990295cf98c539eee0f85036c674b48171}{a2789ce} \\
+        \hline
+        MG Correction & Initial submission for MIS/MG & \href{https://github.com/UGarCil/UGarcil_capstone/commit/fd2bd6f5b5341c89f7e1f6c776bde296b6cbc12c}{fd2bd6f} \\
+        \hline
+        MG New version & Update version with newer version in modular design & \href{https://github.com/UGarCil/UGarcil_capstone/commit/3ada8465952e6575a826ef02fc94bf4a8f519db8}{3ada846} \\
+        \hline
+        MG new version annotated & Minor update reflecting the new version of documentation for April 1st. & \href{https://github.com/UGarCil/UGarcil_capstone/commit/fb7bb98bb145bbf0a482aeb724c165c636fb190b}{fb7bb98} \\
+        \hline
+        MG New version & Update version with clarification on data types and 5 modules & \href{https://github.com/UGarCil/UGarcil_capstone/commit/2cf0fbde1519ea61a820182e5381c98b612500b6}{2cf0fbd} \\
+        \hline
+    \end{tabularx}
+\end{table}
+% ######################################################################
+
+\newpage
 \subsection{VnV Plan and Report}
+The validation and verification plan was one of the most technical documents in the project. 
+I found it easy to write in principle, but difficult given how easy it was to overshoot the goals to achieve, based on the 
+limited amount of time, and available human resources to help in the development of the software. 
+The difference between validation and verification, which addresses very different 
+perpectives in the development of the software (Are we building the right product? vs Are we building the product right?), was 
+one of my biggest take-aways from building this project. As it turns out, my project cannot compete 
+with the heuristic approach that most molecular biologists use nowadays to analize genome-size data. 
+In this sense, the VnV plan could only be justified as an exercise. However! Although the assumption for the 
+course was that validation tests passed (even if we didn't implement them), I do believe this project sets 
+the right track for building the foundation for future releases, which could greatly benefit from the 
+structure written for \progname{}.
+In addition, the problem it's intended to solve — What is the best substitution matrix to use for two sequences of DNA — relies on the assumption that a global alignment is achievable, 
+something that most heuristic algorithms cannot deliver. Therefore, I find the services delivered by my software to have validity in 
+the field of bioinformatics, albeit limited to a specific set of sequences.
 
+
+\begin{table}[h]
+    \centering
+    \caption{Feedback Response Tracking}
+    \label{tab:feedbackVnV}
+    \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{0.22\textwidth}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{0.18\textwidth}|}
+        \hline
+        \textbf{Label} & \textbf{Changes/Issue} & \textbf{Commit} \\
+        \hline\hline
+        VnV Submission & Initial submission for VnV & \href{https://github.com/UGarCil/UGarcil_capstone/commit/b57dbb02bdc86099d7e74cf161d3161513e9c361}{b57dbb0} \\
+        \hline
+        VnV Correction & Minor update reflecting the new version of documentation for April 1st. & \href{https://github.com/UGarCil/UGarcil_capstone/commit/98663bc17f2253d129e7fe6c81e935975f21f1ce}{98663bc} \\
+        \hline
+        VnV Updated version & Main update reflecting the new version of documentation for April 4th after comments. & \href{https://github.com/UGarCil/UGarcil_capstone/commit/9dbf9028a5dafb9805c4763bf266ce024dfb6c2e}{9dbf902} \\
+        \hline
+    \end{tabularx}
+\end{table}
+% ##################################################################
+\newpage
 \section{Challenge Level and Extras}
 
 \subsection{Challenge Level}
 
-\plt{State the challenge level (advanced, general, basic) for your project.  Your challenge level should exactly match what is included in your problem statement.  This should be the challenge level agreed on between you and the course instructor.}
+The challenge level for my project was \textbf{basic}.
+% \plt{State the challenge level (advanced, general, basic) for your project.  Your challenge level should exactly match what is included in your problem statement.  This should be the challenge level agreed on between you and the course instructor.}
 
 \subsection{Extras}
 
-\plt{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.}
+Due to limitations in time and resources (which was pointed at me during the VnV plan),
+the main extra delivered by my program is a \href{https://github.com/UGarCil/UGarcil_capstone/blob/main/docs/UserGuide/UserGuide.pdf}{\textbf{user guide}}
+and a \href{https://replit.com/@garcilau/Sublimat-10#main.py}{\textbf{live demo}}.
+
+% \plt{Summarize the extras (if any) that were tackled by this project.  Extras
+% can include usability testing, code walkthroughs, user documentation, formal
+% proof, GenderMag personas, Design Thinking, etc.  Extras should have already
+% been approved by the course instructor as included in your problem statement.}
 
 \section{Design Iteration (LO11 (PrototypeIterate))}
 
-\plt{Explain how you arrived at your final design and implementation.  How did
-the design evolve from the first version to the final version?} 
+The development in the design and implementation of \progname{} was iterative and sequential. The general 
+progression of the project began with the SRS documentation, which enabled a high level of abstraction in the 
+program elements. How to handle the specifications in a timely manner was the focus of the VnV. It was a this stage 
+where I needed to go back to the SRS after addressing the comments of my domain experts. 
+An updated version of the SRS that declared clear edge cases for the theoretical model, and a more detailed description of the 
+non-functional requirements allowed me to refactor the modularity of the program. The MG and MIS 
+documentation reflected those changes in their initial version — with 9 modules — vs its final version 
+— with 5 modules. The necessity for such changes was highlighted by the lack of secrets and/or services 
+in some of the modules, which were necessary for the program to run, but didn't encapsulate enough complexity, any state variables
+ nor services to justify their existence as modules.
+In addition, some of the most important changes became clear only after diving into the Proof of Concept, where I was able 
+to receive feedback from potential users. After their considerations, it became clear the end user was feeling restricted 
+by the accessibility of substitution matrices in the program, with the obvious solution of adding a 
+file manager module. That's why the final version of the program inserted a control module, 
+and a file manager module.
+% \plt{Explain how you arrived at your final design and implementation.  How did
+% the design evolve from the first version to the final version?} 
 
-\plt{Don't just say what you changed, say why you changed it.  The needs of the
-client should be part of the explanation.  For example, if you made changes in
-response to usability testing, explain what the testing found and what changes
-it led to.}
+% \plt{Don't just say what you changed, say why you changed it.  The needs of the
+% client should be part of the explanation.  For example, if you made changes in
+% response to usability testing, explain what the testing found and what changes
+% it led to.}
 
 \section{Design Decisions (LO12)}
 
-\plt{Reflect and justify your design decisions.  How did limitations,
- assumptions, and constraints influence your decisions?  Discuss each of these
- separately.}
+The design decisions made during the development of \progname{} 
+were based, at least initially, on maximizing the readability of the code, and 
+in such a way the architecture of the program could reflect the MG and MIS documentation.
+However, some of the most important decisions in the design of the software relied on the 
+responsibility to encapsulate the services and secrets reflected in design documentations. 
+In particular, the file manager module could have been dissolved, with its processes 
+assigned to each of the abstract data types that needed to communicate with the operative system, 
+by reading the files or saving the data. However, the decision to keep them all encapsulated in the same 
+specialized module made the code more readable and easier to maintain or change. From this experience
+I learned that building programs for scalability begins with separation of concerns. If my program 
+had had the need to communicate with more modules, changing the behavior of each 
+module would have resulted in a cumbersome task.
+
+In addition, I was particularly interested in designing the control module because 
+it detailed the flow of information in the system. Although I wasn't able to develop the 
+program further in the time available, I would like to explore a future release of the software 
+where the control module is changed into an interface or abstract data type, enabling its 
+integration into larger systems, and the file manager module would be raised at a higher hierarchical level, 
+whereas the alignment module would become a Decision Hiding module, allowing the user to 
+explore other pairwise alignment algorithms.
+
+% \plt{Reflect and justify your design decisions.  How did limitations,
+%  assumptions, and constraints influence your decisions?  Discuss each of these
+%  separately.}
 
 \section{Economic Considerations (LO23)}
 
-\plt{Is there a market for your product? What would be involved in marketing your 
-product? What is your estimate of the cost to produce a version that you could 
-sell?  What would you charge for your product?  How many units would you have to 
-sell to make money? If your product isn't something that would be sold, like an 
-open source project, how would you go about attracting users?  How many potential 
-users currently exist?}
+There are no economic considerations for the implementation or use of \progname{}.
+Its use is strictly intended for research purposes, and the code is open source. 
+This is why \progname{} includes an MIT license with a Commons clause condition that 
+restricts the software from commercial use. 
+% \plt{Is there a market for your product? What would be involved in marketing your 
+% product? What is your estimate of the cost to produce a version that you could 
+% sell?  What would you charge for your product?  How many units would you have to 
+% sell to make money? If your product isn't something that would be sold, like an 
+% open source project, how would you go about attracting users?  How many potential 
+% users currently exist?}
 
 \section{Reflection on Project Management (LO24)}
 
-\plt{This question focuses on processes and tools used for project management.}
+% \plt{This question focuses on processes and tools used for project management.}
+I was lucky to have chosen a project that wasn't too complex, as compared with 
+some outstanding projects shown during presentations. This gave me the opportunity 
+to handle changes in modules and specifications in such a way my project didn't cascade into 
+complex rearrangements in the software design.
 
 \subsection{How Does Your Project Management Compare to Your Development Plan}
 
-\plt{Did you follow your Development plan, with respect to the team meeting plan, 
-team communication plan, team member roles and workflow plan.  Did you use the 
-technology you planned on using?}
+The following table, \ref{tab:progress}, has been modified from \citep{patel2023module}, and summarizes the progress of the project, 
+and how it compares to the development plan.
+
+% ##############################################################
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|p{5cm}|c|p{1.5cm}|p{3cm}|c|}
+    \hline
+    \rowcolor{brown!70!white}\textcolor{white}{\textbf{Task}} & \textcolor{white}{\textbf{Status}} & \textcolor{white}{\textbf{Followed status}} & \textcolor{white}{\textbf{Assigned to}} & \textcolor{white}{\textbf{Start Week}} \\
+    \hline
+    \rowcolor{brown!15!white}\multicolumn{1}{|l|}{\textbf{Planning}} & & \textbf{Low} & & \textbf{Week 1} \\
+    \hline
+    Conduct research on topic & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Draft project problem statement & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Gather stakeholders & \cellcolor{yellow!20}Non-Completed & & Uriel Garcilazo & \\
+    \hline
+    Plan tentative goals & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    \rowcolor{brown!15!white}\multicolumn{1}{|l|}{\textbf{SRS Analysis}} & & \textbf{High} & & \textbf{Week 3} \\
+    \hline
+    Define business objectives and goals & \cellcolor{yellow!20}Non-Completed & & Uriel Garcilazo & \\
+    \hline
+    Formalize project requirements & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Define priorities & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Verify Document by Primary reviewer & \cellcolor{yellow!20}Completed & & Junwei Lin & \\
+    \hline
+    Verify Document by Professor & \cellcolor{yellow!20}Completed & & Smith Spencer & \\
+    \hline
+    \rowcolor{brown!15!white}\multicolumn{1}{|l|}{\textbf{VnV Plan}} & & \textbf{Medium} & & \textbf{Week 6} \\
+    \hline
+    Define Unit tests & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Verify Document by Primary reviewer & \cellcolor{yellow!20}Completed & & Junwei Lin & \\
+    \hline
+    Verify Document by Secondary reviewer & \cellcolor{yellow!20}Completed & & Junwei Lin & \\
+    \hline
+    Verify Document by Professor & \cellcolor{yellow!20}Completed & & Smith Spencer & \\
+    \hline
+    \rowcolor{brown!15!white}\multicolumn{1}{|l|}{\textbf{Design Document}} & & \textbf{High} & & \textbf{Week 9} \\
+    \hline
+    Proof of concept & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Define Modules & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Identified Syntax and Semantics & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Verify Document by Primary reviewer & \cellcolor{yellow!20}Completed & & Junwei Lin & \\
+    \hline
+    Verify Document by Professor & \cellcolor{yellow!20}Completed & & Smith Spencer & \\
+    \hline
+    \rowcolor{brown!15!white}\multicolumn{1}{|l|}{\textbf{Development}} & & \textbf{High} & & \textbf{Week 10} \\
+    \hline
+    Development & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Execution & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    Test cases & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    \rowcolor{brown!15!white}\multicolumn{1}{|l|}{\textbf{VnV Report}} & & \textbf{High} & & \textbf{Week 12} \\
+    \hline
+    Report test cases & \cellcolor{yellow!20}Completed & & Uriel Garcilazo & \\
+    \hline
+    \end{tabular}
+    \caption{Project Progress Tracking}
+    \label{tab:progress}
+    \end{table}
+
+% ###############################################################
+
+% \plt{Did you follow your Development plan, with respect to the team meeting plan, 
+% team communication plan, team member roles and workflow plan.  Did you use the 
+% technology you planned on using?}
 
 \subsection{What Went Well?}
 
-\plt{What went well for your project management in terms of processes and 
-technology?}
+% \plt{What went well for your project management in terms of processes and 
+% technology?}
+
+Because there were no heavy dependencies used in my program, the installation process 
+was straightforward, and \progname{} was able to be installed in most live or demo versions 
+of online python interpreters. 
+The use of GitHub was also a great help in the development of the project, 
+as it allowed me to keep track of the changes made in the code, and to share it with my peers.
 
 \subsection{What Went Wrong?}
 
-\plt{What went wrong in terms of processes and technology?}
+Due to my inexperience handling latex files, filling the initial 
+documentation for SRS was tremendously challenging. I found caveats and compiling 
+issues every 5 minutes. Finding the references and getting used to the .bib format was 
+equaly frustrating. After VnV, however, I was much more comfortable with the syntax.
+
+A more theoretical issue related to my documentation was 
+a clear documentation of the input system. Because of the difficulty 
+handling latex previously stated, I was reluctant to major changes in my 
+SRS documentation, although it was becoming clear that giving the end user the opportunity to 
+handle the substitution matrices on their own, rather than being hardcoded in the program, 
+was an important feature. By the time I reached the proof of concept, the change was 
+unavoidable, because delaying the change would have had serious drawbacks down the 
+MG and MIS documentation.
 
 \subsection{What Would you Do Differently Next Time?}
 
-\plt{What will you do differently for your next project?}
+I would pick a project capable of receiving more input from the user. 
+Rather than building the architecture in Python and terminal, I'd like to try 
+building an API that users and classroom peers could use to give me feedback. 
+This would make the gathering of data from a unique set of highly specialized 
+users much more feasible, as they wouldn't need to install anything.
 
 \section{Reflection on Capstone}
 
-\plt{This question focuses on what you learned during the course of the capstone project.}
+% \plt{This question focuses on what you learned during the course of the capstone project.}
+I learned:
+\begin{itemize}
+    \item There are multiple tests, and some rely on principles of natural selection and biology
+    \item Experienced programmers have a hard time developing testing
+    \item Specifications and requirements are the heart of a good project (i.e. meant to be subject to expansion and change)
+    \item Continuous integration allows for the automation of testing and code quality
+    \item There are utilities like pylint, black and isort that allow for standardization of the code
+\end{itemize}
 
 \subsection{Which Courses Were Relevant}
 
-\plt{Which of the courses you have taken were relevant for the capstone project?}
+% \plt{Which of the courses you have taken were relevant for the capstone project?}
+UBC's CPSC110: Introduction to Systematic Program Design
 
 \subsection{Knowledge/Skills Outside of Courses}
 
-\plt{What skills/knowledge did you need to acquire for your capstone project
-that was outside of the courses you took?}
+% \plt{What skills/knowledge did you need to acquire for your capstone project
+% that was outside of the courses you took?}
+I had to learn about packaging my modules, setting up standardization for PEP8, and most importantly,learning 
+latex and mathematical symbols.
+
+\bibliographystyle{plain}   
+\bibliography{../../refs/References}   
 
 \end{document}
